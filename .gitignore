@@ -1,0 +1,7 @@
+# Masters vidéo (150–200 Mo) : trop lourds pour GitHub (limite 100 Mo/fichier).
+# Le site utilise uniquement les versions web de assets/video/projects/.
+assets/video/Ardentes_AfterMovie.mp4
+assets/video/Pagaille_AfterMovie.mov
+assets/video/SoLaLune_Concert.mov
+
+.DS_Store
