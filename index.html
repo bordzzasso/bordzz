@@ -288,6 +288,10 @@
         - href : la vidéo complète (fichier .mp4, ou lien YouTube / Vimeo)
         - <video src="…-preview.mp4" poster="….jpg"> : aperçu muet de quelques secondes + vignette 16:9
           (on peut aussi mettre simplement <img src="….jpg" alt="">)
+        - CARROUSEL (plusieurs vidéos dans un projet) : ajouter après le </a> une liste
+          <ol class="project__reel" hidden> avec une ligne par vidéo :
+          <li><a href="vidéo.mp4" data-poster="vignette.jpg">Titre</a></li>
+          (voir le projet The Weeknd ; la 1re vidéo est celle qui s'ouvre en premier)
       -->
       <ul class="projects" data-view="list">
         <li class="project" data-category="aftermovie" data-reveal>
@@ -316,6 +320,24 @@
             <span class="project__cat">Concert</span>
             <span class="project__year">2026</span>
           </a>
+        </li>
+        <li class="project" data-category="concert" data-reveal>
+          <a class="project__link" href="assets/video/projects/the-weeknd/aftermovie.mp4" data-cursor="Lecture">
+            <span class="project__n">004</span>
+            <span class="project__media"><video src="assets/video/projects/the-weeknd/preview.mp4" poster="assets/img/projects/the-weeknd.jpg" muted loop playsinline preload="none"></video></span>
+            <span class="project__title" data-split>The Weeknd // Concert</span>
+            <span class="project__cat">Concert</span>
+            <span class="project__year">2026</span>
+          </a>
+          <ol class="project__reel" hidden>
+            <li><a href="assets/video/projects/the-weeknd/aftermovie.mp4" data-poster="assets/img/projects/the-weeknd/aftermovie.jpg">Aftermovie</a></li>
+            <li><a href="assets/video/projects/the-weeknd/plan-47.mp4" data-poster="assets/img/projects/the-weeknd/plan-47.jpg">Plan 47</a></li>
+            <li><a href="assets/video/projects/the-weeknd/accueil.mp4" data-poster="assets/img/projects/the-weeknd/accueil.jpg">Accueil</a></li>
+            <li><a href="assets/video/projects/the-weeknd/abel.mp4" data-poster="assets/img/projects/the-weeknd/abel.jpg">Abel</a></li>
+            <li><a href="assets/video/projects/the-weeknd/do-you-love-me.mp4" data-poster="assets/img/projects/the-weeknd/do-you-love-me.jpg">Do You Love Me</a></li>
+            <li><a href="assets/video/projects/the-weeknd/abel-flamme.mp4" data-poster="assets/img/projects/the-weeknd/abel-flamme.jpg">Abel // Flamme</a></li>
+            <li><a href="assets/video/projects/the-weeknd/carti-calin.mp4" data-poster="assets/img/projects/the-weeknd/carti-calin.jpg">Carti câlin</a></li>
+          </ol>
         </li>
       </ul>
     </section>
@@ -405,7 +427,7 @@
 
   <dialog class="player" aria-labelledby="player-title">
     <div class="player__bar">
-      <span class="player__rec"><i></i>PLAY</span>
+      <span class="player__rec"><i></i>PLAY<b class="player__count" data-player-count></b></span>
       <span class="player__title" id="player-title" data-player-title>—</span>
       <button class="chip" type="button" data-player-close>Fermer ✕</button>
     </div>
@@ -413,6 +435,11 @@
       <span class="crop crop--tl"></span><span class="crop crop--tr"></span><span class="crop crop--bl"></span><span class="crop crop--br"></span>
       <div class="player__screen" data-player-screen></div>
     </div>
+    <nav class="reel" data-player-reel hidden aria-label="Vidéos du projet">
+      <button class="chip reel__nav" type="button" data-reel-prev aria-label="Vidéo précédente">←</button>
+      <ol class="reel__strip" data-reel-strip></ol>
+      <button class="chip reel__nav" type="button" data-reel-next aria-label="Vidéo suivante">→</button>
+    </nav>
     <div class="player__bar player__bar--bottom">
       <span data-player-cat>—</span>
       <span>BORDZZ [Production]</span>
