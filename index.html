@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@75..112.5,100..800&display=swap">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2026-11-24b">
 
   <script>
     // Intro (compte à rebours) : une seule fois par session, jamais si l'utilisateur limite les animations.
@@ -26,7 +26,7 @@
     try { if (sessionStorage.getItem('bz-intro')) document.documentElement.classList.add('intro-seen'); } catch (e) {}
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('intro-seen');
   </script>
-  <script src="js/main.js" defer></script>
+  <script src="js/main.js?v=2026-11-24b" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Aller au contenu</a>
@@ -338,6 +338,15 @@
             <li><a href="assets/video/projects/the-weeknd/abel-flamme.mp4" data-poster="assets/img/projects/the-weeknd/abel-flamme.jpg">Abel // Flamme</a></li>
             <li><a href="assets/video/projects/the-weeknd/carti-calin.mp4" data-poster="assets/img/projects/the-weeknd/carti-calin.jpg">Carti câlin</a></li>
           </ol>
+        </li>
+        <li class="project" data-category="concert" data-reveal>
+          <a class="project__link" href="assets/video/projects/63kluf/63kluf.mp4" data-cursor="Lecture">
+            <span class="project__n">005</span>
+            <span class="project__media"><video src="assets/video/projects/63kluf/preview.mp4" poster="assets/img/projects/63kluf.jpg" muted loop playsinline preload="none"></video></span>
+            <span class="project__title" data-split>63KLUF // Concert</span>
+            <span class="project__cat">Concert</span>
+            <span class="project__year">2026</span>
+          </a>
         </li>
       </ul>
     </section>

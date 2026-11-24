@@ -597,6 +597,7 @@
     $('[data-player-close]').addEventListener('click', () => player.close());
     player.addEventListener('click', (e) => { if (e.target === player) player.close(); });
     player.addEventListener('close', () => {
+      if (player.open) return; // rouvert entre-temps : ne pas effacer le nouveau projet
       pScreen.replaceChildren();
       clearReel();
       setPlayerOpen(false);
