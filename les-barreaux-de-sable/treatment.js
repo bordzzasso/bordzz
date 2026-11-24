@@ -311,10 +311,11 @@
     boardScroll = Math.max(1, boardDist / BOARD_SPEED);
     board.style.setProperty('--board-dist', boardDist.toFixed(1));
     boardPin.style.height = `${Math.round(window.innerHeight + boardScroll)}px`;
-    const sr = boardStrip.getBoundingClientRect();
+    // positions mesurées hors transformations (les cadres tournent en 3D)
     boardFrames.forEach((f) => {
-      const r = f.el.getBoundingClientRect();
-      f.cx = r.left - sr.left + r.width / 2;
+      const base = f.el.offsetParent === boardStrip ? 0 : boardStrip.offsetLeft;
+      f.cx = f.el.offsetLeft - base + f.el.offsetWidth / 2;
+      f.dn = 9;
     });
     boardP = -1;
   }
@@ -515,8 +516,16 @@
             let best = 0;
             let bestD = Infinity;
             boardFrames.forEach((f, i) => {
-              const d = Math.abs(f.cx + x - vw / 2);
+              const c = f.cx + x - vw / 2;
+              const d = Math.abs(c);
               if (d < bestD) { bestD = d; best = i; }
+              // la pellicule s'enroule : chaque cadre tourne selon sa distance au centre
+              const dn = clamp(c / vw, -1, 1);
+              if (Math.abs(dn - f.dn) > 0.002) {
+                f.dn = dn;
+                f.el.style.setProperty('--d', dn.toFixed(3));
+                f.el.style.setProperty('--ad', Math.abs(dn).toFixed(3));
+              }
             });
             if (best !== boardIdx && boardN) { boardIdx = best; boardN.textContent = `P${best + 1}`; }
           }
@@ -568,5 +577,196 @@
 
     requestAnimationFrame(loop);
   }
+
+  /* ------------------------------------------------------------------
+     Version 3 — profondeur
+     ------------------------------------------------------------------ */
+  // Cartes et galets qui s'inclinent sous le pointeur, avec un reflet de lumière
+  if (finePointer && !reduced) {
+    $$('.reading, .palette span').forEach((el) => {
+      const g = document.createElement('i');
+      g.className = 'glare';
+      g.setAttribute('aria-hidden', 'true');
+      el.appendChild(g);
+      const max = el.classList.contains('reading') ? 5 : 16;
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+        const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+        const a = Math.min(1, Math.hypot(nx, ny)) * max;
+        el.classList.add('is-tilting');
+        if (a > 0.05) el.style.rotate = `${(-ny).toFixed(3)} ${nx.toFixed(3)} 0 ${a.toFixed(2)}deg`;
+        el.style.setProperty('--gx', `${((nx + 1) * 50).toFixed(1)}%`);
+        el.style.setProperty('--gy', `${((ny + 1) * 50).toFixed(1)}%`);
+      });
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('is-tilting');
+        el.style.rotate = '';
+      });
+    });
+  }
+
+  // Ouverture : trois plans (paysage, barreaux, titre) bougent à des profondeurs différentes
+  const heroEl = $('.hero');
+  if (heroEl && finePointer && !reduced) {
+    const hm = $('.hero__media', heroEl);
+    const hb = $('.hero__bars', heroEl);
+    const hc = $('.hero__content', heroEl);
+    heroEl.addEventListener('pointermove', (e) => {
+      const nx = (e.clientX / vw) * 2 - 1;
+      const ny = (e.clientY / vh) * 2 - 1;
+      if (hm) hm.style.translate = `${(-nx * 14).toFixed(1)}px ${(-ny * 9).toFixed(1)}px`;
+      if (hb) hb.style.translate = `${(nx * 18).toFixed(1)}px 0`;
+      if (hc) hc.style.translate = `${(nx * 7).toFixed(1)}px ${(ny * 5).toFixed(1)}px`;
+    }, { passive: true });
+  }
+
+  // Dunes en 3D, la nuit, derrière « Et si la personne qu'on aime… »
+  const qSec = $('.question');
+  if (qSec) {
+    const cv = document.createElement('canvas');
+    cv.className = 'dunes';
+    cv.setAttribute('aria-hidden', 'true');
+    qSec.prepend(cv);
+    const ctx = cv.getContext('2d');
+    const small = window.matchMedia('(max-width: 700px)').matches;
+    const ROWS = small ? 38 : 56;
+    const PTS = small ? 70 : 130;
+    const DZ = 0.46;
+    const ZN = 1.5;
+    const hash = (x, y) => {
+      let h = (Math.imul(x, 374761393) + Math.imul(y, 668265263)) | 0;
+      h = Math.imul(h ^ (h >>> 13), 1274126177);
+      return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+    };
+    const noise = (x, y) => {
+      const xi = Math.floor(x);
+      const yi = Math.floor(y);
+      const fx = x - xi;
+      const fy = y - yi;
+      const sx = fx * fx * (3 - 2 * fx);
+      const sy = fy * fy * (3 - 2 * fy);
+      const a = hash(xi, yi);
+      const b = hash(xi + 1, yi);
+      const c = hash(xi, yi + 1);
+      const d = hash(xi + 1, yi + 1);
+      return a + (b - a) * sx + (c - a) * sy + (a - b - c + d) * sx * sy;
+    };
+    // crêtes de dunes (vent de travers) + ondulations + grandes masses
+    // (le détail fin s'efface avec la distance, sinon les crêtes lointaines deviennent des pics)
+    const height = (x, z, det) => {
+      const r = 1 - Math.abs(noise(x * 0.3 + z * 0.14, z * 0.34) * 2 - 1);
+      return r * r * 1.35 + noise(x * 0.95, z * 0.95) * 0.22 * det + noise(x * 0.1 + 40, z * 0.1) * 0.95;
+    };
+    const grain = new Image();
+    grain.src = 'img/grain.png';
+    let gPat = null;
+    let W = 0;
+    let H = 0;
+    let dpr = 1;
+    let off = 0;
+    let last = 0;
+    let on = false;
+    let raf = 0;
+    let lastScroll = -1e9;
+    let acc = 0;
+    let fillGrad = null;
+    let fadeGrad = null;
+    const xs = new Float32Array(PTS + 1);
+    const ys = new Float32Array(PTS + 1);
+
+    const size = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      W = cv.clientWidth;
+      H = cv.clientHeight;
+      cv.width = Math.max(1, Math.round(W * dpr));
+      cv.height = Math.max(1, Math.round(H * dpr));
+      fillGrad = ctx.createLinearGradient(0, 0, 0, H);
+      fillGrad.addColorStop(0, '#140e0a');
+      fillGrad.addColorStop(1, '#0a0705');
+      fadeGrad = ctx.createLinearGradient(0, 0, 0, H * 0.45);
+      fadeGrad.addColorStop(0, 'rgba(0,0,0,1)');
+      fadeGrad.addColorStop(1, 'rgba(0,0,0,0)');
+      gPat = grain.complete && grain.naturalWidth ? ctx.createPattern(grain, 'repeat') : null;
+    };
+    const draw = () => {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      const f = W * 0.62;
+      const cx = W / 2;
+      const hy = H * 0.1;
+      const camH = 3.9;
+      const frac = off % DZ;
+      const base = Math.floor(off / DZ);
+      for (let i = ROWS - 1; i >= 0; i--) {
+        const z = ZN + i * DZ - frac;
+        const wz = (base + i) * DZ;
+        const span = (((W / 2) * z) / f) * 1.06;
+        const det = Math.max(0, 1 - z / 10);
+        for (let k = 0; k <= PTS; k++) {
+          const x = -span + (2 * span * k) / PTS;
+          xs[k] = cx + (x / z) * f;
+          ys[k] = hy + ((camH - height(x, wz, det)) / z) * f * 0.5;
+        }
+        // la dune masque celles de derrière…
+        ctx.beginPath();
+        ctx.moveTo(xs[0], ys[0]);
+        for (let k = 1; k <= PTS; k++) ctx.lineTo(xs[k], ys[k]);
+        ctx.lineTo(W + 4, H + 4);
+        ctx.lineTo(-4, H + 4);
+        ctx.closePath();
+        ctx.fillStyle = fillGrad;
+        ctx.fill();
+        // …et sa crête accroche la lumière ; le lointain se perd dans la brume
+        const far = i / (ROWS - 1);
+        const near = Math.max(0, 1 - i / 9);
+        const fadeIn = i === ROWS - 1 ? frac / DZ : 1;
+        const a = (0.9 - far * 0.66) * fadeIn;
+        ctx.beginPath();
+        ctx.moveTo(xs[0], ys[0]);
+        for (let k = 1; k <= PTS; k++) ctx.lineTo(xs[k], ys[k]);
+        ctx.strokeStyle = `rgba(${Math.round(236 - near * 26)},${Math.round(206 - near * 92)},${Math.round(168 - near * 112)},${a.toFixed(3)})`;
+        ctx.lineWidth = 0.8 + near * 0.9;
+        ctx.stroke();
+      }
+      if (gPat) {
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = gPat;
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalAlpha = 1;
+      }
+      // fondu vers le haut (dessiné ici plutôt qu'en masque CSS : moins coûteux)
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.fillStyle = fadeGrad;
+      ctx.fillRect(0, 0, W, H * 0.45);
+      ctx.globalCompositeOperation = 'source-over';
+    };
+    // Les dunes dérivent quand on lit, et se figent pendant le défilement
+    // (pour que le défilement reste parfaitement fluide) ; 30 images/s suffisent.
+    window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
+    const tick = (t) => {
+      raf = 0;
+      if (!on) return;
+      const dt = last ? Math.min(64, t - last) : 16;
+      last = t;
+      if (t - lastScroll > 160) {
+        off += dt * 0.00024;
+        acc += dt;
+        if (acc >= 32) { acc = 0; draw(); }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    size();
+    draw();
+    grain.addEventListener('load', () => { size(); draw(); });
+    window.addEventListener('resize', () => { size(); draw(); });
+    if (!reduced && 'IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => {
+        on = en.isIntersecting;
+        if (on && !raf) { last = 0; raf = requestAnimationFrame(tick); }
+      }).observe(cv);
+    }
+  }
+
   requestAnimationFrame(loop);
 })();

@@ -1438,3 +1438,212 @@ img[data-px] { --s: 1.1; }
   .twins__side .pill { left: 10px; bottom: 10px; font-size: 10px; }
   .twins__side--b .pill { left: auto; right: 10px; }
 }
+
+/* ==========================================================================
+   Version 3 — Matière, lumière, profondeur
+   Le désert n'est pas plat : grain de sable, lumière rasante venue du haut
+   à gauche, ombres portées, volumes et perspective.
+   ========================================================================== */
+:root {
+  --grain: url("img/grain.png");
+  --ripples: url("img/ripples.png");
+  --lit: radial-gradient(120% 90% at 8% -12%, rgba(255, 253, 248, 0.78), rgba(255, 253, 248, 0) 55%);
+  --shade: radial-gradient(110% 85% at 106% 116%, rgba(143, 63, 29, 0.17), rgba(143, 63, 29, 0) 60%);
+  --lift:
+    0 1px 1px rgba(70, 35, 12, 0.05),
+    0 6px 12px -6px rgba(70, 35, 12, 0.18),
+    0 26px 48px -22px rgba(70, 35, 12, 0.34),
+    0 70px 90px -60px rgba(70, 35, 12, 0.4);
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.8), inset 0 -1px 0 rgba(143, 63, 29, 0.12);
+  --night:
+    radial-gradient(90% 70% at 50% -5%, rgba(150, 86, 42, 0.26), rgba(150, 86, 42, 0) 62%),
+    radial-gradient(110% 80% at 50% 115%, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 60%);
+}
+
+/* ---------- Le papier : un grain de sable partout ---------- */
+body, .tint { background-image: var(--grain); }
+.visual, .vfx, .places { background-image: var(--grain), var(--lit); }
+
+/* ---------- Les cartes : des dalles de grès, éclairées en biais ---------- */
+.card, .mirror-card, .shepherd, .cutting, .schema:not(.schema--dark),
+.film__mirror:not(.film__mirror--pale), .reading:not(.reading--dark), .grade, .direction {
+  background-image: var(--grain), var(--lit), var(--shade);
+  box-shadow: var(--lift), var(--edge);
+}
+.film__mirror--pale {
+  background-image: var(--grain), radial-gradient(120% 90% at 8% -12%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 55%), radial-gradient(110% 85% at 106% 116%, rgba(40, 40, 40, 0.14), rgba(40, 40, 40, 0) 60%);
+}
+
+/* ---------- La terre cuite : des dunes, avec leurs rides de vent ---------- */
+.film__panel, .duo-card__panel--terra {
+  background-color: var(--terra);
+  background-image:
+    var(--grain),
+    var(--ripples),
+    radial-gradient(120% 70% at 12% -4%, rgba(255, 216, 165, 0.5), rgba(255, 216, 165, 0) 55%),
+    linear-gradient(172deg, #d47c45 0%, #c86c37 38%, #a4502a 100%);
+  background-size: auto, 520px 520px, auto, auto;
+}
+.film__panel { box-shadow: var(--lift), inset 0 1px 0 rgba(255, 222, 184, 0.55), inset 0 -40px 80px -50px rgba(70, 25, 8, 0.45); }
+.meet__tile--red {
+  background-image: var(--grain), radial-gradient(120% 80% at 10% -10%, rgba(255, 160, 150, 0.4), rgba(255, 160, 150, 0) 55%), linear-gradient(170deg, #c41d33, #9c1325);
+}
+
+/* ---------- La nuit : un noir qui respire ---------- */
+.question, .rhymes, .reading--dark, .schema--dark { background-image: var(--grain), var(--night); }
+.film__end { background-image: var(--grain), radial-gradient(90% 70% at 50% -5%, rgba(90, 120, 160, 0.22), rgba(90, 120, 160, 0) 62%), radial-gradient(110% 80% at 50% 115%, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 60%); }
+.reading--dark { box-shadow: var(--lift), inset 0 1px 0 rgba(255, 220, 180, 0.12); }
+
+/* ---------- Les images posées sur la page ont une épaisseur ---------- */
+.mood__imgs, .vfx__grid, .twins__side, .places__duo, .places__row, .light__stack, .hello__img, .grade__img, .post__strip,
+.board__strip figure > img, .board__split {
+  box-shadow: 0 2px 3px rgba(40, 20, 8, 0.12), 0 22px 40px -18px rgba(40, 20, 8, 0.45), 0 60px 80px -60px rgba(40, 20, 8, 0.5);
+}
+
+/* Les étiquettes deviennent des autocollants */
+.pill {
+  background-image: var(--grain), linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 60%);
+  box-shadow: 0 1px 1px rgba(30, 12, 4, 0.2), 0 8px 16px -8px rgba(30, 12, 4, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ---------- Les titres : des lettres taillées dans le grès ---------- */
+.caps {
+  background-image: var(--grain), linear-gradient(180deg, #da2a40 0%, #b3172b 50%, #8c1022 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0.01em 0.012em 0 #8a0f20)
+    drop-shadow(0.01em 0.012em 0 #7a0d1c)
+    drop-shadow(0.01em 0.012em 0 #6b0b18)
+    drop-shadow(0.01em 0.012em 0 #5c0a14)
+    drop-shadow(0.04em 0.09em 0.07em rgba(70, 25, 10, 0.3));
+}
+.caps--light {
+  background-image: var(--grain), linear-gradient(180deg, #fffaf0 0%, #f6e8cf 55%, #e5c99d 100%);
+  filter:
+    drop-shadow(0.01em 0.012em 0 #b8865a)
+    drop-shadow(0.01em 0.012em 0 #9d6b42)
+    drop-shadow(0.01em 0.012em 0 #82522d)
+    drop-shadow(0.01em 0.012em 0 #683d1d)
+    drop-shadow(0.04em 0.09em 0.08em rgba(20, 8, 2, 0.45));
+}
+.rhymes .caps--light {
+  filter:
+    drop-shadow(0.01em 0.012em 0 #8f6a48)
+    drop-shadow(0.01em 0.012em 0 #6f5034)
+    drop-shadow(0.01em 0.012em 0 #523a24)
+    drop-shadow(0.01em 0.012em 0 #3a2818)
+    drop-shadow(0 0.08em 0.25em rgba(236, 160, 90, 0.18));
+}
+.hello__word {
+  filter:
+    drop-shadow(0.008em 0.01em 0 #8a0f20)
+    drop-shadow(0.008em 0.01em 0 #7a0d1c)
+    drop-shadow(0.008em 0.01em 0 #6b0b18)
+    drop-shadow(0.008em 0.01em 0 #5c0a14)
+    drop-shadow(0.03em 0.08em 0.06em rgba(70, 25, 10, 0.28));
+}
+.hero__title, .end__title {
+  text-shadow: none;
+  filter:
+    drop-shadow(0.008em 0.01em 0 #e2c49a)
+    drop-shadow(0.008em 0.01em 0 #c49c6c)
+    drop-shadow(0.008em 0.01em 0 #9f7447)
+    drop-shadow(0.008em 0.01em 0 #7a5230)
+    drop-shadow(0.03em 0.12em 0.14em rgba(15, 8, 3, 0.55));
+}
+
+/* ---------- La palette : des galets polis ---------- */
+.palette { perspective: 900px; }
+.palette span {
+  position: relative;
+  background:
+    radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0) 34%),
+    radial-gradient(circle at 72% 80%, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0) 58%),
+    var(--grain),
+    var(--c);
+  box-shadow:
+    inset -6px -10px 18px rgba(0, 0, 0, 0.22),
+    inset 5px 7px 12px rgba(255, 255, 255, 0.2),
+    0 3px 4px rgba(40, 20, 8, 0.2),
+    0 22px 24px -14px rgba(40, 20, 8, 0.5);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* ---------- Les barreaux de l'ouverture : des piliers ronds ---------- */
+.hero__bars i::before, .hero__bars i::after {
+  background:
+    var(--grain),
+    linear-gradient(180deg, rgba(255, 244, 220, 0.25), rgba(60, 30, 10, 0.35)),
+    linear-gradient(90deg, #7d4f28 0%, #c99560 14%, #f6e3c1 34%, #e8c391 56%, #b07a46 80%, #6e4321 100%);
+}
+
+/* ---------- Les dunes en 3D (fond de « La question ») ---------- */
+.dunes {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 64%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ---------- Reflet de lumière sous le pointeur (cartes inclinables) ---------- */
+.glare {
+  position: absolute; inset: 0; z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 250, 240, 0.45), rgba(255, 250, 240, 0) 45%);
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+}
+.is-tilting > .glare { opacity: 1; }
+.sense__grid { perspective: 1400px; }
+.reading { transition: rotate 0.5s var(--ease); }
+.reading.is-tilting { transition: rotate 0.12s linear; }
+.fx .palette span { transition: scale 0.9s cubic-bezier(0.3, 1.45, 0.45, 1) calc(var(--i, 0) * 70ms + 0.2s), translate 0.5s var(--ease), rotate 0.4s var(--ease); }
+.fx .palette span.is-tilting { transition: scale 0.9s cubic-bezier(0.3, 1.45, 0.45, 1) calc(var(--i, 0) * 70ms + 0.2s), translate 0.5s var(--ease), rotate 0.12s linear; }
+
+/* ---------- Storyboard : la pellicule s'enroule en 3D ---------- */
+.board.is-pinned .board__strip figure {
+  transform: perspective(1300px) rotateY(calc(var(--d, 0) * -26deg)) translateZ(calc(var(--ad, 0) * -110px));
+  transform-origin: 50% 40%;
+}
+.board.is-pinned .board__strip figure figcaption { opacity: calc(1 - var(--ad, 0) * 1.1); }
+
+/* ---------- Mouvements de profondeur au défilement ---------- */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* les titres se lèvent comme des pierres dressées */
+    :where(*):has(> .caps) { perspective: 1100px; }
+    .caps {
+      transform-origin: 50% 100%;
+      animation: v3-stand linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 35%;
+    }
+    @keyframes v3-stand { from { rotate: x 64deg; } to { rotate: x 0deg; } }
+
+    /* les images se soulèvent de la table */
+    .mood__imgs, .vfx__grid, .twins__side, .places__duo, .places__row, .hello__img,
+    .light__stack, .post__strip, .grade__img {
+      transform-origin: 50% 100%;
+      animation: v3-plate linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+    @keyframes v3-plate {
+      from { transform: perspective(1400px) rotateX(16deg) translateZ(-60px); }
+      to { transform: none; }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .board.is-pinned .board__strip figure { transform: none; }
+}
+
+/* Ouverture : marge pour que le paysage puisse bouger avec le pointeur */
+.hero__media { inset: -6% -2.5%; }
+.hero__media, .hero__bars, .hero__content { transition: translate 0.35s var(--ease); }
+.question__log { position: relative; text-shadow: 0 0 14px #120d09, 0 0 4px #120d09; }
