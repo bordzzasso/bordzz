@@ -922,3 +922,25 @@ strong, b { font-weight: 650; }
 .pos-apart { object-position: 60% 70%; }
 .pos-crest { object-position: 92% 20%; }
 .pos-left { object-position: 0% 50%; }
+
+/* ==========================================================================
+   v17 — Rencontrez Thomas / Marie : les photos entières, posées comme des
+   tirages sur la carte (plus de recadrage, les visages restent visibles)
+   ========================================================================== */
+.meet__grid {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: clamp(16px, 2.2vw, 26px); padding: clamp(24px, 3.2vw, 44px);
+  background-color: #23476b; background-image: var(--noise); background-blend-mode: soft-light;
+}
+.meet--marie .meet__grid { background-color: #93421b; }
+.meet__grid > img {
+  position: static; inset: auto; contain: none; aspect-ratio: auto;
+  width: auto; height: auto; max-width: 100%; max-height: 360px; min-height: 0;
+  object-fit: contain; border: 8px solid var(--print);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12), 0 22px 32px -18px rgba(0, 0, 0, 0.75);
+}
+.meet__grid > img:nth-child(odd) { rotate: -1.5deg; }
+.meet__grid > img:nth-child(even) { rotate: 1.2deg; }
+@media (max-width: 760px) {
+  .meet__grid > img { max-height: 320px; }
+}
