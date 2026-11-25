@@ -877,3 +877,48 @@ strong, b { font-weight: 650; }
 .seq .todo { padding: 0; }
 .seq .todo > * { position: static; inset: auto; width: auto; height: auto; margin-inline: 22px; }
 .pos-walk { object-position: 80% 45%; }
+
+/* ==========================================================================
+   v15 — le détail du budget (besoin, prix, gratuit, financement), cadrages
+   ========================================================================== */
+.budget__detail {
+  margin: clamp(22px, 3vw, 34px) 0 0; padding: clamp(18px, 2.6vw, 32px);
+  background-color: var(--white); background-image: var(--noise); background-blend-mode: soft-light;
+  box-shadow: var(--shadow);
+}
+.budget__detail figcaption { max-width: 82ch; margin-bottom: 16px; font-size: 13.5px; line-height: 1.55; }
+.budget__detail figcaption .pill { margin-right: 6px; }
+.budget__scroll { overflow-x: auto; }
+.budget__table { width: 100%; min-width: 320px; border-collapse: collapse; }
+.budget__table th, .budget__table td { padding: 12px 12px; border-top: 1px solid rgba(25, 18, 13, 0.14); text-align: right; vertical-align: top; white-space: nowrap; }
+.budget__table th:first-child { padding-left: 0; text-align: left; white-space: normal; }
+.budget__table th:last-child, .budget__table td:last-child { padding-right: 0; }
+.budget__table thead th { padding-top: 0; border-top: 0; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--red); }
+.budget__table tbody th b { display: block; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 12.5px; letter-spacing: 0.03em; text-transform: uppercase; }
+.budget__table tbody th span { display: block; max-width: 52ch; margin-top: 3px; font-weight: 400; font-size: 13px; line-height: 1.4; opacity: 0.72; }
+.budget__table td { font-family: var(--display); font-stretch: 112%; font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+.budget__table td.is-none { color: rgba(25, 18, 13, 0.32); font-weight: 600; }
+.budget__table .to-find { color: var(--red); font-weight: 800; }
+.budget__table .ok { display: inline-grid; place-items: center; width: 26px; height: 26px; background: #2e8540; color: #fff; font-family: var(--body, sans-serif); font-size: 15px; font-weight: 900; line-height: 1; }
+.budget__table tfoot th, .budget__table tfoot td { padding-top: 14px; border-top: 3px solid var(--ink); font-family: var(--display); font-stretch: 125%; font-weight: 900; font-size: 16px; text-transform: uppercase; }
+.budget__table tfoot small { display: block; margin-top: 3px; font-stretch: 112%; font-weight: 800; font-size: 10px; letter-spacing: 0.06em; color: var(--red); }
+@media (max-width: 760px) {
+  /* sur téléphone, chaque besoin sur une ligne, puis ses trois montants côte à côte */
+  .budget__table, .budget__table tbody, .budget__table tfoot { display: block; min-width: 0; }
+  .budget__table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .budget__table tr { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 10px; padding: 12px 0; border-top: 1px solid rgba(25, 18, 13, 0.14); }
+  .budget__table th, .budget__table td { padding: 0; border: 0; text-align: left; }
+  .budget__table th[scope="row"] { grid-column: 1 / -1; margin-bottom: 8px; }
+  .budget__table td { font-size: 14px; }
+  .budget__table td::before { content: attr(data-label); display: block; margin-bottom: 3px; font-stretch: 112%; font-weight: 800; font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(25, 18, 13, 0.55); }
+  .budget__table tfoot tr { padding-top: 14px; border-top: 3px solid var(--ink); }
+  .budget__table tfoot th, .budget__table tfoot td { padding: 0; border: 0; font-size: 15px; }
+  .budget__table .ok { width: 22px; height: 22px; font-size: 13px; }
+}
+
+/* cadrages des nouvelles images */
+.pos-sun { object-position: 50% 62%; }
+.pos-sand { object-position: 38% 72%; }
+.pos-apart { object-position: 60% 70%; }
+.pos-crest { object-position: 92% 20%; }
+.pos-left { object-position: 0% 50%; }
