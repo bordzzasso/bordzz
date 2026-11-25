@@ -6,22 +6,20 @@
   <title>Les Barreaux de Sable — traitement</title>
   <!-- Page privée : accessible uniquement par lien direct, jamais indexée -->
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-  <meta name="theme-color" content="#1a1310">
+  <meta name="theme-color" content="#0d0a08">
   <link rel="icon" href="../assets/logo/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
-  <link rel="preload" as="image" href="img/hero-ridges.jpg">
-  <link rel="stylesheet" href="treatment.css?v=6">
+  <link rel="stylesheet" href="treatment.css?v=7">
   <script>document.documentElement.classList.add('js');</script>
-  <script src="treatment.js?v=6" defer></script>
+  <script src="treatment.js?v=7" defer></script>
 </head>
 <body>
-  <!-- Le sol craquelé, derrière toute la page -->
   <div class="ground" aria-hidden="true"></div>
   <span class="progress" aria-hidden="true"><i></i></span>
 
-  <!-- ===================== Autocollants (réutilisés) ===================== -->
+  <!-- ===================== Autocollants ===================== -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
     <defs>
       <filter id="cold" color-interpolation-filters="sRGB">
@@ -40,9 +38,7 @@
           <circle cx="52" cy="46" r="20"/><circle cx="74" cy="40" r="22"/><circle cx="98" cy="44" r="20"/>
           <circle cx="62" cy="64" r="18"/><circle cx="88" cy="64" r="19"/><circle cx="110" cy="58" r="15"/><circle cx="42" cy="60" r="14"/>
         </g>
-        <g fill="none" stroke="#d6c7ad" stroke-width="2.2">
-          <path d="M48 40c4-6 10-7 15-4M70 32c5-5 12-5 17 0M94 38c5-3 10-2 13 2M58 62c5-4 11-4 15 0M84 60c5-4 11-4 15 0"/>
-        </g>
+        <g fill="none" stroke="#d6c7ad" stroke-width="2.2"><path d="M48 40c4-6 10-7 15-4M70 32c5-5 12-5 17 0M94 38c5-3 10-2 13 2M58 62c5-4 11-4 15 0M84 60c5-4 11-4 15 0"/></g>
         <g fill="#231a14">
           <rect x="54" y="74" width="7" height="27" rx="3.5"/><rect x="70" y="78" width="7" height="25" rx="3.5"/>
           <rect x="89" y="78" width="7" height="25" rx="3.5"/><rect x="103" y="72" width="7" height="27" rx="3.5"/>
@@ -51,346 +47,473 @@
         </g>
         <circle cx="132" cy="42" r="1.8" fill="#fff"/>
       </symbol>
-      <!-- L'œil tracé dans le sable -->
       <symbol id="eye" viewBox="0 0 160 90">
         <path d="M6 45C34 12 126 12 154 45 126 78 34 78 6 45Z" fill="#fff" stroke="#fff" stroke-width="12" stroke-linejoin="round"/>
         <path d="M6 45C34 12 126 12 154 45 126 78 34 78 6 45Z" fill="#f4ead8" stroke="#19120d" stroke-width="5" stroke-linejoin="round"/>
-        <circle cx="80" cy="45" r="21" fill="#8f3f1d"/>
-        <circle cx="80" cy="45" r="10" fill="#19120d"/>
-        <circle cx="86" cy="39" r="4" fill="#fff"/>
+        <circle cx="80" cy="45" r="21" fill="#8f3f1d"/><circle cx="80" cy="45" r="10" fill="#19120d"/><circle cx="86" cy="39" r="4" fill="#fff"/>
       </symbol>
-      <!-- La goutte -->
       <symbol id="drop" viewBox="0 0 80 110">
         <path d="M40 6C40 6 8 46 8 70a32 32 0 0 0 64 0C72 46 40 6 40 6Z" fill="#fff" stroke="#fff" stroke-width="10" stroke-linejoin="round"/>
         <path d="M40 6C40 6 8 46 8 70a32 32 0 0 0 64 0C72 46 40 6 40 6Z" fill="#b3172b"/>
         <path d="M24 72c0-9 5-18 9-24" fill="none" stroke="#ff6a7b" stroke-width="5" stroke-linecap="round" opacity=".7"/>
       </symbol>
+      <!-- Le soleil (le O de « Bonjour ») -->
+      <symbol id="sun" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="46" fill="#fff"/>
+        <circle cx="50" cy="50" r="39" fill="#f2a13a"/>
+        <circle cx="50" cy="50" r="39" fill="none" stroke="#e07f20" stroke-width="3"/>
+        <circle cx="36" cy="44" r="4.5" fill="#19120d"/><circle cx="64" cy="44" r="4.5" fill="#19120d"/>
+        <path d="M34 60c8 9 24 9 32 0" fill="none" stroke="#19120d" stroke-width="4.5" stroke-linecap="round"/>
+      </symbol>
+      <!-- Le téléphone sans réseau -->
+      <symbol id="phone" viewBox="0 0 90 140">
+        <rect x="6" y="6" width="78" height="128" rx="16" fill="#fff"/>
+        <rect x="12" y="12" width="66" height="116" rx="12" fill="#19120d"/>
+        <rect x="18" y="26" width="54" height="88" rx="6" fill="#2b3f52"/>
+        <g fill="#5d7489"><rect x="26" y="78" width="7" height="8" rx="1.5"/><rect x="37" y="72" width="7" height="14" rx="1.5"/><rect x="48" y="66" width="7" height="20" rx="1.5"/><rect x="59" y="60" width="7" height="26" rx="1.5"/></g>
+        <path d="M24 56l44 36M68 56L24 92" stroke="#ff5c6e" stroke-width="6" stroke-linecap="round"/>
+        <text x="45" y="47" fill="#fff" font-family="Arial, sans-serif" font-weight="700" font-size="11" text-anchor="middle">0 barre</text>
+      </symbol>
+      <!-- La gourde de Thomas -->
+      <symbol id="flask" viewBox="0 0 80 140">
+        <path d="M28 6h24v14c14 6 22 18 22 34v66c0 8-6 14-14 14H20c-8 0-14-6-14-14V54c0-16 8-28 22-34z" fill="#fff"/>
+        <path d="M32 12h16v12c13 5 20 16 20 30v64c0 5-4 9-9 9H21c-5 0-9-4-9-9V54c0-14 7-25 20-30z" fill="#4a7a6a"/>
+        <rect x="30" y="8" width="20" height="10" rx="3" fill="#19120d"/>
+        <rect x="12" y="66" width="56" height="26" fill="#e9d6b4"/>
+        <text x="40" y="84" fill="#19120d" font-family="Arial, sans-serif" font-weight="800" font-size="12" text-anchor="middle">1,5 L</text>
+      </symbol>
     </defs>
   </svg>
 
-  <!-- ===================== OUVERTURE : l'entrée dans la crevasse =====================
-       Au défilement, l'écran reste fixe : on suit Marie et Thomas dans la faille,
-       les parois se resserrent jusqu'au ruban de ciel, puis la lumière revient. -->
-  <div class="entry" data-entry>
-  <header class="hero" id="top">
-    <div class="hero__media">
-      <img src="img/hero-ridges.jpg" alt="Les badlands des Bardenas : crêtes de terre ocre ravinées, plaine et plateaux au loin" width="1600" height="1067" fetchpriority="high">
+  <!-- ===================== OUVERTURE ===================== -->
+  <header class="intro" id="top">
+    <i class="cross" style="--x:22%;--y:30%" aria-hidden="true"></i>
+    <i class="cross cross--red" style="--x:74%;--y:62%" aria-hidden="true"></i>
+    <i class="cross" style="--x:31%;--y:72%" aria-hidden="true"></i>
+    <div class="intro__inner">
+      <h1 class="intro__title">Les Barreaux<br>de Sable</h1>
+      <span class="intro__tag">un western psychologique</span>
+      <p class="intro__by">traitement par Alex Roho, Kevin Roussel, Alan Cloarec &amp; Cédric Gallo</p>
+      <p class="intro__school">Sup de Pub · 2026–2027 <a class="logo-box" href="../" aria-label="BORDZZ"><span class="logo-mark"></span></a></p>
     </div>
-    <div class="hero__veil"></div>
-    <div class="slot" aria-hidden="true" data-slot>
-      <div class="slot__glow"></div>
-      <div class="slot__world" data-slot-world>
-        <div class="slot__walkers" data-walkers>
-          <svg class="walker walker--marie" viewBox="0 0 60 170" aria-hidden="true">
-            <g class="walker__body">
-              <g class="walker__leg walker__leg--a"><path d="M21.5 86h8.5l-1.2 70.5c0 1.6-.9 2.5-2.6 2.5h-2.4c-1.6 0-2.4-.9-2.4-2.5z"/></g>
-              <g class="walker__leg walker__leg--b"><path d="M30 86h8.5l-.9 70.5c0 1.6-.9 2.5-2.5 2.5h-2.4c-1.6 0-2.5-.9-2.5-2.5z"/></g>
-              <g class="walker__arm walker__arm--a"><path d="M18.4 34c-2.6 9-3.6 27-2.6 47.5.1 1.6 1 2.4 2.4 2.4s2.2-.9 2.3-2.4c.5-15 1.3-30 3-44z"/></g>
-              <g class="walker__arm walker__arm--b"><path d="M41.6 34c2.6 9 3.6 27 2.6 47.5-.1 1.6-1 2.4-2.4 2.4s-2.2-.9-2.3-2.4c-.5-15-1.3-30-3-44z"/></g>
-              <path d="M19.5 37c0-6 4.5-9.5 10.5-9.5s10.5 3.5 10.5 9.5l-1.7 21c-.6 6 .6 10 2.4 15.5.9 3 .5 13.5.5 13.5H18.3s-.4-10.5.5-13.5c1.8-5.5 3-9.5 2.4-15.5z"/>
-              <rect class="walker__pack" x="21" y="33" width="18" height="27" rx="6"/>
-              <path d="M30 4.5c-5.2 0-8.6 3.8-8.6 9.4 0 5.6 3.4 10.1 8.6 10.1s8.6-4.5 8.6-10.1c0-5.6-3.4-9.4-8.6-9.4z"/>
-              <path d="M30 13c4 0 6.5 2.4 6.2 7.2-.6 5.2-1.7 8.8-6.2 8.8s-5.6-3.6-6.2-8.8C23.5 15.4 26 13 30 13z"/>
-            </g>
-          </svg>
-          <svg class="walker walker--thomas" viewBox="0 0 60 170" aria-hidden="true">
-            <g class="walker__body">
-              <g class="walker__leg walker__leg--a"><path d="M20.5 86h9.5l-1.2 70.5c0 1.6-.9 2.5-2.6 2.5h-3c-1.6 0-2.5-.9-2.5-2.5z"/></g>
-              <g class="walker__leg walker__leg--b"><path d="M30 86h9.5l-.9 70.5c0 1.6-.9 2.5-2.5 2.5h-3c-1.6 0-2.5-.9-2.5-2.5z"/></g>
-              <g class="walker__arm walker__arm--a"><path d="M16.5 33c-3 9.5-4.2 28-3.2 49 .1 1.7 1.1 2.6 2.6 2.6s2.5-.9 2.6-2.6c.5-15.5 1.4-31 3.4-45z"/></g>
-              <g class="walker__arm walker__arm--b"><path d="M43.5 33c3 9.5 4.2 28 3.2 49-.1 1.7-1.1 2.6-2.6 2.6s-2.5-.9-2.6-2.6c-.5-15.5-1.4-31-3.4-45z"/></g>
-              <path d="M17 35.5c0-6.5 5.6-9.5 13-9.5s13 3 13 9.5l-2.2 25c-.4 6 .6 12 .8 26.5H18.4c.2-14.5 1.2-20.5.8-26.5z"/>
-              <rect class="walker__pack" x="17.5" y="30.5" width="25" height="38" rx="7"/>
-              <rect x="26.5" y="21" width="7" height="7" rx="2"/>
-              <path d="M30 4.5c-5.6 0-9.4 4-9.4 10.2 0 6.1 3.8 10.3 9.4 10.3s9.4-4.2 9.4-10.3C39.4 8.5 35.6 4.5 30 4.5z"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-      <div class="slot__floor"></div>
-    </div>
-    <div class="hero__content">
-      <p class="hero__pre">un court métrage</p>
-      <h1 class="hero__title">Les Barreaux<br>de Sable</h1>
-      <p class="hero__by">Alex Roho · Kevin Roussel · Alan Cloarec · Cédric Gallo</p>
-      <p class="hero__school">Sup de Pub · 2026–2027 <a class="logo-box" href="../" aria-label="BORDZZ"><span class="logo-mark"></span></a></p>
-    </div>
-    <span class="hero__cue" aria-hidden="true">Défiler</span>
-    <ol class="entry__lines" aria-hidden="true">
-      <li>Marie et Thomas s'enfoncent dans le désert.</li>
-      <li>Ils s'engagent dans un labyrinthe de crevasses.</li>
-      <li>Les parois montent à douze mètres. Le ciel n'est plus qu'un ruban.</li>
-      <li class="is-dark">À leur sortie, la réalité s'est fissurée.</li>
-    </ol>
-    <i class="entry__light" aria-hidden="true"></i>
   </header>
-  </div>
 
   <main>
 
     <!-- ===================== BONJOUR ===================== -->
-    <section class="sec" id="bonjour" data-chapter="Bonjour" aria-labelledby="t-bonjour">
-      <div class="panel panel--cream hello">
-        <div class="hello__text">
-          <h2 class="t-xl" id="t-bonjour">Bonjour</h2>
-          <p class="lead">Tout est parti d'une question. Elle ne nous a plus lâchés pendant l'écriture. Elle est devenue un couple, un désert, un labyrinthe de roche… et <em>Les Barreaux de Sable</em>.</p>
-          <p>Ce traitement raconte le film, et surtout ce qu'on y met. On vous emmène dans les Bardenas. Prenez de l'eau.</p>
-          <dl class="sheet">
+    <section class="on-ground hello" id="bonjour" data-chapter="Bonjour" aria-labelledby="t-bonjour">
+      <div class="hello__top">
+        <h2 class="hello__word" id="t-bonjour" aria-label="Bonjour">B<svg class="hello__sun" aria-hidden="true"><use href="#sun"/></svg>NJOUR</h2>
+        <figure class="frame frame--terra hello__frame"><img src="img/castil-wide.jpg" alt="Le Castildetierra, cheminée de terre des Bardenas, sous un ciel de nuages" width="1100" height="733"></figure>
+      </div>
+      <div class="panel panel--cream hello__letter">
+        <div class="hello__cols">
+          <div class="hello__text">
+            <p>Il y a quelques mois, une question nous est tombée dessus et ne nous a plus lâchés&nbsp;: <strong>et si la personne qu'on aime n'était plus vraiment là&nbsp;?</strong></p>
+            <p>Elle est devenue un couple, un désert, un labyrinthe de roche… et <em>Les Barreaux de Sable</em>. Ce traitement raconte le film, mais surtout ce qu'on y met&nbsp;: pourquoi chaque scène, chaque lumière, chaque silence.</p>
+            <p>On vous emmène dans les Bardenas. Prenez de l'eau.</p>
+          </div>
+          <dl class="facts">
             <div><dt>Format</dt><dd>Court métrage de fiction</dd></div>
             <div><dt>Genre</dt><dd>Western psychologique</dd></div>
             <div><dt>Structure</dt><dd>Douze scènes, une journée, une boucle</dd></div>
-            <div><dt>Décor</dt><dd>Désert des Bardenas Reales, Navarre</dd></div>
+            <div><dt>Décor</dt><dd>Bardenas Reales, Navarre</dd></div>
             <div><dt>Écrit par</dt><dd>Alex Roho, Kevin Roussel, Alan Cloarec &amp; Cédric Gallo</dd></div>
             <div><dt>École</dt><dd>Sup de Pub, 2026–2027</dd></div>
           </dl>
         </div>
-        <figure class="hello__img"><img src="img/castil-wide.jpg" alt="Le Castildetierra, cheminée de terre des Bardenas, sous un ciel de nuages" width="1100" height="733" loading="lazy"></figure>
+        <div class="strip strip--5" aria-hidden="true">
+          <img src="img/hikers-far.jpg" alt="" width="1100" height="733" loading="lazy">
+          <img src="img/slot-ribbon.jpg" alt="" width="1100" height="1467" loading="lazy">
+          <img src="img/sheep-steppe.jpg" alt="" width="1100" height="733" loading="lazy">
+          <img class="g-bw" src="img/castil-storm.jpg" alt="" width="1600" height="1067" loading="lazy">
+          <img class="g-cold" src="img/car-mirror.jpg" alt="" width="1100" height="733" loading="lazy">
+        </div>
       </div>
 
-      <div class="panel panel--night question">
-        <span class="pill pill--red">Logline</span>
-        <p class="question__q">Et si la personne qu'on aime n'était <em>plus vraiment</em> là&nbsp;?</p>
-        <p class="question__log">Dans un désert écrasant de chaleur, un jeune couple se perd dans un labyrinthe de crevasses. À la sortie, chacun marche aux côtés du double de l'autre. Jusqu'où iront-ils avant de comprendre que l'être qu'ils aiment n'est plus là&nbsp;?</p>
+      <div class="panel panel--cream says">
+        <figure class="says__img"><img src="img/desert-tiny.jpg" alt="Une silhouette minuscule sur une crête, face à l'immensité du désert" width="1100" height="733" loading="lazy"></figure>
+        <div class="says__text">
+          <p class="says__big">Et si la personne qu'on aime n'était plus vraiment là&nbsp;?</p>
+          <p>Au cœur d'un désert écrasant de chaleur, une randonnée vire au cauchemar lorsqu'un jeune couple se perd dans un labyrinthe de crevasses.</p>
+          <p>À leur sortie, ils pensent s'être retrouvés, ignorant que la réalité s'est fissurée&nbsp;: chacun marche désormais aux côtés du double de l'autre. Prisonniers d'un jeu de miroirs où les tensions explosent, <strong>jusqu'où iront-ils avant de comprendre que l'être qu'ils aiment n'est plus là&nbsp;?</strong></p>
+        </div>
+        <svg class="sticker sticker--phone" aria-hidden="true"><use href="#phone"/></svg>
       </div>
     </section>
 
+    <div class="bleed" aria-label="Un couple qui ne se dispute jamais n'est pas un couple heureux. C'est un couple qui se tait.">
+      <img src="img/castil-storm.jpg" alt="" width="1600" height="1067" loading="lazy">
+      <p>Un couple qui ne se dispute jamais n'est pas un couple heureux.<br>C'est un couple qui se tait.</p>
+    </div>
+
     <!-- ===================== APPROCHE GÉNÉRALE ===================== -->
-    <section class="sec" id="approche" data-chapter="Approche générale" aria-labelledby="t-approche">
-      <div class="panel panel--cream split">
-        <div class="split__text">
+    <section class="sheet sheet--white" id="approche" data-chapter="Approche générale" aria-labelledby="t-approche">
+      <div class="wrap">
+        <div class="head-split">
+          <figure class="head-split__img"><img src="img/white-canyon.jpg" alt="Collines de terre blanche ravinées" width="1100" height="733" loading="lazy"></figure>
           <h2 class="t-xl" id="t-approche">Approche<br>générale</h2>
-          <p class="lead">Un couple qui ne se dispute jamais n'est pas un couple heureux. C'est un couple qui se tait.</p>
-          <p>Thomas et Marie sourient, se frôlent les doigts, s'appellent «&nbsp;Indiana Jones&nbsp;». Tout va bien, en apparence. Le désert leur enlève tout&nbsp;: le réseau, les repères, les échappatoires. Il ne reste qu'eux, et tout ce qu'ils ne se sont jamais dit.</p>
-          <p>Chaque plan, chaque raccord, chaque silence sert la même idée&nbsp;: ce qu'on étouffe finit toujours par sortir. Et le jour où ça sort, il est trop tard.</p>
-          <p class="motto">Arrêter de se taire.<br>Commencer à se perdre.</p>
         </div>
-        <figure class="split__img"><img src="img/hikers-far.jpg" alt="Deux silhouettes minuscules marchant dans une plaine désertique" width="1100" height="733" loading="lazy"></figure>
-      </div>
-
-      <div class="panel panel--terra">
-        <div class="cards cards--2">
-          <article class="card">
-            <figure class="card__img"><img src="img/bw-castil.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">Ouverture = fin</span></figure>
-            <h3>La boucle</h3>
-            <p>Le film commence par sa fin&nbsp;: Marie au bord du vide, en noir et blanc, terrifiée. Puis retour au matin, en couleurs, chez un couple parfait. On sait où l'histoire va, pas pourquoi. Quand le plan revient, le cadre s'élargit&nbsp;: Marie n'était pas seule.</p>
-          </article>
-          <article class="card">
-            <figure class="card__img"><img src="img/slot-ribbon.jpg" alt="" width="1100" height="1467" loading="lazy"><span class="pill">Coude de rocher</span></figure>
-            <h3>Le faux raccord</h3>
-            <p>Tout bascule dans un coude de rocher. Quelques secondes hors champ, et chacun ressort à côté du double de l'autre. On ne souligne rien&nbsp;: même visage, même cadre, juste un regard trop fixe, un sourire qui dure trop. Le spectateur doute avec eux.</p>
-          </article>
-          <article class="card">
-            <figure class="card__img mirror"><img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy"><img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy"><span class="pill">Thomas / Samoht</span></figure>
-            <h3>Le miroir</h3>
-            <p>Deux lignes parallèles qui se répondent plan pour plan, rôles inversés. Samoht et Eiram ne sont pas des monstres&nbsp;: ce sont Thomas et Marie sans filtre, leurs prénoms à l'envers. Leur violence ne vient pas de ce qu'ils inventent, mais de ce qu'ils révèlent.</p>
-          </article>
-          <article class="card">
-            <figure class="card__img"><img src="img/sheep-steppe.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">Avertissement muet</span></figure>
-            <h3>L'étrange</h3>
-            <p>Un berger et deux moutons parfaitement synchronisés traversent le désert, tête basse. On ne l'explique pas. Le fantastique reste au bord du réel&nbsp;: les lectures surnaturelle et métaphorique tiennent jusqu'au bout.</p>
-            <svg class="sticker sticker--sheep" aria-hidden="true"><use href="#sheep"/></svg>
-          </article>
+        <div class="cols2 just">
+          <p>L'idée est simple&nbsp;: un couple qui ne se dispute jamais n'est pas un couple heureux, c'est un couple qui se tait. Thomas et Marie sourient, se frôlent les doigts, s'appellent «&nbsp;Indiana Jones&nbsp;». Tout va bien. En apparence.</p>
+          <p>Ce ne sont pas deux personnes qui se déchirent, ce sont deux personnes qui se bridaient. Chacun voit très bien les défauts de l'autre, et chacun se tait pour protéger le couple, et son ego. Leur règle implicite&nbsp;: aucune embrouille, donc aucune vraie communication. Une relation toxique sans cris ni violence, qui empêche chacun d'exister.</p>
+          <p>Le désert leur enlève tout&nbsp;: le réseau, les repères, les échappatoires. Il ne reste qu'eux, et tout ce qu'ils ne se sont jamais dit. Chaque non-dit fait monter la pression, comme dans une cocotte-minute.</p>
+          <p><strong>C'est le cœur de notre film.</strong> Chaque plan, chaque raccord, chaque silence sert la même idée&nbsp;: ce qu'on étouffe finit toujours par sortir, et le jour où ça sort, il est trop tard.</p>
         </div>
-      </div>
 
-      <div class="panel panel--night motifs">
-        <h2 class="t-lg">Deux images</h2>
-        <div class="cards cards--2">
-          <article class="motif">
-            <figure class="motif__img motif__img--eye"><img src="img/plain-path.jpg" alt="" width="1100" height="733" loading="lazy"><svg class="motif__eye" viewBox="0 0 160 90" aria-hidden="true"><path d="M6 45C34 12 126 12 154 45 126 78 34 78 6 45Z"/><circle cx="80" cy="45" r="20"/><circle cx="80" cy="45" r="8"/></svg></figure>
-            <h3>L'œil</h3>
-            <p>Marie marche sur un œil immense creusé dans le sable, sans le voir. Nous, on le voit. C'est Thomas&nbsp;: son regard, son contrôle, partout, même là où il n'est pas.</p>
-            <svg class="sticker sticker--eye" aria-hidden="true"><use href="#eye"/></svg>
-          </article>
-          <article class="motif">
-            <figure class="motif__img motif__img--blood"><img src="img/bw-ridge.jpg" alt="" width="1100" height="733" loading="lazy"><svg class="motif__drip" viewBox="0 0 120 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h120v9c-10 1-16 3-19 9-3 7-2 17-3 26-1 6-4 9-8 9s-7-3-8-9l-2-14c-1-6-4-9-9-9-4 0-6 3-7 9l-3 108c-.4 9-4 14-10 14s-9.6-5-10-14l-3-96c-.3-8-3-12-8-12-3 0-5 2-6 6l-1 9c-.5 4-2 6-4 6s-3.5-2-4-6L-1 9Z"/><ellipse cx="51.5" cy="164" rx="9" ry="11"/></svg></figure>
-            <h3>Le sang <span class="pill pill--ghost">proposition</span></h3>
-            <p>En pleine dispute, le nez de Thomas se met à saigner, d'un coup, sans raison. Il essuie, sourit, ne dit rien. Ce sang, c'est celui de Marie&nbsp;: ses colères, son tempérament sanguin, qui ont besoin de lui pour exister. Elle explose, c'est lui qui saigne. Dans le noir et blanc final, ce sera la seule couleur.</p>
-            <svg class="sticker sticker--drop" aria-hidden="true"><use href="#drop"/></svg>
-          </article>
+        <div class="mosaic">
+          <div class="m-row">
+            <div class="m-block m-block--terra">
+              <h3>La boucle.</h3>
+              <p>Le film commence par sa fin. Marie est au bord du vide, en noir et blanc, terrifiée. Puis on revient au matin, en couleurs, chez un couple parfait.</p>
+              <p>Le spectateur sait donc où l'histoire va. Ce qu'il ignore, c'est pourquoi. Quand le plan d'ouverture revient, on élargit le cadre et la vérité apparaît&nbsp;: <strong>Marie n'était pas seule.</strong></p>
+            </div>
+            <figure class="m-img"><img class="g-bw" src="img/mesa-wide.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Ouverture = fin</span></figure>
+          </div>
+          <div class="m-row">
+            <figure class="m-img"><img src="img/slot-ribbon.jpg" alt="" width="1100" height="1467" loading="lazy"><span class="pill pill--float">Un coude de rocher</span></figure>
+            <div class="m-block m-block--cream">
+              <h3>Le faux raccord.</h3>
+              <p>Tout bascule dans un coude de rocher. Quelques secondes hors champ suffisent, et quand ils ressortent, chacun marche à côté du double de l'autre.</p>
+              <p>On ne souligne rien. Même visage, mêmes vêtements, même cadre. C'est un regard un peu trop fixe, un sourire qui dure un peu trop, une phrase un peu trop sèche. <strong>Le spectateur doute en même temps que les personnages</strong>, et c'est ce doute qui rend le film inconfortable.</p>
+            </div>
+          </div>
+          <div class="m-strip" aria-hidden="true">
+            <img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy">
+            <img class="flip" src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy">
+            <img src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy">
+            <img class="flip" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy">
+          </div>
+          <div class="m-row">
+            <div class="m-block m-block--night">
+              <h3>Le miroir.</h3>
+              <p>À partir de là, le film avance en deux lignes parallèles qui se répondent plan pour plan&nbsp;: mêmes cadrages, mêmes rythmes, rôles inversés.</p>
+              <p>Samoht et Eiram ne sont pas des monstres. Ce sont Thomas et Marie sans filtre, et leurs prénoms le disent&nbsp;: la même personne, à l'envers. Leur violence ne vient pas de ce qu'ils inventent, mais de ce qu'ils révèlent. <strong>Tout ce qu'ils disent était déjà là.</strong></p>
+            </div>
+            <div class="m-block m-block--cream">
+              <h3>L'étrange.</h3>
+              <p>Un berger et deux moutons parfaitement synchronisés, tête basse, traversent le désert. On ne l'explique pas&nbsp;: c'est un avertissement muet.</p>
+              <p>Le fantastique reste toujours au bord du réel, et les deux lectures, surnaturelle et métaphorique, doivent tenir jusqu'au bout.</p>
+              <svg class="sticker sticker--sheep" aria-hidden="true"><use href="#sheep"/></svg>
+            </div>
+          </div>
+          <div class="m-row m-row--statement">
+            <p>Arrêter de se taire.<br>Commencer à se perdre.</p>
+          </div>
+        </div>
+
+        <div class="mosaic mosaic--night">
+          <div class="m-row">
+            <figure class="m-img m-img--eye"><img src="img/plain-path.jpg" alt="" width="1100" height="733" loading="lazy"><svg class="eye-trace" viewBox="0 0 160 90" aria-hidden="true"><path d="M6 45C34 12 126 12 154 45 126 78 34 78 6 45Z"/><circle cx="80" cy="45" r="20"/><circle cx="80" cy="45" r="8"/></svg><span class="pill pill--float">L'œil</span></figure>
+            <div class="m-block m-block--night">
+              <h3>L'œil.</h3>
+              <p>Marie marche sur un œil immense, creusé dans le sable. Elle ne le voit pas&nbsp;; nous, si.</p>
+              <p>C'est Thomas&nbsp;: son regard qui la suit partout, son contrôle déguisé en protection. Il gère ses fréquentations, sa famille, ses journées, et il le fait si calmement que personne ne le soupçonne. Même ici, au milieu de nulle part, <strong>elle marche sous son regard.</strong></p>
+              <svg class="sticker sticker--eye" aria-hidden="true"><use href="#eye"/></svg>
+            </div>
+          </div>
+          <div class="m-row">
+            <div class="m-block m-block--night">
+              <h3>Le sang. <span class="pill pill--ghost">proposition</span></h3>
+              <p>En pleine dispute, le nez de Thomas se met à saigner, d'un coup, sans raison. Il essuie, sourit, ne dit rien.</p>
+              <p>Ce sang, c'est celui de Marie&nbsp;: ses colères, son tempérament sanguin, qui ont besoin de lui pour exister. <strong>Elle explose, c'est lui qui saigne.</strong> Dans le noir et blanc final, ce sera la seule tache de couleur.</p>
+              <svg class="sticker sticker--drop" aria-hidden="true"><use href="#drop"/></svg>
+            </div>
+            <figure class="m-img m-img--blood"><img class="g-bw" src="img/bw-ridge.jpg" alt="" width="1100" height="733" loading="lazy"><svg class="drip" viewBox="0 0 120 200" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h120v9c-10 1-16 3-19 9-3 7-2 17-3 26-1 6-4 9-8 9s-7-3-8-9l-2-14c-1-6-4-9-9-9-4 0-6 3-7 9l-3 108c-.4 9-4 14-10 14s-9.6-5-10-14l-3-96c-.3-8-3-12-8-12-3 0-5 2-6 6l-1 9c-.5 4-2 6-4 6s-3.5-2-4-6L-1 9Z"/><ellipse cx="51.5" cy="164" rx="9" ry="11"/></svg></figure>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== APPROCHE VISUELLE ===================== -->
-    <section class="sec" id="visuel" data-chapter="Approche visuelle" aria-labelledby="t-visuel">
-      <div class="panel panel--cream split split--rev">
-        <figure class="split__img"><img src="img/hiker-woman-2.jpg" alt="Une randonneuse face à un désert de terres rouges et ocres" width="1100" height="730" loading="lazy"></figure>
-        <div class="split__text">
-          <h2 class="t-xl" id="t-visuel">Approche<br>visuelle</h2>
-          <p class="lead">Brut, solaire, et de plus en plus oppressant.</p>
-          <p>Tout est tourné en pellicule&nbsp;: grain marqué, contraste fort, noirs profonds, hautes lumières qui brûlent. Une palette chaude d'un bout à l'autre, ocres, terres et blancs aveuglants. Le désert doit se sentir sur la peau.</p>
-          <p>D'abord des plans larges et fixes&nbsp;: le couple n'est qu'une silhouette dans l'immensité minérale, minuscule et sans repère. Après le faux raccord, la couleur se désature au rythme de la dispute et la caméra se rapproche, jusqu'aux visages couverts de sueur et de poussière. Le décor sort du cadre&nbsp;: plus d'issue.</p>
-          <p>Au climax, la couleur a disparu. L'épilogue rouvre le cadre&nbsp;: la voiture s'éloigne, la poussière retombe. Même décor, mais le couple n'existe plus.</p>
+    <section class="sheet sheet--cream" id="visuel" data-chapter="Approche visuelle" aria-labelledby="t-visuel">
+      <div class="wrap">
+        <div class="ed">
+          <div class="ed__text">
+            <h2 class="t-xl" id="t-visuel">Approche<br>visuelle</h2>
+            <div class="just">
+              <p>Le langage visuel du film est <strong>brut, solaire et de plus en plus oppressant</strong>. Il part d'un désert immense et contemplatif et se referme peu à peu sur les visages, jusqu'à l'étouffement.</p>
+              <p>Tout le film est tourné en pellicule. Le grain est marqué, le contraste fort, les noirs profonds et les hautes lumières qui brûlent. La palette est chaude d'un bout à l'autre&nbsp;: ocres, terres et blancs aveuglants. Le désert doit se sentir sur la peau.</p>
+              <p>On ouvre sur Marie, de profil, au bord du vide, dans un noir et blanc au grain épais. Puis le titre claque et la couleur arrive, à son maximum&nbsp;: les Bardenas écrasées de soleil et l'air qui vibre au-dessus de la terre craquelée.</p>
+              <p>Dans la première partie, les plans sont larges, fixes et contemplatifs. Le décor domine le cadre et le couple n'est qu'une silhouette dans l'immensité minérale. Cette grandeur amplifie leur vulnérabilité&nbsp;: <strong>ils sont minuscules, seuls, sans repère.</strong></p>
+            </div>
+          </div>
+          <figure class="ed__img"><img src="img/hiker-woman.jpg" alt="Une randonneuse de dos face à une butte, ses traces de pas dans le sable" width="1100" height="1650" loading="lazy"></figure>
         </div>
+        <div class="ed ed--rev">
+          <div class="collage" aria-hidden="true">
+            <img src="img/white-hills.jpg" alt="" width="1100" height="733" loading="lazy">
+            <img src="img/slot-figure.jpg" alt="" width="1100" height="733" loading="lazy">
+            <img src="img/hiker-woman-2.jpg" alt="" width="1100" height="730" loading="lazy">
+          </div>
+          <div class="just">
+            <p>Le moment clé est <strong>le faux raccord</strong>. À la sortie des crevasses, les deux duos réapparaissent dans des cadres rigoureusement identiques. Rien ne trahit l'échange, sauf un regard qui ne cille plus ou des gestes un peu mécaniques.</p>
+            <p>À partir de là, deux mouvements se font en même temps. Les couleurs se désaturent progressivement, au rythme de la dispute, et la caméra se rapproche. Les plans larges cèdent la place aux plans moyens, puis aux visages couverts de sueur et de poussière. Le décor sort du cadre, le monde se réduit au couple et il n'y a plus d'issue.</p>
+            <p>Le berger et ses moutons surgissent comme un mirage dans une image déjà presque délavée, puis se dissolvent dans la réverbération.</p>
+            <p>Au climax, la couleur a disparu. On est au plus près&nbsp;: un souffle, des yeux, une main qui se pose entre deux omoplates. On retrouve le plan d'ouverture, et cette fois on comprend ce qu'il cachait.</p>
+            <p>L'épilogue rouvre enfin le cadre. Le dernier plan est très large, comme au début&nbsp;: la voiture s'éloigne dans le désert et la poussière retombe lentement. Le décor est le même, mais le couple n'existe plus.</p>
+          </div>
+        </div>
+        <p class="quote">Pellicule, chaleur et désaturation progressive&nbsp;: un film qui s'éteint et se resserre en même temps que le couple, jusqu'à ce qu'il ne reste plus rien entre eux.</p>
+        <figure class="grade">
+          <figcaption><span class="pill pill--red">Étalonnage</span> La même image, du premier au dernier plan.</figcaption>
+          <ol>
+            <li><div class="grade__img"><img class="g-bw" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 1</b><span>Noir &amp; blanc, grain épais.</span></li>
+            <li><div class="grade__img"><img class="g-warm" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 2 → 4</b><span>La couleur à son maximum.</span></li>
+            <li><div class="grade__img"><img class="g-pale" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 5 → 9</b><span>Elle se désature avec la dispute.</span></li>
+            <li><div class="grade__img"><img class="g-bw" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 10 → 11</b><span>Plus de couleur.</span></li>
+            <li><div class="grade__img"><img class="g-cold" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 12</b><span>Le soir, froid.</span></li>
+          </ol>
+        </figure>
       </div>
-
-      <figure class="panel panel--cream grade">
-        <figcaption class="grade__head"><span class="pill pill--red">Étalonnage</span><span>Un film qui s'éteint en même temps que le couple.</span></figcaption>
-        <ol class="grade__steps">
-          <li><div class="grade__img"><img class="g-bw" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 1</b><span>Noir &amp; blanc, grain épais.</span></li>
-          <li><div class="grade__img"><img class="g-warm" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 2 → 4</b><span>La couleur à son maximum.</span></li>
-          <li><div class="grade__img"><img class="g-pale" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 5 → 9</b><span>Elle se désature avec la dispute.</span></li>
-          <li><div class="grade__img"><img class="g-bw" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 10 → 11</b><span>Plus de couleur.</span></li>
-          <li><div class="grade__img"><img class="g-cold" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></div><b>Sc. 12</b><span>Le soir, froid.</span></li>
-        </ol>
-      </figure>
     </section>
 
     <!-- ===================== LUMIÈRE ===================== -->
-    <section class="sec" id="lumiere" data-chapter="Lumière" aria-labelledby="t-lumiere">
-      <div class="panel panel--terra light">
-        <div class="light__head">
-          <h2 class="t-xl t-xl--light" id="t-lumiere">Lumière</h2>
-          <p class="lead">Naturelle, brute, impitoyable. Elle suit la course du soleil sur une seule journée, et cette course devient celle du couple.</p>
+    <section class="sheet sheet--cream sheet--tight" id="lumiere" data-chapter="Lumière" aria-labelledby="t-lumiere">
+      <div class="wrap">
+        <h2 class="t-xl t-center" id="t-lumiere">Lumière</h2>
+        <div class="cols2 just">
+          <p>La lumière du film est <strong>naturelle, brute et impitoyable</strong>. Elle suit la course du soleil sur une seule journée, et cette course devient celle du couple&nbsp;: de la douceur du matin à la violence du zénith, puis au froid du soir.</p>
+          <p>Au début de la randonnée, le soleil est encore bas. La lumière est chaude et rasante, avec de longues ombres sur la terre craquelée et des peaux dorées. Tout est doux et accueillant. C'est la lumière d'un couple qui va bien, ou qui fait semblant.</p>
+          <p>Dans les crevasses, le soleil direct disparaît. Il ne reste qu'une lumière indirecte, renvoyée par les parois ocre, plus fraîche et plus sourde. Seul le ruban de ciel brûle tout en haut du cadre. La trouée blanche au bout du couloir aveugle presque et ressemble à un passage.</p>
+          <p>À la sortie, tout se durcit. Plus le soleil monte, plus la lumière devient verticale et écrasante. Au zénith, elle efface les ombres et les reliefs, brûle les hautes lumières et creuse les orbites. La sueur accroche la lumière sur les fronts, les regards se plissent et la chaleur devient palpable, hostile. <strong>On ne protège plus les visages, on les expose.</strong></p>
+          <p>Pour l'apparition du berger, la lumière se met à trembler. La réverbération est telle que l'image semble se dissoudre. Au sommet de la falaise, en noir et blanc, le contraste est maximal&nbsp;: des noirs profonds, un ciel brûlé et des silhouettes découpées au-dessus du vide.</p>
+          <p>Puis le soleil tombe. Sur le parking, la lumière est bleutée et froide, sans contraste, comme si la journée s'était vidée de toute sa chaleur, en même temps que le couple. Sur tout le film, on travaille au plus près de la lumière naturelle, avec peu de sources et beaucoup de réflecteurs et de négatif pour sculpter les visages sans trahir le réel.</p>
         </div>
         <div class="moods">
-          <figure class="mood"><img src="img/mesa-wide.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">1 · Le matin</span><figcaption>Chaude et rasante, longues ombres, peaux dorées. Un couple qui va bien, ou qui fait semblant.</figcaption></figure>
-          <figure class="mood"><img src="img/slot-figure.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">2 · Les crevasses</span><figcaption>Plus de soleil direct&nbsp;: une lumière sourde, renvoyée par les parois. Seul le ruban de ciel brûle.</figcaption></figure>
-          <figure class="mood"><img src="img/white-hills.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">3 · Le zénith</span><figcaption>Verticale, écrasante. Elle efface les ombres et creuse les orbites. On ne protège plus les visages&nbsp;: on les expose.</figcaption></figure>
-          <figure class="mood"><img src="img/sheep-arid.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">4 · Le berger</span><figcaption>La réverbération fait trembler l'image, jusqu'à la dissoudre.</figcaption></figure>
-          <figure class="mood"><img class="g-bw" src="img/cliff-overlook.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">5 · La falaise</span><figcaption>Noir et blanc, contraste maximal&nbsp;: ciel brûlé, silhouettes découpées au-dessus du vide.</figcaption></figure>
-          <figure class="mood"><img class="g-cold" src="img/car-mirror.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">6 · Le parking</span><figcaption>Bleutée, froide, sans contraste. La journée s'est vidée de sa chaleur, en même temps que le couple.</figcaption></figure>
+          <figure><img src="img/road-mesa.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Lumière 1 — Le matin</span></figure>
+          <figure><img src="img/slot-dark.jpg" alt="" width="1100" height="825" loading="lazy"><span class="pill pill--float">Lumière 2 — Les crevasses</span></figure>
+          <figure><img src="img/white-hills.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Lumière 3 — Le zénith</span></figure>
+          <figure><img src="img/sheep-arid.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Lumière 4 — Le berger</span></figure>
+          <figure><img class="g-bw" src="img/cliff-overlook.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Lumière 5 — La falaise</span></figure>
+          <figure><img class="g-cold" src="img/car-mirror.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">Lumière 6 — Le parking</span></figure>
         </div>
-        <p class="note">Au plus près du naturel&nbsp;: peu de sources, beaucoup de réflecteurs et de négatif pour sculpter les visages sans trahir le réel.</p>
       </div>
     </section>
 
     <!-- ===================== LE FILM ===================== -->
-    <section class="sec" id="film" data-chapter="Le film" aria-labelledby="t-film">
-      <div class="panel panel--blue film">
-        <div class="film__head">
-          <h2 class="t-xl t-xl--light" id="t-film">Le film</h2>
-          <p class="lead">Douze scènes, une journée, une boucle.</p>
+    <section class="on-ground film" id="film" data-chapter="Le film" aria-labelledby="t-film">
+      <div class="film__top">
+        <h2 class="pill-title" id="t-film">Le film</h2>
+        <figure class="frame frame--sky film__frame"><img src="img/hiker-woman-2.jpg" alt="Une randonneuse face à un désert de terres rouges et ocres" width="1100" height="730" loading="lazy"></figure>
+        <svg class="sticker sticker--eye-top" aria-hidden="true"><use href="#eye"/></svg>
+      </div>
+      <div class="panel panel--blue film__panel">
+        <div class="film__head"><h3 class="film__part">Douze scènes</h3><p>Une journée, une boucle. Le film commence par sa fin, puis remonte le temps jusqu'à elle.</p></div>
+        <div class="scenes">
+          <article><b>1#</b><h4>Au bord du vide</h4><p>Noir et blanc, grain épais. Marie, de profil, les orteils au-dessus du canyon, la mâchoire qui tremble. Des cailloux tombent au ralenti. Une musique sourde monte du ravin. Coupe au noir.</p></article>
+          <figure><img class="g-bw" src="img/castil-wide.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>2#</b><h4>Rayés de la carte</h4><p>Le titre claque, la couleur explose. Thomas et Marie s'enfoncent dans les Bardenas, complices. Plus de réseau&nbsp;: «&nbsp;Zéro barre. On est officiellement rayés de la carte.&nbsp;»</p></article>
+          <figure><img src="img/hikers-far.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <figure><img src="img/slot-ribbon.jpg" alt="" width="1100" height="1467" loading="lazy"></figure>
+          <article><b>3#</b><h4>Le labyrinthe</h4><p>Les parois montent à douze mètres, le ciel n'est plus qu'un ruban. Au détour d'un coude, le passage se divise. Deux secondes de bourdonnement&nbsp;: la réalité vient de se fissurer.</p></article>
+          <figure><img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy"></figure>
+          <article><b>4#</b><h4>Le faux raccord</h4><p>Chacun ressort de son côté et retrouve l'autre. Même visage, mais un regard qui ne cille plus, un sourire trop long. Ce sont Samoht et Eiram.</p></article>
+          <article><b>5#</b><h4>Les frottements</h4><p>Les premières piques, dites calmement. Samoht corrige Marie, Eiram se moque du planning de Thomas. On croit à la fatigue.</p></article>
+          <figure><img src="img/plain-path.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>6#</b><h4>L'escalade</h4><p>Les vérités tombent, de plus en plus lourdes&nbsp;: l'isolement, la surprotection, le père, la tromperie. Les vrais craquent&nbsp;: ils savaient.</p></article>
+          <figure><img src="img/white-canyon.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <figure><img src="img/mesa-wide.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>7#</b><h4>La rupture</h4><p>Au zénith, les doubles tournent le dos. Marie rappelle Samoht comme si tout pouvait se réparer&nbsp;; Thomas crie derrière Eiram, plus en colère qu'il ne l'a jamais été.</p></article>
+          <figure><img src="img/sheep-steppe.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>8#</b><h4>L'apparition</h4><p>Dans la réverbération, un berger et deux moutons au même pas, tête basse. Il frappe le sol de son bâton. <em>Toc.</em> Tout disparaît.</p></article>
+          <article><b>9#</b><h4>La traque</h4><p>Chacun court après le double de l'autre, vers la falaise. «&nbsp;Faut que je te dise un truc…&nbsp;» Personne n'entendra jamais ces phrases.</p></article>
+          <figure><img src="img/slot-figure.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>10#</b><h4>La séparation</h4><p>Noir et blanc. Deux promontoires face à face, séparés par le canyon. Ils se voient, ils crient. Le vent avale les mots.</p></article>
+          <figure><img class="g-bw" src="img/mesa-pisquerra.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <figure><img class="g-bw" src="img/cliff-overlook.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>11#</b><h4>Le piège du miroir</h4><p>Le plan d'ouverture revient. Le cadre s'élargit&nbsp;: le double est là, juste derrière. Une main à plat entre les omoplates. Coupe au noir.</p></article>
+          <figure><img class="g-cold" src="img/car-mirror.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
+          <article><b>12#</b><h4>Le parking</h4><p>Fin de journée, lumière froide. Samoht et Eiram remontent en voiture sans se regarder. Les portières claquent. La poussière retombe.</p></article>
         </div>
-        <ol class="scenes">
-          <li><b>1#</b><h3>Au bord du vide</h3><p>Noir et blanc. Marie, de profil, au-dessus du canyon. Coupe au noir.</p></li>
-          <li><b>2#</b><h3>Rayés de la carte</h3><p>La couleur explose. Thomas et Marie s'enfoncent dans les Bardenas, sans réseau.</p></li>
-          <li><b>3#</b><h3>Le labyrinthe</h3><p>Les parois montent, le ciel n'est plus qu'un ruban. Au détour d'un coude, ils se perdent.</p></li>
-          <li><b>4#</b><h3>Le faux raccord</h3><p>Chacun retrouve l'autre. Même visage, regard trop fixe&nbsp;: ce sont les doubles.</p></li>
-          <li><b>5#</b><h3>Les frottements</h3><p>Les premières piques. On croit à la fatigue.</p></li>
-          <li><b>6#</b><h3>L'escalade</h3><p>Les vérités tombent, de plus en plus lourdes. Les vrais craquent.</p></li>
-          <li><b>7#</b><h3>La rupture</h3><p>Au zénith, les doubles tournent le dos.</p></li>
-          <li><b>8#</b><h3>L'apparition</h3><p>Un berger, deux moutons au même pas. <em>Toc.</em></p></li>
-          <li><b>9#</b><h3>La traque</h3><p>Chacun court après le double de l'autre, vers la falaise.</p></li>
-          <li><b>10#</b><h3>La séparation</h3><p>Deux promontoires face à face. Le vent avale les mots.</p></li>
-          <li><b>11#</b><h3>Le piège du miroir</h3><p>Le plan d'ouverture revient. Le cadre s'élargit&nbsp;: une main dans le dos.</p></li>
-          <li><b>12#</b><h3>Le parking</h3><p>Les doubles remontent en voiture sans se regarder. La poussière retombe.</p></li>
+      </div>
+
+      <div class="panel panel--image film__thesis">
+        <img src="img/panorama.jpg" alt="" width="1600" height="584" loading="lazy">
+        <div class="film__thesis-text">
+          <p class="says__big">Ils aimaient le personnage, pas la personne.</p>
+          <p>C'est la thèse du film. Au climax, chacun dit enfin ce dont il avait besoin&nbsp;: lui, quelqu'un à sauver&nbsp;; elle, quelqu'un qui la retienne. Aucun des deux ne parle de l'autre, seulement du rôle.</p>
+        </div>
+      </div>
+
+      <div class="panel panel--night film__curve">
+        <p class="steps__title"><span class="pill pill--red">La dispute</span> monte en cinq paliers. Les doubles ne cherchent pas la dispute&nbsp;: ils disent ce qu'ils pensent. Ce sont les vrais qui craquent.</p>
+        <ol class="steps">
+          <li><b>1</b><h4>Les agacements</h4><p>Samoht corrige Marie sans élever la voix. Thomas demande à Eiram si elle a pris son cachet.</p></li>
+          <li><b>2</b><h4>Le couple</h4><p>L'isolement et la surprotection, dits en face.</p></li>
+          <li><b>3</b><h4>Les secrets</h4><p>Le père, l'enterrement manqué, la tromperie. Les vrais craquent&nbsp;: ils savaient.</p></li>
+          <li><b>4</b><h4>Le climax croisé</h4><p>On ne voit plus que Samoht et Eiram. Leurs vérités se répondent d'un monde à l'autre.</p></li>
+          <li><b>5</b><h4>La rupture</h4><p>Chacun s'en va. Personne n'entendra les derniers mots.</p></li>
         </ol>
-        <div class="steps">
-          <p class="steps__title"><span class="pill pill--red">La dispute</span> monte en cinq paliers. Les doubles ne cherchent pas la dispute&nbsp;: ils disent ce qu'ils pensent. Ce sont les vrais qui craquent.</p>
-          <ol>
-            <li><b>1</b><h3>Les agacements</h3><p>Samoht corrige Marie sans élever la voix. Thomas demande à Eiram si elle a pris son cachet.</p></li>
-            <li><b>2</b><h3>Le couple</h3><p>L'isolement et la surprotection, dits en face.</p></li>
-            <li><b>3</b><h3>Les secrets</h3><p>Le père, l'enterrement manqué, la tromperie. Les vrais craquent&nbsp;: ils savaient.</p></li>
-            <li><b>4</b><h3>Le climax croisé</h3><p>On ne voit plus que Samoht et Eiram. Leurs vérités se répondent d'un monde à l'autre.</p></li>
-            <li><b>5</b><h3>La rupture</h3><p>Chacun s'en va. Ils aimaient le personnage, pas la personne.</p></li>
-          </ol>
-        </div>
+        <figure class="schema" data-schema data-s0="1# Au bord du vide|Tension 9/10 · on ressent : vertige|Couleur : noir &amp; blanc" data-s1="2# Rayés de la carte|Tension 2/10 · on ressent : insouciance|Couleur : chaud" data-s2="3# Le labyrinthe|Tension 4/10 · on ressent : enfermement|Couleur : chaud" data-s3="4# Le faux raccord|Tension 5.2/10 · on ressent : malaise|Couleur : chaud" data-s4="5# Les frottements|Tension 5.6/10 · on ressent : agacement|Couleur : se retire" data-s5="6# L&#x27;escalade|Tension 7.4/10 · on ressent : étouffement|Couleur : se retire" data-s6="7# La rupture|Tension 6.8/10 · on ressent : abandon|Couleur : se retire" data-s7="8# L&#x27;apparition|Tension 6/10 · on ressent : irréel|Couleur : se retire" data-s8="9# La traque|Tension 8.2/10 · on ressent : panique|Couleur : se retire" data-s9="10# La séparation|Tension 8.8/10 · on ressent : impuissance|Couleur : noir &amp; blanc" data-s10="11# Le piège du miroir|Tension 10/10 · on ressent : vertige|Couleur : noir &amp; blanc" data-s11="12# Le parking|Tension 1.5/10 · on ressent : vide|Couleur : froid">
+          <figcaption class="schema__head"><span class="pill pill--red">Schéma</span><b>La tension, scène par scène</b><span>Deux pics identiques, au début et à la fin&nbsp;: la boucle se ressent avant de se comprendre. Entre les deux, la tension monte par paliers, et la couleur s'éteint avec elle.</span></figcaption>
+          <div class="schema__scroll"><svg class="sx" viewBox="0 0 1000 314" role="img" aria-label="Courbe de tension du film, scène par scène"><line class="sx-grid" x1="190" x2="985" y1="64.0" y2="64.0"/><text class="sx-ytick" x="178" y="68.0">insoutenable</text><line class="sx-grid" x1="190" x2="985" y1="143.0" y2="143.0"/><text class="sx-ytick" x="178" y="147.0">tendu</text><line class="sx-grid" x1="190" x2="985" y1="222.0" y2="222.0"/><text class="sx-ytick" x="178" y="226.0">calme</text><path class="sx-area" d="M190 79.8 L223.1 79.8 C234.2 98.2 267.3 177.2 289.4 190.4 C311.5 203.6 333.5 167.2 355.6 158.8 C377.7 150.4 399.8 144.1 421.9 139.8 C444.0 135.6 466.0 139.3 488.1 133.5 C510.2 127.7 532.3 108.2 554.4 105.1 C576.5 101.9 598.5 110.9 620.6 114.6 C642.7 118.2 664.8 130.9 686.9 127.2 C709.0 123.5 731.0 99.8 753.1 92.4 C775.2 85.1 797.3 87.7 819.4 83.0 C841.5 78.2 863.5 44.8 885.6 64.0 C907.7 83.2 940.8 175.9 951.9 198.3 L985 198.3 L985 222 L190 222 Z"/><path class="sx-line" d="M190 79.8 L223.1 79.8 C234.2 98.2 267.3 177.2 289.4 190.4 C311.5 203.6 333.5 167.2 355.6 158.8 C377.7 150.4 399.8 144.1 421.9 139.8 C444.0 135.6 466.0 139.3 488.1 133.5 C510.2 127.7 532.3 108.2 554.4 105.1 C576.5 101.9 598.5 110.9 620.6 114.6 C642.7 118.2 664.8 130.9 686.9 127.2 C709.0 123.5 731.0 99.8 753.1 92.4 C775.2 85.1 797.3 87.7 819.4 83.0 C841.5 78.2 863.5 44.8 885.6 64.0 C907.7 83.2 940.8 175.9 951.9 198.3 L985 198.3"/><circle class="sx-dot" cx="223.1" cy="79.8" r="4.5"/><text class="sx-ann" x="223.1" y="65.8" text-anchor="middle">vertige</text><circle class="sx-dot" cx="289.4" cy="190.4" r="4.5"/><text class="sx-ann" x="289.4" y="212.4" text-anchor="middle">insouciance</text><circle class="sx-dot" cx="421.9" cy="139.8" r="4.5"/><text class="sx-ann" x="421.9" y="125.8" text-anchor="middle">le faux raccord</text><circle class="sx-dot" cx="885.6" cy="64.0" r="4.5"/><text class="sx-ann" x="885.6" y="50.0" text-anchor="middle">climax</text><circle class="sx-dot" cx="951.9" cy="198.3" r="4.5"/><text class="sx-ann" x="951.9" y="220.3" text-anchor="end">le vide</text><path class="sx-loop" d="M223.1 36 Q554.4 14 885.6 36"/><text class="sx-ann sx-ann--soft" x="554.4" y="19" text-anchor="middle">la boucle : le même vertige</text><text class="sx-num" x="223.1" y="246">1</text><text class="sx-num" x="289.4" y="246">2</text><text class="sx-num" x="355.6" y="246">3</text><text class="sx-num" x="421.9" y="246">4</text><text class="sx-num" x="488.1" y="246">5</text><text class="sx-num" x="554.4" y="246">6</text><text class="sx-num" x="620.6" y="246">7</text><text class="sx-num" x="686.9" y="246">8</text><text class="sx-num" x="753.1" y="246">9</text><text class="sx-num" x="819.4" y="246">10</text><text class="sx-num" x="885.6" y="246">11</text><text class="sx-num" x="951.9" y="246">12</text><text class="sx-row" x="178" y="280">On ressent</text><text class="sx-row" x="178" y="304">La couleur</text><text class="sx-feel" x="223.1" y="276">Vertige</text><text class="sx-feel" x="289.4" y="276">Insouciance</text><text class="sx-feel" x="355.6" y="276">Enfermement</text><text class="sx-feel" x="421.9" y="276">Malaise</text><text class="sx-feel" x="488.1" y="276">Agacement</text><text class="sx-feel" x="554.4" y="276">Étouffement</text><text class="sx-feel" x="620.6" y="276">Abandon</text><text class="sx-feel" x="686.9" y="276">Irréel</text><text class="sx-feel" x="753.1" y="276">Panique</text><text class="sx-feel" x="819.4" y="276">Impuissance</text><text class="sx-feel" x="885.6" y="276">Vertige</text><text class="sx-feel" x="951.9" y="276">Vide</text><rect x="191.0" y="294" width="64.2" height="12" rx="3" fill="#8b8b8b"/><rect x="257.2" y="294" width="64.2" height="12" rx="3" fill="#e0a35c"/><rect x="323.5" y="294" width="64.2" height="12" rx="3" fill="#e6ad69"/><rect x="389.8" y="294" width="64.2" height="12" rx="3" fill="#e9b574"/><rect x="456.0" y="294" width="64.2" height="12" rx="3" fill="#d9ba8f"/><rect x="522.2" y="294" width="64.2" height="12" rx="3" fill="#cdb497"/><rect x="588.5" y="294" width="64.2" height="12" rx="3" fill="#c1ad9c"/><rect x="654.8" y="294" width="64.2" height="12" rx="3" fill="#b6a9a1"/><rect x="721.0" y="294" width="64.2" height="12" rx="3" fill="#aba6a4"/><rect x="787.2" y="294" width="64.2" height="12" rx="3" fill="#7f7f7f"/><rect x="853.5" y="294" width="64.2" height="12" rx="3" fill="#6c6c6c"/><rect x="919.8" y="294" width="64.2" height="12" rx="3" fill="#6f8aa3"/><line class="sx-cursor" x1="0" x2="0" y1="40" y2="306"/><rect class="sx-hit" x="190.0" y="0" width="66.2" height="314" data-i="0"/><rect class="sx-hit" x="256.2" y="0" width="66.2" height="314" data-i="1"/><rect class="sx-hit" x="322.5" y="0" width="66.2" height="314" data-i="2"/><rect class="sx-hit" x="388.8" y="0" width="66.2" height="314" data-i="3"/><rect class="sx-hit" x="455.0" y="0" width="66.2" height="314" data-i="4"/><rect class="sx-hit" x="521.2" y="0" width="66.2" height="314" data-i="5"/><rect class="sx-hit" x="587.5" y="0" width="66.2" height="314" data-i="6"/><rect class="sx-hit" x="653.8" y="0" width="66.2" height="314" data-i="7"/><rect class="sx-hit" x="720.0" y="0" width="66.2" height="314" data-i="8"/><rect class="sx-hit" x="786.2" y="0" width="66.2" height="314" data-i="9"/><rect class="sx-hit" x="852.5" y="0" width="66.2" height="314" data-i="10"/><rect class="sx-hit" x="918.8" y="0" width="66.2" height="314" data-i="11"/></svg></div>
+          <div class="schema__tip" hidden></div>
+        </figure>
+        <details class="sx-table"><summary>Lire en tableau</summary><div class="sx-table__scroll"><table><tr><th scope="col">Scène</th><th scope="col">Tension</th><th scope="col">On ressent</th><th scope="col">Couleur</th></tr><tr><th scope="row">1# Au bord du vide</th><td>9/10</td><td>Vertige</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">2# Rayés de la carte</th><td>2/10</td><td>Insouciance</td><td>Chaud</td></tr><tr><th scope="row">3# Le labyrinthe</th><td>4/10</td><td>Enfermement</td><td>Chaud</td></tr><tr><th scope="row">4# Le faux raccord</th><td>5.2/10</td><td>Malaise</td><td>Chaud</td></tr><tr><th scope="row">5# Les frottements</th><td>5.6/10</td><td>Agacement</td><td>Se retire</td></tr><tr><th scope="row">6# L&#x27;escalade</th><td>7.4/10</td><td>Étouffement</td><td>Se retire</td></tr><tr><th scope="row">7# La rupture</th><td>6.8/10</td><td>Abandon</td><td>Se retire</td></tr><tr><th scope="row">8# L&#x27;apparition</th><td>6/10</td><td>Irréel</td><td>Se retire</td></tr><tr><th scope="row">9# La traque</th><td>8.2/10</td><td>Panique</td><td>Se retire</td></tr><tr><th scope="row">10# La séparation</th><td>8.8/10</td><td>Impuissance</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">11# Le piège du miroir</th><td>10/10</td><td>Vertige</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">12# Le parking</th><td>1.5/10</td><td>Vide</td><td>Froid</td></tr></table></div></details>
       </div>
     </section>
 
     <!-- ===================== CASTING ===================== -->
-    <section class="sec" id="casting" data-chapter="Casting" aria-labelledby="t-cast">
-      <div class="panel panel--cream cast">
-        <div class="cast__head">
+    <section class="sheet sheet--white" id="casting" data-chapter="Casting" aria-labelledby="t-cast">
+      <div class="wrap">
+        <div class="cast-head">
           <h2 class="t-xl" id="t-cast">Casting</h2>
-          <div>
-            <p class="lead">On ne cherche pas deux acteurs. On cherche quatre personnages dans deux corps.</p>
-            <p>Thomas et Marie, c'est le couple de façade. Samoht et Eiram, le même couple quand il arrête de se taire. Il faut des comédiens capables de jouer peu et de dire beaucoup&nbsp;: un sourire un peu trop long, une épaule un peu trop droite, sans jamais tomber dans le «&nbsp;méchant&nbsp;». Avant tout, on cherche un duo&nbsp;: les essais se feront en couple. Et le désert ne pardonne rien&nbsp;: il nous faut des comédiens endurants.</p>
+          <p class="says__big says__big--ink">On ne cherche pas deux acteurs. On cherche quatre personnages dans deux corps.</p>
+        </div>
+        <div class="cols2 just">
+          <p>Thomas et Marie, c'est le couple de façade&nbsp;: complice, attentionné, souriant. Samoht et Eiram, c'est ce même couple quand il arrête de se taire. Nos comédiens doivent donc jouer le masque et ce qu'il y a dessous, souvent dans le même plan, parfois avec un seul regard. La douceur qui sonne juste d'un côté, la froideur qui glace de l'autre, avec le même visage.</p>
+          <p>On cherche des comédiens capables de <strong>jouer peu et dire beaucoup</strong>. Un sourire un peu trop long, une épaule un peu trop droite&nbsp;: le basculement doit se lire dans des détails, sans tomber dans le «&nbsp;méchant&nbsp;» appuyé.</p>
+          <p>Thomas doit avoir un look atypique. Un visage qu'on n'oublie pas, une gueule plutôt qu'une belle gueule. Il doit faire un peu tache dans l'image du couple parfait&nbsp;: c'est cette fissure qui rend crédible Samoht, qui contrôle et manipule pour ne jamais être dépassé. Marie, elle, doit être d'une beauté évidente. C'est elle qui porte l'image du couple idéal, celui qu'on envie. Plus son visage est lumineux, plus le sourire figé d'Eiram dérange.</p>
+          <p>Avant tout, on cherche un duo. Ce qui compte, c'est l'alchimie entre eux&nbsp;: on fera passer les essais en couple, parce qu'un couple qui se tait se joue à deux. Enfin, le désert ne pardonne rien&nbsp;: chaleur, poussière, course, escalade. Il nous faut des comédiens endurants, prêts à finir la journée couverts de sueur et de sable.</p>
+        </div>
+        <article class="meet meet--thomas">
+          <div class="meet__text">
+            <h3 class="meet__name">Rencontrez Thomas</h3>
+            <p class="meet__meta">Thomas / Samoht — 32 ans</p>
+            <p>Thomas a une tête qu'on ne range dans aucune case. Il n'est pas beau au sens magazine, mais il a une vraie présence. C'est le mec drôle de la bande, toujours une vanne d'avance, surtout sur lui-même&nbsp;: comme ça, les autres n'ont pas besoin de la faire à sa place.</p>
+            <p>Il prévoit tout&nbsp;: itinéraire, carte papier, gourde pleine. Il dit que c'est par sécurité. En vrai, il déteste perdre le contrôle. Avec Marie, tout va bien, il le répète souvent. Peut-être un peu trop.</p>
+            <p><strong>Samoht</strong>, c'est Thomas sans les blagues. Même visage, mais le regard ne sourit plus. Tout ce que Thomas pense en silence, Samoht le dit à voix haute, calmement.</p>
+            <p class="meet__hide"><span>Ce qu'il cache</span>la jalousie, le complexe d'infériorité, le besoin de contrôle</p>
+            <p class="meet__q">Alors, qui est le vrai Thomas&nbsp;: celui qui fait rire, ou celui qui n'a jamais osé parler&nbsp;?</p>
+            <svg class="sticker sticker--flask" aria-hidden="true"><use href="#flask"/></svg>
           </div>
-        </div>
-        <div class="meet">
-          <article class="meet__card meet__card--thomas">
-            <figure class="meet__img mirror"><img src="img/hiker-man.jpg" alt="Référence : randonneur en marche dans le désert" width="1100" height="825" loading="lazy"><img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy"></figure>
-            <div class="meet__text">
-              <h3 class="meet__name">Rencontrez Thomas</h3>
-              <p class="meet__meta">Thomas / Samoht — 32 ans</p>
-              <p>Une tête qu'on ne range dans aucune case&nbsp;: pas beau au sens magazine, mais une vraie présence. Le drôle de la bande, toujours une vanne d'avance, surtout sur lui-même. Il prévoit tout&nbsp;: itinéraire, carte papier, gourde pleine. Par sécurité, dit-il. En vrai, il déteste perdre le contrôle.</p>
-              <p><strong>Samoht</strong>, c'est Thomas sans les blagues. Même visage, mais le regard ne sourit plus.</p>
-              <p class="meet__hide"><span>Ce qu'il cache</span> la jalousie, le complexe d'infériorité, le besoin de contrôle</p>
-              <p class="meet__q">Qui est le vrai Thomas&nbsp;: celui qui fait rire, ou celui qui n'a jamais osé parler&nbsp;?</p>
-            </div>
-          </article>
-          <article class="meet__card meet__card--marie">
-            <figure class="meet__img mirror"><img src="img/hiker-woman.jpg" alt="Référence : randonneuse de dos face à une butte" width="1100" height="1650" loading="lazy"><img src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy"></figure>
-            <div class="meet__text">
-              <h3 class="meet__name">Rencontrez Marie</h3>
-              <p class="meet__meta">Marie / Eiram — 31 ans</p>
-              <p>Une beauté évidente, des bracelets qui tintent quand elle parle. Elle sait ce qui est bon pour les autres, et surtout pour Thomas. C'est celle qu'on appelle quand ça ne va pas, et elle adore ça. Elle voit les piques de Thomas, mais ne dit rien&nbsp;: une dispute, ça fissure.</p>
-              <p><strong>Eiram</strong>, c'est Marie sans le sourire poli. Elle ne protège plus Thomas, elle le juge, et frappe là où ça fait mal.</p>
-              <p class="meet__hide"><span>Ce qu'elle cache</span> la peur d'être abandonnée, les crises, le chantage affectif, la tromperie</p>
-              <p class="meet__q">Et si la femme parfaite n'avait jamais été qu'un rôle&nbsp;?</p>
-            </div>
-          </article>
-        </div>
+          <div class="meet__grid" aria-hidden="true">
+            <img src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy">
+            <img class="flip g-pale" src="img/hiker-man.jpg" alt="" width="1100" height="825" loading="lazy">
+            <img src="img/hikers-far.jpg" alt="" width="1100" height="733" loading="lazy">
+            <img src="img/road-mesa.jpg" alt="" width="1100" height="733" loading="lazy">
+          </div>
+        </article>
+        <article class="meet meet--marie">
+          <div class="meet__grid" aria-hidden="true">
+            <img src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy">
+            <img class="flip g-pale" src="img/hiker-woman.jpg" alt="" width="1100" height="1650" loading="lazy">
+            <img src="img/hiker-woman-2.jpg" alt="" width="1100" height="730" loading="lazy">
+            <img src="img/desert-tiny.jpg" alt="" width="1100" height="733" loading="lazy">
+          </div>
+          <div class="meet__text">
+            <h3 class="meet__name">Rencontrez Marie</h3>
+            <p class="meet__meta">Marie / Eiram — 31 ans</p>
+            <p>Marie a une beauté évidente et des bracelets qui tintent quand elle parle. Elle a confiance en son jugement&nbsp;: elle sait ce qui est bon pour les autres, et surtout pour Thomas.</p>
+            <p>C'est celle qu'on appelle quand ça ne va pas, et elle adore ça. Sa plus grande peur, c'est de ne plus être indispensable. Elle voit très bien les petites piques de Thomas, mais elle ne dit rien&nbsp;: une dispute, ça fissure.</p>
+            <p><strong>Eiram</strong>, c'est Marie sans le sourire poli. Son sourire s'étire un peu trop, et ses yeux ne clignent plus. Elle ne protège plus Thomas, elle le juge. Elle frappe là où ça fait mal, parce qu'elle sait exactement où c'est.</p>
+            <p class="meet__hide"><span>Ce qu'elle cache</span>la peur d'être abandonnée, les crises, le chantage affectif, la tromperie</p>
+            <p class="meet__q">Et si la femme parfaite n'avait jamais été qu'un rôle&nbsp;?</p>
+          </div>
+        </article>
       </div>
     </section>
 
     <!-- ===================== LIEUX ===================== -->
-    <section class="sec" id="lieux" data-chapter="Lieux" aria-labelledby="t-lieux">
-      <div class="panel panel--cream places">
-        <figure class="places__wide"><img src="img/panorama.jpg" alt="Panorama des Bardenas au soleil couchant, plateaux et ravines" width="1600" height="584" loading="lazy"><span class="pill pill--red">Bardenas Reales, Navarre</span></figure>
-        <div class="places__head">
-          <h2 class="t-xl" id="t-lieux">Lieux</h2>
-          <div>
-            <p class="lead">Le désert n'est pas un décor. C'est le troisième personnage.</p>
-            <p>Il doit être réel, brûlant, écrasant, et il existe à deux heures de la France. Parc naturel et réserve de biosphère de l'UNESCO, 42&nbsp;000 hectares de paysages dignes de l'Ouest américain, décor de <em>Game of Thrones</em>&nbsp;: pour un western psychologique, on ne pouvait pas rêver mieux. Il isole le couple, coupe le réseau, retire tous les repères.</p>
+    <section class="band" id="lieux" data-chapter="Lieux" aria-labelledby="t-lieux">
+      <div class="band__inner">
+        <figure class="frame frame--cream band__frame"><img src="img/badlands-texture.jpg" alt="Les ravines des Bardenas vues du ciel" width="1600" height="926" loading="lazy"></figure>
+        <h2 class="pill-title pill-title--red band__title" id="t-lieux">Lieux</h2>
+      </div>
+    </section>
+    <section class="sheet sheet--white sheet--tight" aria-label="Les lieux du tournage">
+      <div class="wrap">
+        <div class="mosaic">
+          <div class="m-row">
+            <div class="m-block m-block--terra">
+              <p>Notre désert doit être <strong>réel, brûlant et écrasant</strong>. Le spectateur doit sentir la chaleur, la poussière et le vertige. Pas besoin de l'imaginer&nbsp;: il existe à deux heures de la France.</p>
+              <p>On tourne dans le désert des <strong>Bardenas Reales</strong>, en Navarre. Classé parc naturel et réserve de biosphère par l'UNESCO, il s'étend sur près de 42&nbsp;000 hectares, avec des paysages qui évoquent l'Ouest américain sans traverser l'Atlantique.</p>
+              <p>C'est aussi un décor de cinéma reconnu, lieu de tournage de séries comme <em>Game of Thrones</em>. Pour un western psychologique, on ne pouvait pas rêver mieux.</p>
+            </div>
+            <figure class="m-img"><img src="img/rock-close.jpg" alt="" width="1100" height="733" loading="lazy"></figure>
           </div>
         </div>
-        <div class="cards cards--3">
-          <article class="card card--flat">
-            <figure class="card__img"><img src="img/plain-path.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">La plaine</span></figure>
-            <p>Ocre, craquelée, à perte de vue. Là où tout commence, et là où tout se brise. À midi, personne ne peut se cacher.</p>
-          </article>
-          <article class="card card--flat">
-            <figure class="card__img"><img src="img/slot-dark.jpg" alt="" width="1100" height="825" loading="lazy"><span class="pill">La crevasse</span></figure>
-            <p>Des failles étroites aux parois immenses, le ciel en ruban. Confiné, plein d'écho&nbsp;: le lieu de la bascule.</p>
-          </article>
-          <article class="card card--flat">
-            <figure class="card__img"><img src="img/mesa-pisquerra.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill">La falaise</span></figure>
-            <p>Deux promontoires face à face, assez proches pour se voir, trop loin pour s'entendre. L'image finale du couple.</p>
-          </article>
+        <div class="center-text">
+          <p>Il isole le couple, coupe le réseau et retire tous les repères. Plus nos personnages s'enfoncent dedans, plus le paysage se déforme avec eux.</p>
+          <p class="says__big says__big--ink">Le désert n'est pas un décor. C'est le troisième personnage.</p>
         </div>
-        <div class="places__notes">
-          <p><strong>Même désert, deux mondes.</strong> Nos duos évoluent en miroir&nbsp;: chaque lieu se dédouble, même décor, même axe de caméra, deux endroits différents.</p>
-          <p><strong>Les contraintes.</strong> Chaleur, vent, lumière&nbsp;: on les intègre. On tourne tôt et tard, et on garde le zénith pour les scènes où la lumière doit être cruelle. Sur place, la Navarra Film Commission nous met en lien avec guides, repérages, hébergement et restauration.</p>
+        <div class="places">
+          <article><figure><img src="img/plain-path.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">La plaine.</span></figure><p>Une étendue ocre, craquelée, à perte de vue. C'est là que tout commence, dans la complicité de façade, et là que tout se brise. La lumière de midi écrase les reliefs et efface les ombres&nbsp;: personne ne peut se cacher.</p></article>
+          <article><figure><img src="img/slot-dark.jpg" alt="" width="1100" height="825" loading="lazy"><span class="pill pill--float">La crevasse.</span></figure><p>Des failles étroites aux parois immenses, où le ciel ne forme plus qu'un ruban. Un espace confiné, plein d'écho, presque claustrophobe&nbsp;: le lieu de la bascule, où la réalité se fissure.</p></article>
+          <article><figure><img src="img/mesa-pisquerra.jpg" alt="" width="1100" height="733" loading="lazy"><span class="pill pill--float">La falaise.</span></figure><p>Deux promontoires face à face, séparés par le canyon. Assez proches pour se voir, mais trop loin pour s'entendre. C'est l'image finale du couple.</p></article>
+        </div>
+        <div class="cols2 just notes">
+          <p><strong>Même désert, deux mondes.</strong> Comme nos deux duos évoluent en miroir, chaque lieu doit pouvoir se dédoubler&nbsp;: même type de décor, même axe de caméra, deux endroits différents. La variété des Bardenas nous le permet sans tricher.</p>
+          <p><strong>Les contraintes.</strong> La chaleur, le vent et la lumière ne se contrôlent pas, donc on les intègre. On tourne tôt le matin et en fin de journée pour ménager l'équipe, et on garde le zénith pour les scènes où la lumière doit être cruelle. Sur place, on s'appuiera sur la Navarra Film Commission et ses prestataires locaux&nbsp;: guides, repérages, hébergement des équipes et restauration sur le tournage.</p>
         </div>
       </div>
     </section>
 
     <!-- ===================== POST-PRODUCTION ===================== -->
-    <section class="sec" id="postprod" data-chapter="Post-production" aria-labelledby="t-post">
-      <div class="panel panel--night post">
-        <div class="post__head">
-          <h2 class="t-xl t-xl--light" id="t-post">Post-prod</h2>
-          <p class="lead">Le silence est notre matière première. Le son ne décrit pas, il fait ressentir.</p>
+    <section class="sheet sheet--night post" id="postprod" data-chapter="Post-production" aria-labelledby="t-post">
+      <div class="wrap">
+        <div class="post__top">
+          <svg class="sticker sticker--phone-top" aria-hidden="true"><use href="#phone"/></svg>
+          <h2 class="pill-title pill-title--red" id="t-post">Post-prod</h2>
+          <p class="says__big">Le silence est notre matière première.</p>
         </div>
-        <figure class="schema" data-schema data-s0="1# Au bord du vide|9|Vertige|une respiration, le vide, puis une musique sourde qui monte du ravin" data-s1="2# Rayés de la carte|2|Insouciance|le vent chaud, les rires, l&#x27;immensité qui avale tout" data-s2="3# Le labyrinthe|4|Enfermement|l&#x27;écho des parois : chaque souffle résonne" data-s3="4# Le faux raccord|5.2|Malaise|un bourdonnement sourd, puis plus rien" data-s4="5# Les frottements|5.6|Agacement|les pas, la soif, des silences qui pèsent" data-s5="6# L&#x27;escalade|7.4|Étouffement|les voix qui montent, le cœur dans les tempes" data-s6="7# La rupture|6.8|Abandon|le zénith qui bourdonne, la plaine vide" data-s7="8# L&#x27;apparition|6|Irréel|l&#x27;air qui tremble, un tintement lointain" data-s8="9# La traque|8.2|Panique|la course, les souffles courts, le sol qui ondule" data-s9="10# La séparation|8.8|Impuissance|le vent qui avale les mots" data-s10="11# Le piège du miroir|10|Vertige|la musique revient, puis le noir" data-s11="12# Le parking|1.5|Vide|plus un souffle de vent, le silence de la voiture">
-          <figcaption class="schema__head"><span class="pill pill--red">Schéma 01</span><b>La tension, scène par scène</b><span>Le montage suit cette courbe&nbsp;: ample au début, il se resserre, s'accélère et finit en cuts brutaux. Deux pics identiques, au début et à la fin&nbsp;: la boucle se ressent avant de se comprendre.</span></figcaption>
-          <div class="schema__scroll"><svg class="sx" viewBox="0 0 1000 314" role="img" aria-labelledby="sx1-t"><title id="sx1-t">Courbe de tension du film, scène par scène</title><line class="sx-grid" x1="190" x2="985" y1="64.0" y2="64.0"/><text class="sx-ytick" x="178" y="68.0">insoutenable</text><line class="sx-grid" x1="190" x2="985" y1="143.0" y2="143.0"/><text class="sx-ytick" x="178" y="147.0">tendu</text><line class="sx-grid" x1="190" x2="985" y1="222.0" y2="222.0"/><text class="sx-ytick" x="178" y="226.0">calme</text><path class="sx-area" d="M190 79.8 L223.1 79.8 C234.2 98.2 267.3 177.2 289.4 190.4 C311.5 203.6 333.5 167.2 355.6 158.8 C377.7 150.4 399.8 144.1 421.9 139.8 C444.0 135.6 466.0 139.3 488.1 133.5 C510.2 127.7 532.3 108.2 554.4 105.1 C576.5 101.9 598.5 110.9 620.6 114.6 C642.7 118.2 664.8 130.9 686.9 127.2 C709.0 123.5 731.0 99.8 753.1 92.4 C775.2 85.1 797.3 87.7 819.4 83.0 C841.5 78.2 863.5 44.8 885.6 64.0 C907.7 83.2 940.8 175.9 951.9 198.3 L985 198.3 L985 222 L190 222 Z"/><path class="sx-line" d="M190 79.8 L223.1 79.8 C234.2 98.2 267.3 177.2 289.4 190.4 C311.5 203.6 333.5 167.2 355.6 158.8 C377.7 150.4 399.8 144.1 421.9 139.8 C444.0 135.6 466.0 139.3 488.1 133.5 C510.2 127.7 532.3 108.2 554.4 105.1 C576.5 101.9 598.5 110.9 620.6 114.6 C642.7 118.2 664.8 130.9 686.9 127.2 C709.0 123.5 731.0 99.8 753.1 92.4 C775.2 85.1 797.3 87.7 819.4 83.0 C841.5 78.2 863.5 44.8 885.6 64.0 C907.7 83.2 940.8 175.9 951.9 198.3 L985 198.3"/><circle class="sx-dot" cx="223.1" cy="79.8" r="4.5"/><text class="sx-ann" x="223.1" y="65.8" text-anchor="middle">vertige</text><circle class="sx-dot" cx="289.4" cy="190.4" r="4.5"/><text class="sx-ann" x="289.4" y="212.4" text-anchor="middle">insouciance</text><circle class="sx-dot" cx="421.9" cy="139.8" r="4.5"/><text class="sx-ann" x="421.9" y="125.8" text-anchor="middle">le faux raccord</text><circle class="sx-dot" cx="885.6" cy="64.0" r="4.5"/><text class="sx-ann" x="885.6" y="50.0" text-anchor="middle">climax</text><circle class="sx-dot" cx="951.9" cy="198.3" r="4.5"/><text class="sx-ann" x="951.9" y="220.3" text-anchor="end">le vide</text><path class="sx-loop" d="M223.1 36 Q554.4 14 885.6 36"/><text class="sx-ann sx-ann--soft" x="554.4" y="19" text-anchor="middle">la boucle : le même vertige</text><text class="sx-num" x="223.1" y="246">1</text><text class="sx-num" x="289.4" y="246">2</text><text class="sx-num" x="355.6" y="246">3</text><text class="sx-num" x="421.9" y="246">4</text><text class="sx-num" x="488.1" y="246">5</text><text class="sx-num" x="554.4" y="246">6</text><text class="sx-num" x="620.6" y="246">7</text><text class="sx-num" x="686.9" y="246">8</text><text class="sx-num" x="753.1" y="246">9</text><text class="sx-num" x="819.4" y="246">10</text><text class="sx-num" x="885.6" y="246">11</text><text class="sx-num" x="951.9" y="246">12</text><text class="sx-row" x="178" y="280">On ressent</text><text class="sx-row" x="178" y="304">La couleur</text><text class="sx-feel" x="223.1" y="276">Vertige</text><text class="sx-feel" x="289.4" y="276">Insouciance</text><text class="sx-feel" x="355.6" y="276">Enfermement</text><text class="sx-feel" x="421.9" y="276">Malaise</text><text class="sx-feel" x="488.1" y="276">Agacement</text><text class="sx-feel" x="554.4" y="276">Étouffement</text><text class="sx-feel" x="620.6" y="276">Abandon</text><text class="sx-feel" x="686.9" y="276">Irréel</text><text class="sx-feel" x="753.1" y="276">Panique</text><text class="sx-feel" x="819.4" y="276">Impuissance</text><text class="sx-feel" x="885.6" y="276">Vertige</text><text class="sx-feel" x="951.9" y="276">Vide</text><rect class="sx-col" x="191.0" y="294" width="64.2" height="12" rx="3" fill="#8b8b8b"/><rect class="sx-col" x="257.2" y="294" width="64.2" height="12" rx="3" fill="#e0a35c"/><rect class="sx-col" x="323.5" y="294" width="64.2" height="12" rx="3" fill="#e6ad69"/><rect class="sx-col" x="389.8" y="294" width="64.2" height="12" rx="3" fill="#e9b574"/><rect class="sx-col" x="456.0" y="294" width="64.2" height="12" rx="3" fill="#d9ba8f"/><rect class="sx-col" x="522.2" y="294" width="64.2" height="12" rx="3" fill="#cdb497"/><rect class="sx-col" x="588.5" y="294" width="64.2" height="12" rx="3" fill="#c1ad9c"/><rect class="sx-col" x="654.8" y="294" width="64.2" height="12" rx="3" fill="#b6a9a1"/><rect class="sx-col" x="721.0" y="294" width="64.2" height="12" rx="3" fill="#aba6a4"/><rect class="sx-col" x="787.2" y="294" width="64.2" height="12" rx="3" fill="#7f7f7f"/><rect class="sx-col" x="853.5" y="294" width="64.2" height="12" rx="3" fill="#6c6c6c"/><rect class="sx-col" x="919.8" y="294" width="64.2" height="12" rx="3" fill="#6f8aa3"/><line class="sx-cursor" x1="0" x2="0" y1="40" y2="306"/><rect class="sx-hit" x="190.0" y="0" width="66.2" height="314" data-i="0"/><rect class="sx-hit" x="256.2" y="0" width="66.2" height="314" data-i="1"/><rect class="sx-hit" x="322.5" y="0" width="66.2" height="314" data-i="2"/><rect class="sx-hit" x="388.8" y="0" width="66.2" height="314" data-i="3"/><rect class="sx-hit" x="455.0" y="0" width="66.2" height="314" data-i="4"/><rect class="sx-hit" x="521.2" y="0" width="66.2" height="314" data-i="5"/><rect class="sx-hit" x="587.5" y="0" width="66.2" height="314" data-i="6"/><rect class="sx-hit" x="653.8" y="0" width="66.2" height="314" data-i="7"/><rect class="sx-hit" x="720.0" y="0" width="66.2" height="314" data-i="8"/><rect class="sx-hit" x="786.2" y="0" width="66.2" height="314" data-i="9"/><rect class="sx-hit" x="852.5" y="0" width="66.2" height="314" data-i="10"/><rect class="sx-hit" x="918.8" y="0" width="66.2" height="314" data-i="11"/></svg></div>
-          <div class="schema__tip" role="status" aria-live="polite" hidden></div>
-        </figure>
-        <figure class="schema" data-schema data-s0="1# Au bord du vide|9|Vertige|une respiration, le vide, puis une musique sourde qui monte du ravin" data-s1="2# Rayés de la carte|2|Insouciance|le vent chaud, les rires, l&#x27;immensité qui avale tout" data-s2="3# Le labyrinthe|4|Enfermement|l&#x27;écho des parois : chaque souffle résonne" data-s3="4# Le faux raccord|5.2|Malaise|un bourdonnement sourd, puis plus rien" data-s4="5# Les frottements|5.6|Agacement|les pas, la soif, des silences qui pèsent" data-s5="6# L&#x27;escalade|7.4|Étouffement|les voix qui montent, le cœur dans les tempes" data-s6="7# La rupture|6.8|Abandon|le zénith qui bourdonne, la plaine vide" data-s7="8# L&#x27;apparition|6|Irréel|l&#x27;air qui tremble, un tintement lointain" data-s8="9# La traque|8.2|Panique|la course, les souffles courts, le sol qui ondule" data-s9="10# La séparation|8.8|Impuissance|le vent qui avale les mots" data-s10="11# Le piège du miroir|10|Vertige|la musique revient, puis le noir" data-s11="12# Le parking|1.5|Vide|plus un souffle de vent, le silence de la voiture">
-          <figcaption class="schema__head"><span class="pill pill--red">Schéma 02</span><b>Ce qu'on entend</b><span>Pas de bruitages démonstratifs&nbsp;: des ambiances. Le désert respire, l'étrange résonne, les corps s'essoufflent. La musique n'existe qu'au bord du vide, deux fois, coupée net par le noir. À la fin, le vent est tombé.</span></figcaption>
-          <div class="schema__scroll"><svg class="sx" viewBox="0 0 1000 262" role="img" aria-labelledby="sx2-t"><title id="sx2-t">Les ambiances sonores du film, scène par scène</title><line class="sx-base" x1="190" x2="985" y1="54" y2="54"/><path class="sx-band" d="M190 46.8 L223.1 46.8 C234.2 44.4 267.3 32.4 289.4 32.4 C311.5 32.4 333.5 45.6 355.6 46.8 C377.7 48.0 399.8 40.8 421.9 39.6 C444.0 38.4 466.0 39.6 488.1 39.6 C510.2 39.6 532.3 40.8 554.4 39.6 C576.5 38.4 598.5 32.4 620.6 32.4 C642.7 32.4 664.8 38.4 686.9 39.6 C709.0 40.8 731.0 40.8 753.1 39.6 C775.2 38.4 797.3 31.2 819.4 32.4 C841.5 33.6 863.5 43.2 885.6 46.8 C907.7 50.4 940.8 52.8 951.9 54.0 L985 54.0 L985 54.0 L951.9 54.0 C940.8 55.2 907.7 57.6 885.6 61.2 C863.5 64.8 841.5 74.4 819.4 75.6 C797.3 76.8 775.2 69.6 753.1 68.4 C731.0 67.2 709.0 67.2 686.9 68.4 C664.8 69.6 642.7 75.6 620.6 75.6 C598.5 75.6 576.5 69.6 554.4 68.4 C532.3 67.2 510.2 68.4 488.1 68.4 C466.0 68.4 444.0 69.6 421.9 68.4 C399.8 67.2 377.7 60.0 355.6 61.2 C333.5 62.4 311.5 75.6 289.4 75.6 C267.3 75.6 234.2 63.6 223.1 61.2 L190 61.2 Z" style="--c:#b3851f"/><circle cx="18" cy="49" r="5" fill="#b3851f"/><text class="sx-track" x="30" y="53">Le désert</text><text class="sx-sub" x="30" y="68">vent, chaleur, immensité</text><line class="sx-base" x1="190" x2="985" y1="110" y2="110"/><path class="sx-band" d="M190 102.8 L223.1 102.8 C234.2 104.0 267.3 111.2 289.4 110.0 C311.5 108.8 333.5 99.2 355.6 95.6 C377.7 92.0 399.8 87.2 421.9 88.4 C444.0 89.6 466.0 100.4 488.1 102.8 C510.2 105.2 532.3 102.8 554.4 102.8 C576.5 102.8 598.5 105.2 620.6 102.8 C642.7 100.4 664.8 89.6 686.9 88.4 C709.0 87.2 731.0 93.2 753.1 95.6 C775.2 98.0 797.3 102.8 819.4 102.8 C841.5 102.8 863.5 94.4 885.6 95.6 C907.7 96.8 940.8 107.6 951.9 110.0 L985 110.0 L985 110.0 L951.9 110.0 C940.8 112.4 907.7 123.2 885.6 124.4 C863.5 125.6 841.5 117.2 819.4 117.2 C797.3 117.2 775.2 122.0 753.1 124.4 C731.0 126.8 709.0 132.8 686.9 131.6 C664.8 130.4 642.7 119.6 620.6 117.2 C598.5 114.8 576.5 117.2 554.4 117.2 C532.3 117.2 510.2 114.8 488.1 117.2 C466.0 119.6 444.0 130.4 421.9 131.6 C399.8 132.8 377.7 128.0 355.6 124.4 C333.5 120.8 311.5 111.2 289.4 110.0 C267.3 108.8 234.2 116.0 223.1 117.2 L190 117.2 Z" style="--c:#4a8ed4"/><circle cx="18" cy="105" r="5" fill="#4a8ed4"/><text class="sx-track" x="30" y="109">L&#x27;étrange</text><text class="sx-sub" x="30" y="124">échos, bourdonnements</text><line class="sx-base" x1="190" x2="985" y1="166" y2="166"/><path class="sx-band" d="M190 151.6 L223.1 151.6 C234.2 152.8 267.3 158.8 289.4 158.8 C311.5 158.8 333.5 152.8 355.6 151.6 C377.7 150.4 399.8 151.6 421.9 151.6 C444.0 151.6 466.0 152.8 488.1 151.6 C510.2 150.4 532.3 144.4 554.4 144.4 C576.5 144.4 598.5 149.2 620.6 151.6 C642.7 154.0 664.8 160.0 686.9 158.8 C709.0 157.6 731.0 146.8 753.1 144.4 C775.2 142.0 797.3 144.4 819.4 144.4 C841.5 144.4 863.5 142.0 885.6 144.4 C907.7 146.8 940.8 156.4 951.9 158.8 L985 158.8 L985 173.2 L951.9 173.2 C940.8 175.6 907.7 185.2 885.6 187.6 C863.5 190.0 841.5 187.6 819.4 187.6 C797.3 187.6 775.2 190.0 753.1 187.6 C731.0 185.2 709.0 174.4 686.9 173.2 C664.8 172.0 642.7 178.0 620.6 180.4 C598.5 182.8 576.5 187.6 554.4 187.6 C532.3 187.6 510.2 181.6 488.1 180.4 C466.0 179.2 444.0 180.4 421.9 180.4 C399.8 180.4 377.7 181.6 355.6 180.4 C333.5 179.2 311.5 173.2 289.4 173.2 C267.3 173.2 234.2 179.2 223.1 180.4 L190 180.4 Z" style="--c:#d75a3c"/><circle cx="18" cy="161" r="5" fill="#d75a3c"/><text class="sx-track" x="30" y="165">Les corps</text><text class="sx-sub" x="30" y="180">souffles, pas, cœur qui bat</text><line class="sx-base" x1="190" x2="985" y1="222" y2="222"/><path class="sx-band" d="M190 200.4 L223.1 200.4 C234.2 204.0 267.3 218.4 289.4 222.0 C311.5 225.6 333.5 222.0 355.6 222.0 C377.7 222.0 399.8 222.0 421.9 222.0 C444.0 222.0 466.0 222.0 488.1 222.0 C510.2 222.0 532.3 222.0 554.4 222.0 C576.5 222.0 598.5 222.0 620.6 222.0 C642.7 222.0 664.8 222.0 686.9 222.0 C709.0 222.0 731.0 222.0 753.1 222.0 C775.2 222.0 797.3 225.6 819.4 222.0 C841.5 218.4 863.5 200.4 885.6 200.4 C907.7 200.4 940.8 218.4 951.9 222.0 L985 222.0 L985 222.0 L951.9 222.0 C940.8 225.6 907.7 243.6 885.6 243.6 C863.5 243.6 841.5 225.6 819.4 222.0 C797.3 218.4 775.2 222.0 753.1 222.0 C731.0 222.0 709.0 222.0 686.9 222.0 C664.8 222.0 642.7 222.0 620.6 222.0 C598.5 222.0 576.5 222.0 554.4 222.0 C532.3 222.0 510.2 222.0 488.1 222.0 C466.0 222.0 444.0 222.0 421.9 222.0 C399.8 222.0 377.7 222.0 355.6 222.0 C333.5 222.0 311.5 218.4 289.4 222.0 C267.3 225.6 234.2 240.0 223.1 243.6 L190 243.6 Z" style="--c:#a86ee8"/><circle cx="18" cy="217" r="5" fill="#a86ee8"/><text class="sx-track" x="30" y="221">La musique</text><text class="sx-sub" x="30" y="236">synthé, voix étouffées</text><line class="sx-cut" x1="256.2" x2="256.2" y1="22" y2="232"/><text class="sx-ann" x="256.2" y="16" text-anchor="middle">coupe au noir</text><line class="sx-cut" x1="918.8" x2="918.8" y1="22" y2="232"/><text class="sx-ann" x="918.8" y="16" text-anchor="middle">coupe au noir</text><text class="sx-ann sx-ann--soft" x="819.4" y="26" text-anchor="middle">le vent avale les mots</text><text class="sx-ann sx-ann--soft" x="979.7" y="198" text-anchor="end">plus que le silence</text><text class="sx-num" x="223.1" y="254">1</text><text class="sx-num" x="289.4" y="254">2</text><text class="sx-num" x="355.6" y="254">3</text><text class="sx-num" x="421.9" y="254">4</text><text class="sx-num" x="488.1" y="254">5</text><text class="sx-num" x="554.4" y="254">6</text><text class="sx-num" x="620.6" y="254">7</text><text class="sx-num" x="686.9" y="254">8</text><text class="sx-num" x="753.1" y="254">9</text><text class="sx-num" x="819.4" y="254">10</text><text class="sx-num" x="885.6" y="254">11</text><text class="sx-num" x="951.9" y="254">12</text><line class="sx-cursor" x1="0" x2="0" y1="22" y2="236"/><rect class="sx-hit" x="190.0" y="0" width="66.2" height="262" data-i="0"/><rect class="sx-hit" x="256.2" y="0" width="66.2" height="262" data-i="1"/><rect class="sx-hit" x="322.5" y="0" width="66.2" height="262" data-i="2"/><rect class="sx-hit" x="388.8" y="0" width="66.2" height="262" data-i="3"/><rect class="sx-hit" x="455.0" y="0" width="66.2" height="262" data-i="4"/><rect class="sx-hit" x="521.2" y="0" width="66.2" height="262" data-i="5"/><rect class="sx-hit" x="587.5" y="0" width="66.2" height="262" data-i="6"/><rect class="sx-hit" x="653.8" y="0" width="66.2" height="262" data-i="7"/><rect class="sx-hit" x="720.0" y="0" width="66.2" height="262" data-i="8"/><rect class="sx-hit" x="786.2" y="0" width="66.2" height="262" data-i="9"/><rect class="sx-hit" x="852.5" y="0" width="66.2" height="262" data-i="10"/><rect class="sx-hit" x="918.8" y="0" width="66.2" height="262" data-i="11"/></svg></div>
-          <div class="schema__tip" role="status" aria-live="polite" hidden></div>
-        </figure>
-        <details class="sx-table"><summary>Lire les schémas en tableau</summary><div class="sx-table__scroll"><table><tr><th scope="col">Scène</th><th scope="col">Tension</th><th scope="col">On ressent</th><th scope="col">On entend</th><th scope="col">Couleur</th></tr><tr><th scope="row">1# Au bord du vide</th><td>9/10</td><td>Vertige</td><td>une respiration, le vide, puis une musique sourde qui monte du ravin</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">2# Rayés de la carte</th><td>2/10</td><td>Insouciance</td><td>le vent chaud, les rires, l&#x27;immensité qui avale tout</td><td>Chaud</td></tr><tr><th scope="row">3# Le labyrinthe</th><td>4/10</td><td>Enfermement</td><td>l&#x27;écho des parois : chaque souffle résonne</td><td>Chaud</td></tr><tr><th scope="row">4# Le faux raccord</th><td>5.2/10</td><td>Malaise</td><td>un bourdonnement sourd, puis plus rien</td><td>Chaud</td></tr><tr><th scope="row">5# Les frottements</th><td>5.6/10</td><td>Agacement</td><td>les pas, la soif, des silences qui pèsent</td><td>Se retire</td></tr><tr><th scope="row">6# L&#x27;escalade</th><td>7.4/10</td><td>Étouffement</td><td>les voix qui montent, le cœur dans les tempes</td><td>Se retire</td></tr><tr><th scope="row">7# La rupture</th><td>6.8/10</td><td>Abandon</td><td>le zénith qui bourdonne, la plaine vide</td><td>Se retire</td></tr><tr><th scope="row">8# L&#x27;apparition</th><td>6/10</td><td>Irréel</td><td>l&#x27;air qui tremble, un tintement lointain</td><td>Se retire</td></tr><tr><th scope="row">9# La traque</th><td>8.2/10</td><td>Panique</td><td>la course, les souffles courts, le sol qui ondule</td><td>Se retire</td></tr><tr><th scope="row">10# La séparation</th><td>8.8/10</td><td>Impuissance</td><td>le vent qui avale les mots</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">11# Le piège du miroir</th><td>10/10</td><td>Vertige</td><td>la musique revient, puis le noir</td><td>Noir &amp; blanc</td></tr><tr><th scope="row">12# Le parking</th><td>1.5/10</td><td>Vide</td><td>plus un souffle de vent, le silence de la voiture</td><td>Froid</td></tr></table></div></details>
+
+        <article class="pp">
+          <div class="pp__text">
+            <span class="pill pill--red">01 · Sound design</span>
+            <h3 class="pp__title">Le son ne décrit pas. Il fait ressentir.</h3>
+            <div class="cols2 just">
+              <p>On ouvre sur presque rien&nbsp;: une respiration, le vide sous les pieds de Marie. Puis le désert prend toute la place&nbsp;: un vent chaud, une chaleur qui vibre, une immensité qui avale les voix. Dans les crevasses, le monde se referme. Chaque souffle résonne, l'écho rapproche ce qui est loin et éloigne ce qui est proche. Au faux raccord, un bourdonnement sourd, deux secondes, puis plus rien&nbsp;: la réalité vient de se fissurer, et c'est l'oreille qui le sent avant l'œil.</p>
+              <p>Plus la dispute monte, plus le son se rapproche des corps&nbsp;: les pas, la soif, les souffles courts, le cœur dans les tempes. L'étrange, lui, reste en dessous, comme une réverbération qui ne devrait pas être là. Au bord du canyon, le vent avale les mots&nbsp;: on voit les lèvres bouger, on n'entend rien. Et dans la dernière scène, le vent est tombé. Il ne reste que le silence de la voiture, <strong>le son le plus dur du film</strong>.</p>
+            </div>
+          </div>
+          <figure class="schema" data-schema data-s0="1# Au bord du vide|On entend : une respiration, le vide, puis une musique sourde qui monte du ravin|Dominante : le vide" data-s1="2# Rayés de la carte|On entend : le vent chaud, les rires, l&#x27;immensité qui avale tout|Dominante : le désert" data-s2="3# Le labyrinthe|On entend : l&#x27;écho des parois : chaque souffle résonne|Dominante : l&#x27;écho" data-s3="4# Le faux raccord|On entend : un bourdonnement sourd, puis plus rien|Dominante : l&#x27;étrange" data-s4="5# Les frottements|On entend : les pas, la soif, des silences qui pèsent|Dominante : les corps" data-s5="6# L&#x27;escalade|On entend : les voix qui montent, le cœur dans les tempes|Dominante : les corps" data-s6="7# La rupture|On entend : le zénith qui bourdonne, la plaine vide|Dominante : le désert" data-s7="8# L&#x27;apparition|On entend : l&#x27;air qui tremble, un tintement lointain|Dominante : l&#x27;étrange" data-s8="9# La traque|On entend : la course, les souffles courts, le sol qui ondule|Dominante : les corps" data-s9="10# La séparation|On entend : le vent qui avale les mots|Dominante : le vent" data-s10="11# Le piège du miroir|On entend : la musique revient, puis le noir|Dominante : la musique" data-s11="12# Le parking|On entend : plus un souffle de vent, le silence de la voiture|Dominante : le silence">
+            <figcaption class="schema__head"><b>Les ambiances, scène par scène</b><span>L'épaisseur de chaque ruban dit sa présence&nbsp;: le désert respire, l'étrange résonne, les corps s'essoufflent.</span></figcaption>
+            <div class="schema__scroll"><svg class="sx" viewBox="0 0 1000 226" role="img" aria-label="Les ambiances sonores du film, scène par scène"><line class="sx-base" x1="190" x2="985" y1="58" y2="58"/><path class="sx-band" d="M190 50.8 L223.1 50.8 C234.2 48.4 267.3 36.4 289.4 36.4 C311.5 36.4 333.5 49.6 355.6 50.8 C377.7 52.0 399.8 44.8 421.9 43.6 C444.0 42.4 466.0 43.6 488.1 43.6 C510.2 43.6 532.3 44.8 554.4 43.6 C576.5 42.4 598.5 36.4 620.6 36.4 C642.7 36.4 664.8 42.4 686.9 43.6 C709.0 44.8 731.0 44.8 753.1 43.6 C775.2 42.4 797.3 35.2 819.4 36.4 C841.5 37.6 863.5 47.2 885.6 50.8 C907.7 54.4 940.8 56.8 951.9 58.0 L985 58.0 L985 58.0 L951.9 58.0 C940.8 59.2 907.7 61.6 885.6 65.2 C863.5 68.8 841.5 78.4 819.4 79.6 C797.3 80.8 775.2 73.6 753.1 72.4 C731.0 71.2 709.0 71.2 686.9 72.4 C664.8 73.6 642.7 79.6 620.6 79.6 C598.5 79.6 576.5 73.6 554.4 72.4 C532.3 71.2 510.2 72.4 488.1 72.4 C466.0 72.4 444.0 73.6 421.9 72.4 C399.8 71.2 377.7 64.0 355.6 65.2 C333.5 66.4 311.5 79.6 289.4 79.6 C267.3 79.6 234.2 67.6 223.1 65.2 L190 65.2 Z" style="--c:#b3851f"/><circle cx="18" cy="53" r="5" fill="#b3851f"/><text class="sx-track" x="30" y="57">Le désert</text><text class="sx-sub" x="30" y="72">vent, chaleur, immensité</text><line class="sx-base" x1="190" x2="985" y1="116" y2="116"/><path class="sx-band" d="M190 108.8 L223.1 108.8 C234.2 110.0 267.3 117.2 289.4 116.0 C311.5 114.8 333.5 105.2 355.6 101.6 C377.7 98.0 399.8 93.2 421.9 94.4 C444.0 95.6 466.0 106.4 488.1 108.8 C510.2 111.2 532.3 108.8 554.4 108.8 C576.5 108.8 598.5 111.2 620.6 108.8 C642.7 106.4 664.8 95.6 686.9 94.4 C709.0 93.2 731.0 99.2 753.1 101.6 C775.2 104.0 797.3 108.8 819.4 108.8 C841.5 108.8 863.5 100.4 885.6 101.6 C907.7 102.8 940.8 113.6 951.9 116.0 L985 116.0 L985 116.0 L951.9 116.0 C940.8 118.4 907.7 129.2 885.6 130.4 C863.5 131.6 841.5 123.2 819.4 123.2 C797.3 123.2 775.2 128.0 753.1 130.4 C731.0 132.8 709.0 138.8 686.9 137.6 C664.8 136.4 642.7 125.6 620.6 123.2 C598.5 120.8 576.5 123.2 554.4 123.2 C532.3 123.2 510.2 120.8 488.1 123.2 C466.0 125.6 444.0 136.4 421.9 137.6 C399.8 138.8 377.7 134.0 355.6 130.4 C333.5 126.8 311.5 117.2 289.4 116.0 C267.3 114.8 234.2 122.0 223.1 123.2 L190 123.2 Z" style="--c:#4a8ed4"/><circle cx="18" cy="111" r="5" fill="#4a8ed4"/><text class="sx-track" x="30" y="115">L&#x27;étrange</text><text class="sx-sub" x="30" y="130">échos, bourdonnements</text><line class="sx-base" x1="190" x2="985" y1="174" y2="174"/><path class="sx-band" d="M190 159.6 L223.1 159.6 C234.2 160.8 267.3 166.8 289.4 166.8 C311.5 166.8 333.5 160.8 355.6 159.6 C377.7 158.4 399.8 159.6 421.9 159.6 C444.0 159.6 466.0 160.8 488.1 159.6 C510.2 158.4 532.3 152.4 554.4 152.4 C576.5 152.4 598.5 157.2 620.6 159.6 C642.7 162.0 664.8 168.0 686.9 166.8 C709.0 165.6 731.0 154.8 753.1 152.4 C775.2 150.0 797.3 152.4 819.4 152.4 C841.5 152.4 863.5 150.0 885.6 152.4 C907.7 154.8 940.8 164.4 951.9 166.8 L985 166.8 L985 181.2 L951.9 181.2 C940.8 183.6 907.7 193.2 885.6 195.6 C863.5 198.0 841.5 195.6 819.4 195.6 C797.3 195.6 775.2 198.0 753.1 195.6 C731.0 193.2 709.0 182.4 686.9 181.2 C664.8 180.0 642.7 186.0 620.6 188.4 C598.5 190.8 576.5 195.6 554.4 195.6 C532.3 195.6 510.2 189.6 488.1 188.4 C466.0 187.2 444.0 188.4 421.9 188.4 C399.8 188.4 377.7 189.6 355.6 188.4 C333.5 187.2 311.5 181.2 289.4 181.2 C267.3 181.2 234.2 187.2 223.1 188.4 L190 188.4 Z" style="--c:#d75a3c"/><circle cx="18" cy="169" r="5" fill="#d75a3c"/><text class="sx-track" x="30" y="173">Les corps</text><text class="sx-sub" x="30" y="188">souffles, pas, cœur qui bat</text><line class="sx-cut" x1="256.2" x2="256.2" y1="22" y2="196"/><text class="sx-ann" x="256.2" y="16" text-anchor="middle">coupe au noir</text><line class="sx-cut" x1="918.8" x2="918.8" y1="22" y2="196"/><text class="sx-ann" x="918.8" y="16" text-anchor="middle">coupe au noir</text><text class="sx-ann sx-ann--soft" x="819.4" y="30" text-anchor="middle">le vent avale les mots</text><text class="sx-ann sx-ann--soft" x="979.7" y="208" text-anchor="end">plus que le silence</text><text class="sx-num" x="223.1" y="218">1</text><text class="sx-num" x="289.4" y="218">2</text><text class="sx-num" x="355.6" y="218">3</text><text class="sx-num" x="421.9" y="218">4</text><text class="sx-num" x="488.1" y="218">5</text><text class="sx-num" x="554.4" y="218">6</text><text class="sx-num" x="620.6" y="218">7</text><text class="sx-num" x="686.9" y="218">8</text><text class="sx-num" x="753.1" y="218">9</text><text class="sx-num" x="819.4" y="218">10</text><text class="sx-num" x="885.6" y="218">11</text><text class="sx-num" x="951.9" y="218">12</text><line class="sx-cursor" x1="0" x2="0" y1="22" y2="200"/><rect class="sx-hit" x="190.0" y="0" width="66.2" height="226" data-i="0"/><rect class="sx-hit" x="256.2" y="0" width="66.2" height="226" data-i="1"/><rect class="sx-hit" x="322.5" y="0" width="66.2" height="226" data-i="2"/><rect class="sx-hit" x="388.8" y="0" width="66.2" height="226" data-i="3"/><rect class="sx-hit" x="455.0" y="0" width="66.2" height="226" data-i="4"/><rect class="sx-hit" x="521.2" y="0" width="66.2" height="226" data-i="5"/><rect class="sx-hit" x="587.5" y="0" width="66.2" height="226" data-i="6"/><rect class="sx-hit" x="653.8" y="0" width="66.2" height="226" data-i="7"/><rect class="sx-hit" x="720.0" y="0" width="66.2" height="226" data-i="8"/><rect class="sx-hit" x="786.2" y="0" width="66.2" height="226" data-i="9"/><rect class="sx-hit" x="852.5" y="0" width="66.2" height="226" data-i="10"/><rect class="sx-hit" x="918.8" y="0" width="66.2" height="226" data-i="11"/></svg></div>
+            <div class="schema__tip" hidden></div>
+          </figure>
+        </article>
+
+        <article class="pp">
+          <div class="pp__text">
+            <span class="pill pill--red">02 · Montage</span>
+            <h3 class="pp__title">Deux films en un, qui finissent par se rentrer dedans.</h3>
+            <div class="cols2 just">
+              <p>Le montage est d'abord ample. Des plans longs et fixes qui laissent le désert respirer et le couple se perdre dans le cadre. À partir du faux raccord, le film avance en <strong>deux lignes parallèles</strong> qui se répondent plan pour plan&nbsp;: d'un côté Marie et Samoht, de l'autre Thomas et Eiram. Mêmes cadrages, mêmes rythmes, rôles inversés.</p>
+              <p>Puis tout se resserre et s'accélère&nbsp;: les allers-retours entre les deux duos deviennent de plus en plus rapides, jusqu'aux cuts brutaux. Au climax, on ne voit plus que Samoht et Eiram, et leurs répliques s'enchaînent comme une seule dispute, d'un monde à l'autre. L'épilogue rouvre tout d'un coup&nbsp;: un plan très large, très long, où la poussière retombe.</p>
+            </div>
+          </div>
+          <figure class="schema" data-schema data-s0="1# Au bord du vide|Plan moyen : 9 s|une seule ligne : le couple" data-s1="2# Rayés de la carte|Plan moyen : 7 s|une seule ligne : le couple" data-s2="3# Le labyrinthe|Plan moyen : 6 s|une seule ligne : le couple" data-s3="4# Le faux raccord|Plan moyen : 5 s|2 allers-retours entre les deux duos" data-s4="5# Les frottements|Plan moyen : 4.5 s|3 allers-retours entre les deux duos" data-s5="6# L&#x27;escalade|Plan moyen : 3.5 s|4 allers-retours entre les deux duos" data-s6="7# La rupture|Plan moyen : 3 s|4 allers-retours entre les deux duos" data-s7="8# L&#x27;apparition|Plan moyen : 4 s|3 allers-retours entre les deux duos" data-s8="9# La traque|Plan moyen : 2.2 s|6 allers-retours entre les deux duos" data-s9="10# La séparation|Plan moyen : 1.6 s|8 allers-retours entre les deux duos" data-s10="11# Le piège du miroir|Plan moyen : 1.2 s|12 allers-retours entre les deux duos" data-s11="12# Le parking|Plan moyen : 12 s|une seule ligne : les doubles">
+            <figcaption class="schema__head"><b>Le rythme du montage</b><span>En haut, la durée moyenne d'un plan&nbsp;; en bas, l'alternance entre les deux duos, de plus en plus rapide, jusqu'à ce qu'il ne reste qu'eux.</span></figcaption>
+            <div class="schema__scroll"><svg class="sx" viewBox="0 0 1000 292" role="img" aria-label="Le rythme du montage : durée moyenne d'un plan et alternance des deux duos, scène par scène"><line class="sx-grid" x1="190" x2="985" y1="170.0" y2="170.0"/><text class="sx-ytick" x="178" y="174.0">0 s</text><line class="sx-grid" x1="190" x2="985" y1="111.7" y2="111.7"/><text class="sx-ytick" x="178" y="115.7">5 s</text><line class="sx-grid" x1="190" x2="985" y1="53.3" y2="53.3"/><text class="sx-ytick" x="178" y="57.3">10 s</text><path class="sx-bar" d="M212.1 170 V69.0 Q212.1 65.0 216.1 65.0 H230.1 Q234.1 65.0 234.1 69.0 V170 Z"/><path class="sx-bar" d="M278.4 170 V92.3 Q278.4 88.3 282.4 88.3 H296.4 Q300.4 88.3 300.4 92.3 V170 Z"/><path class="sx-bar" d="M344.6 170 V104.0 Q344.6 100.0 348.6 100.0 H362.6 Q366.6 100.0 366.6 104.0 V170 Z"/><path class="sx-bar" d="M410.9 170 V115.7 Q410.9 111.7 414.9 111.7 H428.9 Q432.9 111.7 432.9 115.7 V170 Z"/><path class="sx-bar" d="M477.1 170 V121.5 Q477.1 117.5 481.1 117.5 H495.1 Q499.1 117.5 499.1 121.5 V170 Z"/><path class="sx-bar" d="M543.4 170 V133.2 Q543.4 129.2 547.4 129.2 H561.4 Q565.4 129.2 565.4 133.2 V170 Z"/><path class="sx-bar" d="M609.6 170 V139.0 Q609.6 135.0 613.6 135.0 H627.6 Q631.6 135.0 631.6 139.0 V170 Z"/><path class="sx-bar" d="M675.9 170 V127.3 Q675.9 123.3 679.9 123.3 H693.9 Q697.9 123.3 697.9 127.3 V170 Z"/><path class="sx-bar" d="M742.1 170 V148.3 Q742.1 144.3 746.1 144.3 H760.1 Q764.1 144.3 764.1 148.3 V170 Z"/><path class="sx-bar" d="M808.4 170 V155.3 Q808.4 151.3 812.4 151.3 H826.4 Q830.4 151.3 830.4 155.3 V170 Z"/><path class="sx-bar" d="M874.6 170 V160.0 Q874.6 156.0 878.6 156.0 H892.6 Q896.6 156.0 896.6 160.0 V170 Z"/><path class="sx-bar" d="M940.9 170 V34.0 Q940.9 30.0 944.9 30.0 H958.9 Q962.9 30.0 962.9 34.0 V170 Z"/><text class="sx-val" x="223.1" y="58.0">9 s</text><text class="sx-val" x="885.6" y="149.0">1 s</text><text class="sx-val" x="951.9" y="23.0">12 s</text><text class="sx-ann sx-ann--soft" x="355.6" y="69.7" text-anchor="middle">ample</text><text class="sx-ann sx-ann--soft" x="620.6" y="97.7" text-anchor="middle">ça se resserre</text><text class="sx-ann sx-ann--soft" x="852.5" y="116.3" text-anchor="middle">cuts brutaux</text><text class="sx-row" x="178" y="18">Durée d'un plan</text><text class="sx-num" x="223.1" y="190">1</text><text class="sx-num" x="289.4" y="190">2</text><text class="sx-num" x="355.6" y="190">3</text><text class="sx-num" x="421.9" y="190">4</text><text class="sx-num" x="488.1" y="190">5</text><text class="sx-num" x="554.4" y="190">6</text><text class="sx-num" x="620.6" y="190">7</text><text class="sx-num" x="686.9" y="190">8</text><text class="sx-num" x="753.1" y="190">9</text><text class="sx-num" x="819.4" y="190">10</text><text class="sx-num" x="885.6" y="190">11</text><text class="sx-num" x="951.9" y="190">12</text><circle cx="18" cy="225" r="5" fill="#d75a3c"/><text class="sx-track" x="30" y="229">Marie &amp; Samoht</text><circle cx="18" cy="255" r="5" fill="#4a8ed4"/><text class="sx-track" x="30" y="259">Thomas &amp; Eiram</text><rect class="sx-lane-one" x="191.0" y="234.0" width="64.2" height="14" rx="4"/><rect class="sx-lane-one" x="257.2" y="234.0" width="64.2" height="14" rx="4"/><text class="sx-lane-lab" x="289.4" y="245" text-anchor="middle">le couple</text><rect class="sx-lane-one" x="323.5" y="234.0" width="64.2" height="14" rx="4"/><rect x="390.8" y="219.0" width="30.1" height="14" rx="4.0" fill="#d75a3c"/><rect x="422.9" y="249.0" width="30.1" height="14" rx="4.0" fill="#4a8ed4"/><rect x="457.0" y="219.0" width="19.4" height="14" rx="4.0" fill="#d75a3c"/><rect x="478.4" y="249.0" width="19.4" height="14" rx="4.0" fill="#4a8ed4"/><rect x="499.8" y="219.0" width="19.4" height="14" rx="4.0" fill="#d75a3c"/><rect x="523.2" y="219.0" width="14.1" height="14" rx="4.0" fill="#d75a3c"/><rect x="539.3" y="249.0" width="14.1" height="14" rx="4.0" fill="#4a8ed4"/><rect x="555.4" y="219.0" width="14.1" height="14" rx="4.0" fill="#d75a3c"/><rect x="571.4" y="249.0" width="14.1" height="14" rx="4.0" fill="#4a8ed4"/><rect x="589.5" y="219.0" width="14.1" height="14" rx="4.0" fill="#d75a3c"/><rect x="605.6" y="249.0" width="14.1" height="14" rx="4.0" fill="#4a8ed4"/><rect x="621.6" y="219.0" width="14.1" height="14" rx="4.0" fill="#d75a3c"/><rect x="637.7" y="249.0" width="14.1" height="14" rx="4.0" fill="#4a8ed4"/><rect x="655.8" y="219.0" width="19.4" height="14" rx="4.0" fill="#d75a3c"/><rect x="677.2" y="249.0" width="19.4" height="14" rx="4.0" fill="#4a8ed4"/><rect x="698.6" y="219.0" width="19.4" height="14" rx="4.0" fill="#d75a3c"/><rect x="722.0" y="219.0" width="8.7" height="14" rx="4.0" fill="#d75a3c"/><rect x="732.7" y="249.0" width="8.7" height="14" rx="4.0" fill="#4a8ed4"/><rect x="743.4" y="219.0" width="8.7" height="14" rx="4.0" fill="#d75a3c"/><rect x="754.1" y="249.0" width="8.7" height="14" rx="4.0" fill="#4a8ed4"/><rect x="764.8" y="219.0" width="8.7" height="14" rx="4.0" fill="#d75a3c"/><rect x="775.5" y="249.0" width="8.7" height="14" rx="4.0" fill="#4a8ed4"/><rect x="788.2" y="219.0" width="6.0" height="14" rx="3.0" fill="#d75a3c"/><rect x="796.3" y="249.0" width="6.0" height="14" rx="3.0" fill="#4a8ed4"/><rect x="804.3" y="219.0" width="6.0" height="14" rx="3.0" fill="#d75a3c"/><rect x="812.3" y="249.0" width="6.0" height="14" rx="3.0" fill="#4a8ed4"/><rect x="820.4" y="219.0" width="6.0" height="14" rx="3.0" fill="#d75a3c"/><rect x="828.4" y="249.0" width="6.0" height="14" rx="3.0" fill="#4a8ed4"/><rect x="836.4" y="219.0" width="6.0" height="14" rx="3.0" fill="#d75a3c"/><rect x="844.5" y="249.0" width="6.0" height="14" rx="3.0" fill="#4a8ed4"/><rect x="854.5" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="859.9" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect x="865.2" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="870.6" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect x="875.9" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="881.3" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect x="886.6" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="892.0" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect x="897.3" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="902.7" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect x="908.0" y="219.0" width="3.4" height="14" rx="1.7" fill="#d75a3c"/><rect x="913.4" y="249.0" width="3.4" height="14" rx="1.7" fill="#4a8ed4"/><rect class="sx-lane-one" x="919.8" y="234.0" width="64.2" height="14" rx="4"/><text class="sx-lane-lab" x="951.9" y="245" text-anchor="middle">les doubles</text><text class="sx-ann sx-ann--soft" x="421.9" y="282" text-anchor="middle">le faux raccord : deux films</text><text class="sx-ann sx-ann--soft" x="885.6" y="282" text-anchor="middle">climax croisé</text><line class="sx-cursor" x1="0" x2="0" y1="26" y2="266"/><rect class="sx-hit" x="190.0" y="0" width="66.2" height="292" data-i="0"/><rect class="sx-hit" x="256.2" y="0" width="66.2" height="292" data-i="1"/><rect class="sx-hit" x="322.5" y="0" width="66.2" height="292" data-i="2"/><rect class="sx-hit" x="388.8" y="0" width="66.2" height="292" data-i="3"/><rect class="sx-hit" x="455.0" y="0" width="66.2" height="292" data-i="4"/><rect class="sx-hit" x="521.2" y="0" width="66.2" height="292" data-i="5"/><rect class="sx-hit" x="587.5" y="0" width="66.2" height="292" data-i="6"/><rect class="sx-hit" x="653.8" y="0" width="66.2" height="292" data-i="7"/><rect class="sx-hit" x="720.0" y="0" width="66.2" height="292" data-i="8"/><rect class="sx-hit" x="786.2" y="0" width="66.2" height="292" data-i="9"/><rect class="sx-hit" x="852.5" y="0" width="66.2" height="292" data-i="10"/><rect class="sx-hit" x="918.8" y="0" width="66.2" height="292" data-i="11"/></svg></div>
+            <div class="schema__tip" hidden></div>
+          </figure>
+        </article>
+
+        <article class="pp">
+          <div class="pp__text">
+            <span class="pill pill--red">03 · Musique</span>
+            <h3 class="pp__title">Une seule musique. Deux fois. Au bord du vide.</h3>
+            <div class="cols2 just">
+              <p>La musique n'existe qu'au bord du vide. Une SynthWave sombre, lourde, analogique, qui monte du ravin. D'abord une nappe grave, puis des dizaines de voix qui hurlent à l'unisson, étouffées comme derrière un mur&nbsp;: pour nous, ce sont toutes les phrases que le couple ne s'est jamais dites. Enfin une pulsation, comme un cœur qui s'emballe.</p>
+              <p>Elle arrive deux fois, au tout début et au moment de la poussée, construite à l'identique, et les deux fois <strong>la même coupe au noir l'arrête net</strong>. La première fois, le spectateur ne comprend pas ce qu'il entend. La deuxième, il reconnaît&nbsp;: la boucle se referme par l'oreille.</p>
+            </div>
+          </div>
+          <figure class="schema">
+            <figcaption class="schema__head"><b>Le même morceau, deux fois</b><span>Trois couches qui entrent l'une après l'autre, jusqu'à la coupe au noir. À la scène 11, tout recommence à l'identique.</span></figcaption>
+            <div class="schema__scroll"><svg class="sx sx--music" viewBox="0 0 1000 192" role="img" aria-label="La musique : le même morceau à la scène 1 et à la scène 11, trois couches qui entrent l'une après l'autre, coupées net par le noir"><text class="sx-track" x="150" y="18">Scène 1 — Au bord du vide</text><line class="sx-base" x1="150" x2="490" y1="54" y2="54"/><path d="M150.0 52.5 L490.0 39 L490.0 69 L150.0 55.5 Z" fill="#b3851f" fill-opacity="0.85"/><circle cx="18" cy="53" r="5" fill="#b3851f"/><text class="sx-sub sx-sub--strong" x="30" y="57">Nappe grave</text><line class="sx-base" x1="150" x2="490" y1="94" y2="94"/><path d="M252.0 92.5 L490.0 79 L490.0 109 L252.0 95.5 Z" fill="#a86ee8" fill-opacity="0.85"/><circle cx="18" cy="93" r="5" fill="#a86ee8"/><text class="sx-sub sx-sub--strong" x="30" y="97">Voix étouffées</text><line class="sx-base" x1="150" x2="490" y1="134" y2="134"/><path d="M354.0 132.5 L490.0 119 L490.0 149 L354.0 135.5 Z" fill="#d75a3c" fill-opacity="0.85"/><circle cx="18" cy="133" r="5" fill="#d75a3c"/><text class="sx-sub sx-sub--strong" x="30" y="137">Pulsation</text><rect class="sx-black" x="492.0" y="28" width="28.0" height="134" rx="4"/><text class="sx-cutlab" x="506.0" y="98" text-anchor="middle" transform="rotate(-90 506.0 98)">coupe au noir</text><text class="sx-num" x="150.0" y="182">0 s</text><text class="sx-num" x="263.3" y="182">10 s</text><text class="sx-num" x="376.7" y="182">20 s</text><text class="sx-num" x="490.0" y="182">30 s</text><text class="sx-track" x="590" y="18">Scène 11 — Le piège du miroir</text><line class="sx-base" x1="590" x2="930" y1="54" y2="54"/><path d="M590.0 52.5 L930.0 39 L930.0 69 L590.0 55.5 Z" fill="#b3851f" fill-opacity="0.85"/><line class="sx-base" x1="590" x2="930" y1="94" y2="94"/><path d="M692.0 92.5 L930.0 79 L930.0 109 L692.0 95.5 Z" fill="#a86ee8" fill-opacity="0.85"/><line class="sx-base" x1="590" x2="930" y1="134" y2="134"/><path d="M794.0 132.5 L930.0 119 L930.0 149 L794.0 135.5 Z" fill="#d75a3c" fill-opacity="0.85"/><rect class="sx-black" x="932.0" y="28" width="28.0" height="134" rx="4"/><text class="sx-cutlab" x="946.0" y="98" text-anchor="middle" transform="rotate(-90 946.0 98)">coupe au noir</text><text class="sx-num" x="590.0" y="182">0 s</text><text class="sx-num" x="703.3" y="182">10 s</text><text class="sx-num" x="816.7" y="182">20 s</text><text class="sx-num" x="930.0" y="182">30 s</text><text class="sx-ann" x="555" y="108" text-anchor="middle" style="font-size:26px">↺</text><text class="sx-ann sx-ann--soft" x="555" y="124" text-anchor="middle">à l'identique</text></svg></div>
+          </figure>
+        </article>
+        <details class="sx-table"><summary>Lire en tableau</summary><div class="sx-table__scroll"><table><tr><th scope="col">Scène</th><th scope="col">On entend</th><th scope="col">Plan moyen</th><th scope="col">Montage</th></tr><tr><th scope="row">1# Au bord du vide</th><td>une respiration, le vide, puis une musique sourde qui monte du ravin</td><td>9 s</td><td>le couple</td></tr><tr><th scope="row">2# Rayés de la carte</th><td>le vent chaud, les rires, l&#x27;immensité qui avale tout</td><td>7 s</td><td>le couple</td></tr><tr><th scope="row">3# Le labyrinthe</th><td>l&#x27;écho des parois : chaque souffle résonne</td><td>6 s</td><td>le couple</td></tr><tr><th scope="row">4# Le faux raccord</th><td>un bourdonnement sourd, puis plus rien</td><td>5 s</td><td>2 allers-retours</td></tr><tr><th scope="row">5# Les frottements</th><td>les pas, la soif, des silences qui pèsent</td><td>4.5 s</td><td>3 allers-retours</td></tr><tr><th scope="row">6# L&#x27;escalade</th><td>les voix qui montent, le cœur dans les tempes</td><td>3.5 s</td><td>4 allers-retours</td></tr><tr><th scope="row">7# La rupture</th><td>le zénith qui bourdonne, la plaine vide</td><td>3 s</td><td>4 allers-retours</td></tr><tr><th scope="row">8# L&#x27;apparition</th><td>l&#x27;air qui tremble, un tintement lointain</td><td>4 s</td><td>3 allers-retours</td></tr><tr><th scope="row">9# La traque</th><td>la course, les souffles courts, le sol qui ondule</td><td>2.2 s</td><td>6 allers-retours</td></tr><tr><th scope="row">10# La séparation</th><td>le vent qui avale les mots</td><td>1.6 s</td><td>8 allers-retours</td></tr><tr><th scope="row">11# Le piège du miroir</th><td>la musique revient, puis le noir</td><td>1.2 s</td><td>12 allers-retours</td></tr><tr><th scope="row">12# Le parking</th><td>plus un souffle de vent, le silence de la voiture</td><td>12 s</td><td>les doubles</td></tr></table></div></details>
       </div>
     </section>
 
     <!-- ===================== MERCI ===================== -->
-    <footer class="sec" id="merci" data-chapter="Merci">
-      <div class="panel panel--night end">
-        <img class="end__bg" src="img/badlands-dusk.jpg" alt="" width="1600" height="1067" loading="lazy">
-        <div class="end__inner">
-          <h2 class="t-xl t-xl--light">Merci.</h2>
-          <p class="end__line">On a hâte de vous emmener dans le désert.</p>
-          <p class="end__people">Alex Roho · Kevin Roussel · Alan Cloarec · Cédric Gallo<br>Sup de Pub, 2026–2027 · <a href="mailto:bordzz.asso@gmail.com">bordzz.asso@gmail.com</a></p>
-          <div class="end__legal">
+    <footer class="on-ground merci" id="merci" data-chapter="Merci">
+      <div class="panel panel--blue merci__panel">
+        <h2 class="t-xl t-xl--gold">Merci.</h2>
+        <p class="says__big">On a hâte de vous emmener dans le désert.</p>
+        <p>Merci d'avoir pris le temps de lire ce traitement. On espère que vous avez senti la chaleur, la poussière et le vertige, et l'envie de voir ce couple se perdre.</p>
+        <p class="merci__people">Alex Roho · Kevin Roussel · Alan Cloarec · Cédric Gallo<br>Sup de Pub, 2026–2027 · <a href="mailto:bordzz.asso@gmail.com">bordzz.asso@gmail.com</a></p>
+      </div>
+      <div class="finale">
+        <img src="img/badlands-dusk.jpg" alt="" width="1600" height="1067" loading="lazy">
+        <div class="finale__inner">
+          <span class="logo-box logo-box--lg"><span class="logo-mark"></span></span>
+          <div class="finale__legal">
             <p>Les idées, le scénario et les intentions présentés ici restent la propriété de leurs auteurs. Les images sont des références d'ambiance, pas des images du film&nbsp;: elles seront remplacées par nos repérages et nos tests.</p>
-            <p>Crédits photos (Wikimedia Commons)&nbsp;: Pere.page, Diego Delso, BirdingInSpain, A1AA1A, Valentin Lam, Sabina Müller (CC BY-SA 4.0) · Wenkbrauwalbatros, Grabat (CC BY-SA 3.0) · Cetrl, Mx. Granger, Kent G. Budge, POOYAN ESHTIAGHI pyeshtiaghi, kpr2 (CC0) · José Maria Cantero Rojas (CC BY 3.0) · Strange Biology, Paxson Woelber, Axel Kristinsson (CC BY 2.0) · Julen Iturbe-Ormaetxe (CC BY-SA 2.0) · NPS, National Trails Office (US National Park Service), Victoria Stauffenberg (domaine public) · Andrés Flajszer (CC BY-SA 3.0 es)</p>
+            <p>Crédits photos (Wikimedia Commons)&nbsp;: Diego Delso, Pere.page, A1AA1A, BirdingInSpain, Valentin Lam, Sabina Müller (CC BY-SA 4.0) · Wenkbrauwalbatros, Grabat (CC BY-SA 3.0) · José Maria Cantero Rojas (CC BY 3.0) · Cetrl, Mx. Granger, Kent G. Budge, POOYAN ESHTIAGHI pyeshtiaghi (CC0) · Andrés Flajszer (CC BY-SA 3.0 es) · Strange Biology, Paxson Woelber, Axel Kristinsson (CC BY 2.0) · Julen Iturbe-Ormaetxe (CC BY-SA 2.0) · NPS, National Trails Office (US National Park Service), Joshua Tree National Park, Victoria Stauffenberg (domaine public)</p>
           </div>
         </div>
       </div>
