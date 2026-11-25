@@ -594,3 +594,151 @@ strong, b { font-weight: 650; }
   .seq--epi { grid-column: auto; display: flex; }
   .seq--epi figure { aspect-ratio: 16 / 9; min-height: 0; }
 }
+
+/* ==========================================================================
+   v11 — angles vifs, matière, rythme
+   Moins lisse : plus aucun coin arrondi, du grain sur les aplats, des
+   couleurs pleines au lieu des dégradés, un serif italique pour les
+   phrases, des images traitées comme des tirages ou des photogrammes,
+   et un peu de mouvement au défilement (CSS seul, défilement natif).
+   Les titres restent fixes.
+   ========================================================================== */
+:root {
+  --r: 0px;
+  --ri: 0px;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --print: #f3ead9;
+  --shadow: 0 1px 0 rgba(20, 8, 2, 0.14), 0 26px 40px -24px rgba(20, 8, 2, 0.8);
+  --noise: url("img/noise.png");
+}
+
+/* 1. Plus aucun coin arrondi */
+*, *::before, *::after { border-radius: 0 !important; }
+.sx-pill { rx: 2px; ry: 2px; }
+
+/* 2. De la matière : du grain sur les aplats, des couleurs pleines */
+.sheet--white, .sheet--cream, .sheet--night, .panel--cream, .panel--blue, .panel--night,
+.m-block, .m-row--statement, .steps li, .contrast__side, .meet__text, .why, .grade,
+.plans__strip, .schema, .band, .seq, .ticker, .pill-title, .pill--red, .intro__tag {
+  background-image: var(--noise);
+  background-blend-mode: soft-light;
+}
+.panel--blue { background-color: var(--blue); }
+.meet--thomas .meet__text { background-color: #2e5b86; }
+.meet--marie .meet__text { background-color: #c0602d; }
+.contrast__side--marie { background-color: #f0d1ae; }
+.why { background-color: #1f1420; }
+.band { background-color: #dc7a43; }
+.seq { background-color: #0b1622; box-shadow: none; outline: 1px solid rgba(255, 255, 255, 0.07); outline-offset: -1px; }
+.schema { background-color: #211814; box-shadow: none; outline: 1px solid rgba(255, 255, 255, 0.07); outline-offset: -1px; }
+.meet__hide, .why__mood, .why__refs { background: rgba(0, 0, 0, 0.18); border-left: 3px solid currentColor; }
+
+/* 3. Typo : un serif italique pour les phrases, les titres en grotesque restent */
+.says__big, .quote, .bleed p, .m-block h3, .plans__title, .pp__title, .meet__q, .contrast__why {
+  font-family: var(--serif); font-weight: 400; letter-spacing: -0.005em;
+}
+.says__big { font-style: italic; font-size: clamp(1.75rem, 3.3vw, 2.8rem); line-height: 1.04; }
+.quote { font-style: italic; max-width: 30ch; font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.04; }
+.bleed p { font-style: italic; max-width: 22ch; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.02; }
+.m-block h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 0.98; }
+.plans__title, .pp__title { font-size: clamp(2rem, 3.6vw, 3.1rem); line-height: 1; }
+.meet__q { font-style: italic; font-size: 20px !important; line-height: 1.15; }
+.contrast__why { font-size: 20px; line-height: 1.3; }
+.contrast__why strong { font-weight: 400; font-style: italic; color: var(--red); }
+
+/* 4. Étiquettes : des cartons rectangulaires, plus des pilules */
+.pill { padding: 0.6em 0.95em 0.55em; letter-spacing: 0.1em; }
+.pill--float {
+  left: 0; bottom: 0; translate: none;
+  padding: 0.8em 1.05em 0.75em;
+  background: rgba(12, 8, 5, 0.84); color: var(--cream);
+  font-size: 10.5px; box-shadow: none;
+}
+.pill--float::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 0.75em; background: var(--red); }
+.ed__grid .pill--float { bottom: 0; translate: none; }
+.pill-title { padding: 0.2em 0.5em 0.24em; rotate: -1.5deg; box-shadow: 7px 7px 0 rgba(12, 8, 5, 0.85); }
+.intro__tag { box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.55); }
+
+/* 5. Les grandes images : des tirages scotchés sur la page */
+.frame { overflow: visible; border: 10px solid var(--print); box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1), 0 34px 50px -26px rgba(10, 5, 2, 0.85); }
+.frame--terra, .frame--sky, .frame--cream { border-color: var(--print); }
+.frame::after {
+  content: ""; position: absolute; z-index: 3; top: -20px; left: 50%;
+  width: clamp(90px, 11vw, 140px); height: 30px; translate: -50% 0; rotate: -3deg;
+  background: rgba(238, 226, 198, 0.78); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+}
+.hello__frame { rotate: 1.4deg; }
+.film__frame { rotate: -1.2deg; }
+.band__frame { rotate: 0.8deg; }
+
+/* 6. Les séquences : des photogrammes, avec les perforations de la pellicule */
+.seq figure { border-block: 16px solid #070504; }
+.seq figure::before, .seq figure::after {
+  content: ""; position: absolute; z-index: 2; left: 0; right: 0; height: 6px;
+  background: repeating-linear-gradient(90deg, transparent 0 7px, rgba(244, 231, 209, 0.62) 7px 15px);
+}
+.seq figure::before { top: -11px; }
+.seq figure::after { bottom: -11px; }
+.seq figure > img { transition: filter 0.4s; }
+.seq:hover figure > img { filter: brightness(1.12) contrast(1.05); }
+.seq__n { padding: 0; background: none; color: var(--gold); letter-spacing: 0.12em; }
+.seq__n::before { content: ""; display: inline-block; width: 18px; height: 2px; margin: 0 8px 3px 0; vertical-align: middle; background: currentColor; }
+.seq h4 { font-size: clamp(1.2rem, 1.7vw, 1.4rem); }
+
+/* 7. Paliers, schémas, sommaire : nets */
+.steps li { border-top: 4px solid rgba(25, 18, 13, 0.85); }
+.steps li:nth-child(5) { border-top-color: #5c0a14; }
+.schema__tip { box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5); }
+.chap__btn { box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.35); }
+.plans__key i { height: 4px; }
+
+/* 8. Du rythme : mosaïques asymétriques, bords en biais */
+@media (min-width: 761px) {
+  .mosaic .m-row:nth-child(odd):not(.m-row--statement) { grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr); }
+  .mosaic .m-row:nth-child(even):not(.m-row--statement) { grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr); }
+  .bleed { clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%); }
+  .post { clip-path: polygon(0 3.2vw, 100% 0, 100% 100%, 0 100%); padding-top: calc(clamp(48px, 7vw, 100px) + 3vw); }
+}
+.m-img { overflow: clip; }
+.m-img > img { transition: scale 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.m-img:hover > img { scale: 1.04; }
+
+/* 9. Le bandeau qui défile sous l'ouverture */
+.ticker { position: relative; z-index: 3; overflow: clip; background-color: var(--red); color: var(--cream); border-block: 1px solid rgba(0, 0, 0, 0.3); }
+.ticker__track { display: flex; width: max-content; animation: v11-ticker 46s linear infinite; }
+.ticker__track span { flex: none; padding: 0.85em 0 0.8em; font-family: var(--display); font-weight: 800; font-stretch: 118%; font-size: 12.5px; line-height: 1; letter-spacing: 0.16em; text-transform: uppercase; white-space: pre; }
+@keyframes v11-ticker { to { translate: -50% 0; } }
+
+/* 10. Au défilement : les images glissent légèrement dans leur cadre */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bleed img, .film__thesis > img, .finale > img, .m-img > img, .says__img img {
+      animation: v11-drift linear both;
+      animation-timeline: view();
+    }
+    .says__img { overflow: clip; }
+    @keyframes v11-drift { from { translate: 0 -4%; scale: 1.1; } to { translate: 0 4%; scale: 1.1; } }
+    .places figure, .plans__img, .grade__img, .ed__still, .moods figure, .contrast__side figure {
+      animation: v11-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    @keyframes v11-rise { from { opacity: 0.2; translate: 0 34px; } to { opacity: 1; translate: 0 0; } }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker__track { animation: none; }
+}
+
+/* Étalonnage en six temps */
+.grade--six ol { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.g-mid { filter: saturate(0.62) contrast(0.97) brightness(1.04); }
+.g-pale { filter: saturate(0.22) brightness(1.1) contrast(0.88); }
+.g-sun { filter: saturate(1.45) sepia(0.12) brightness(1.13) contrast(1.06); }
+@media (max-width: 980px) {
+  .grade--six ol { grid-template-columns: repeat(6, minmax(120px, 1fr)); }
+}
+@media (max-width: 760px) {
+  .hello__frame, .film__frame, .band__frame { rotate: none; }
+  .bleed p { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+}
