@@ -130,4 +130,12 @@
     });
     svg.addEventListener('pointerleave', () => { tip.hidden = true; fig.classList.remove('is-hover'); });
   });
+
+  /* ------------------------------------------------------------------
+     Références animées : des WebP en boucle, comme des GIF (aucun bouton).
+     Si l'appareil demande moins d'animation, on montre l'image fixe.
+     ------------------------------------------------------------------ */
+  if (reduced) {
+    $$('img.ref[src$=".webp"]').forEach((img) => { img.src = img.getAttribute('src').replace(/\.webp$/, '.jpg'); });
+  }
 })();

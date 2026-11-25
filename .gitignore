@@ -8,3 +8,7 @@
 !/assets/video/hero-mobile.mp4
 
 .DS_Store
+
+# Références brutes (GIF jusqu'à 30 Mo) : le site utilise les versions converties
+# de les-barreaux-de-sable/img/ref/
+/assets/BarreuxDeSable/

@@ -435,3 +435,122 @@ strong, b { font-weight: 650; }
   .scenes, .moods, .steps { grid-template-columns: 1fr; }
   .facts { grid-template-columns: 1fr; }
 }
+
+/* ==========================================================================
+   v8 — références animées, séquences, casting, musique, carte sonore
+   ========================================================================== */
+/* Les références (GIF convertis en WebP animés : en boucle, sans bouton) */
+.ref { display: block; width: 100%; height: 100%; object-fit: cover; background: #2a1d14; }
+.frame > .ref { width: 100%; height: 100%; object-fit: cover; }
+.hello__frame { aspect-ratio: 2.36 / 1; }
+.strip > .ref { width: 100%; height: clamp(110px, 13vw, 170px); }
+.head-split__img > .ref { width: 100%; height: 100%; }
+.m-img > .ref { position: absolute; inset: 0; width: 100%; height: 100%; }
+.moods .ref { height: clamp(180px, 20vw, 260px); }
+
+/* Approche visuelle : du désert immense aux visages */
+.ed__grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; border-radius: var(--ri); overflow: clip; box-shadow: var(--shadow); }
+.ed__grid .ref { aspect-ratio: 16 / 10; height: auto; }
+.ed__grid .pill--float { bottom: 50%; translate: -50% 50%; }
+.ed__still { position: relative; border-radius: var(--ri); overflow: clip; box-shadow: var(--shadow); }
+.ed__still img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* Le film : douze séquences, en cartes lisibles (image puis texte) */
+.seqs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 18px); padding: 0 clamp(16px, 2.6vw, 32px) clamp(20px, 3vw, 36px); }
+.seq { display: flex; flex-direction: column; border-radius: 16px; overflow: clip; background: rgba(255, 255, 255, 0.06); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.seq figure { aspect-ratio: 16 / 9; }
+.seq figure > img, .seq figure > video { width: 100%; height: 100%; object-fit: cover; }
+.seq__text { padding: 16px 18px 20px; }
+.seq__n { display: inline-block; margin-bottom: 8px; padding: 0.35em 0.8em; border-radius: 999px; background: var(--gold); color: var(--blue); font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; }
+.seq h4 { margin: 0 0 8px; font-weight: 600; font-size: clamp(1.1rem, 1.6vw, 1.3rem); line-height: 1.15; letter-spacing: -0.01em; color: var(--white); }
+.seq p { margin: 0; font-size: 13.5px; line-height: 1.55; opacity: 0.86; }
+
+/* Casting : la séparation entre Marie et Thomas */
+.contrast { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 22px); margin-top: clamp(28px, 4vw, 44px); }
+.contrast__side { display: grid; grid-template-rows: auto 1fr; border-radius: var(--r); overflow: clip; box-shadow: var(--shadow); }
+.contrast__side figure { aspect-ratio: 16 / 9; }
+.contrast__side figure .ref { width: 100%; height: 100%; }
+.contrast__side > div { padding: clamp(20px, 2.8vw, 32px); }
+.contrast__side h3 { margin: 12px 0 10px; font-family: var(--display); font-weight: 900; font-stretch: 118%; font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1; text-transform: uppercase; }
+.contrast__side p { margin: 0; font-size: 14px; text-align: justify; hyphens: auto; }
+.contrast__side--marie { background: linear-gradient(160deg, #f6dcc0, #efc79e); }
+.contrast__side--marie h3 { color: var(--red); }
+
+.contrast__side--thomas { background: var(--night); color: var(--cream); }
+.contrast__side--thomas h3 { color: var(--gold); }
+.contrast__why { grid-column: 1 / -1; max-width: 70ch; margin: 6px auto 0; text-align: center; font-size: 15px; }
+.meet__grid { grid-template-columns: 1fr; }
+.meet__grid > .ref { width: 100%; height: 100%; min-height: 260px; }
+.meet--marie .meet__grid > .ref { object-position: 25% 40%; }
+
+/* Musique : pourquoi la SynthWave */
+.why { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(20px, 3vw, 40px); align-items: center; margin: 6px 0 clamp(18px, 2.4vw, 26px); padding: clamp(18px, 2.6vw, 30px); border-radius: var(--ri); background: linear-gradient(150deg, #2a1636, #1d1220 60%, #23140f); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); }
+.why__img { border-radius: 14px; overflow: clip; aspect-ratio: 4 / 3; }
+.why__img .ref { width: 100%; height: 100%; }
+.why__title { margin: 0 0 12px; font-family: var(--display); font-weight: 900; font-stretch: 118%; font-size: clamp(1.2rem, 2vw, 1.6rem); text-transform: uppercase; color: #d8a8ff; }
+.why__text p { font-size: 13.8px; color: rgba(244, 231, 209, 0.85); text-align: justify; hyphens: auto; }
+.why__text strong { color: var(--white); }
+.why__mood, .why__refs { margin: 0 0 8px; padding: 9px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.06); text-align: left !important; }
+.why__mood span, .why__refs span { display: block; margin-bottom: 2px; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em; color: #d8a8ff; }
+
+/* Carte sonore : pastilles de la timeline */
+.sx-colband { fill: rgba(255, 255, 255, 0.025); }
+.sx-pill { fill: var(--c); fill-opacity: 0.22; stroke: var(--c); stroke-width: 1.2; }
+.sx-pill--empty { fill-opacity: 0; }
+.sx-pill-t { fill: rgba(244, 231, 209, 0.95); font-size: 10.5px; font-weight: 600; text-anchor: middle; }
+.sx-pill-t--sm { font-size: 9.6px; font-weight: 500; }
+
+@media (max-width: 980px) {
+  .seqs { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 760px) {
+  .seqs, .contrast, .why { grid-template-columns: 1fr; }
+  .ed__grid .pill--float { bottom: 12px; translate: -50% 0; }
+  .schema__head::after { content: "Glisser pour voir les 12 séquences →"; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ref { animation: none; }
+}
+
+/* Images des cartes : hauteur fixée par le cadre, quel que soit le format de la référence */
+.seq figure, .contrast__side figure, .why__img, .meet__grid { position: relative; }
+.seq figure > *, .contrast__side figure > *, .why__img > * { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.contrast__side--marie figure .ref { object-position: 18% 40%; }
+.meet__grid > img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; }
+
+/* ==========================================================================
+   v9 — valeurs de plan, « sans ombre »
+   ========================================================================== */
+.sticker--sun { right: 22px; top: -34px; width: clamp(58px, 5.6vw, 78px); aspect-ratio: 1; rotate: -8deg; }
+
+/* Les valeurs de plan : texte, puis cinq cadres de plus en plus serrés */
+.plans { margin-bottom: clamp(44px, 6vw, 80px); }
+.plans__title { margin: 0 0 0.7em; font-weight: 600; font-size: clamp(1.5rem, 2.8vw, 2.3rem); line-height: 1.08; letter-spacing: -0.02em; }
+.plans .cols2 { margin-bottom: clamp(24px, 3vw, 36px); }
+.plans__strip { margin: 0; padding: clamp(20px, 3vw, 32px); border-radius: var(--r); background: var(--white); box-shadow: var(--shadow); }
+.plans__strip figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 18px; font-weight: 600; }
+.plans__key { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; font-weight: 500; font-size: 12px; color: #6b5646; }
+.plans__key i { display: inline-block; width: 18px; height: 6px; margin-left: 8px; border-radius: 3px; }
+.plans__key .k-decor { background: #d1a54c; }
+.plans__key .k-eux { background: #a83232; }
+.plans ol { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(10px, 1.4vw, 16px); margin: 0; padding: 0; list-style: none; }
+.plans__img { position: relative; aspect-ratio: 16 / 10; border-radius: 12px; overflow: clip; background: #2a1d14; }
+.plans__img > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* la part du cadre occupée par eux (rouge) face au décor (sable) */
+.plans__bar { position: relative; display: block; height: 6px; margin: 12px 0 10px; border-radius: 3px; background: #d1a54c; overflow: clip; }
+.plans__bar::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: var(--eux); border-radius: 0 3px 3px 0; background: #a83232; box-shadow: -2px 0 0 var(--white); }
+.plans li:nth-child(1) { --eux: 6%; }
+.plans li:nth-child(2) { --eux: 32%; }
+.plans li:nth-child(3) { --eux: 62%; }
+.plans li:nth-child(4) { --eux: 90%; }
+.plans li:nth-child(5) { --eux: 5%; }
+.plans b { display: block; font-family: var(--display); font-stretch: 112%; font-weight: 800; font-size: 11px; text-transform: uppercase; color: var(--red); }
+.plans em { display: block; margin-top: 2px; font-style: normal; font-weight: 600; font-size: 12px; color: #6b5646; }
+.plans li > span:last-child { display: block; margin-top: 4px; font-size: 13px; line-height: 1.4; }
+.seq h4 .pill--ghost { font-size: 8.5px; translate: 0 -2px; }
+
+@media (max-width: 760px) {
+  .plans ol { grid-template-columns: repeat(5, minmax(160px, 1fr)); overflow-x: auto; padding-bottom: 6px; }
+  .plans__key { margin-left: 0; }
+  .sticker--sun { right: 14px; top: -28px; }
+}
