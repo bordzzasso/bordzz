@@ -1,772 +1,334 @@
-/* LES BARREAUX DE SABLE — interactions
-   Défilement natif ; effets de position en CSS (scroll-driven animations), repli JS.
-   Les positions sont mesurées une fois (et au redimensionnement) : la boucle
-   d'animation ne relit jamais la mise en page. */
+/* ==========================================================================
+   Les Barreaux de Sable — traitement (v5)
+   - l'ouverture : l'entrée dans la crevasse (au défilement)
+   - le sommaire en bas à gauche
+   - flèches ← → du clavier : section précédente / suivante (présentation orale)
+   Défilement natif, aucun effet au-delà de l'ouverture.
+   ========================================================================== */
 (() => {
-  'use strict';
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const root = document.documentElement;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-  const lerp = (a, b, t) => a + (b - a) * t;
-  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
-  const easeInOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-
   if (!reduced) root.classList.add('fx');
 
   /* ------------------------------------------------------------------
-     Défilement : celui du système (fluide, 120 Hz, inertie native).
-     Les effets liés à la position (ouverture, parallaxes, sections qui
-     s'ouvrent, storyboard, barre de progression) passent par les
-     « scroll-driven animations » CSS quand le navigateur les connaît :
-     ils sont calés image par image sur le défilement. Sinon, repli en JS.
+     L'entrée dans la crevasse
+     L'ouverture reste fixe pendant que l'on défile : la caméra avance
+     entre des pans de roche (en 3D CSS), les parois se resserrent
+     jusqu'au ruban de ciel, Marie et Thomas s'enfoncent devant nous,
+     puis la lumière envahit l'écran et devient la page.
      ------------------------------------------------------------------ */
-  const sda = !reduced && !!(window.CSS && CSS.supports && CSS.supports('animation-timeline: view()'));
-  function scrollToEl(el) {
-    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-  }
+  const entry = $('[data-entry]');
+  const slot = $('[data-slot]');
+  if (entry && slot && !reduced) {
+    root.classList.add('has-entry');
+    const world = $('[data-slot-world]', slot);
+    const glow = $('.slot__glow', slot);
+    const floor = $('.slot__floor', slot);
+    const walkers = $('[data-walkers]', slot);
+    const eMedia = $('.hero__media', entry);
+    const eContent = $('.hero__content', entry);
+    const eMarks = $$('.hero > .plus', entry);
+    const eCue = $('.hero__cue', entry);
+    const eLight = $('.entry__light', entry);
+    const eLines = $$('.entry__lines li', entry).map((el, i) => ({ el, i, o: -1 }));
+    const WINDOWS = [[0.07, 0.25], [0.29, 0.47], [0.51, 0.71], [0.88, 2]];
+    const TEX = ['slot-dark.jpg', 'rock-close.jpg', 'slot-ribbon.jpg'];
 
-  /* ------------------------------------------------------------------
-     Découpages typographiques
-     ------------------------------------------------------------------ */
-  // Lettre par lettre (chaque mot reste insécable)
-  function splitChars(el) {
-    let i = 0;
-    const walk = (node) => {
-      Array.from(node.childNodes).forEach((n) => {
-        if (n.nodeType === 3) {
-          const frag = document.createDocumentFragment();
-          n.textContent.split(/(\s+)/).forEach((part) => {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-            const word = document.createElement('span');
-            word.className = 'cw';
-            for (const c of part) {
-              const mask = document.createElement('span');
-              mask.className = 'cm';
-              const ch = document.createElement('span');
-              ch.className = 'ch';
-              ch.style.setProperty('--ci', i++);
-              ch.textContent = c;
-              mask.appendChild(ch);
-              word.appendChild(mask);
-            }
-            frag.appendChild(word);
-          });
-          n.replaceWith(frag);
-        } else if (n.nodeType === 1) {
-          if (n.classList.contains('sun')) { n.style.setProperty('--ci', i++); return; }
-          walk(n);
-        }
-      });
-    };
-    walk(el);
-  }
+    const smooth = (a, b, x) => { const t = clamp((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t); };
+    let seed = 7;
+    const rnd = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
 
-  // Mot par mot : avec masque (ils montent) ou sans (ils s'allument)
-  function splitWords(el, masked) {
-    let i = 0;
-    const out = [];
-    const walk = (node) => {
-      Array.from(node.childNodes).forEach((n) => {
-        if (n.nodeType === 3) {
-          const frag = document.createDocumentFragment();
-          n.textContent.split(/([ \t\n]+)/).forEach((part) => {
-            if (!part) return;
-            if (/^[ \t\n]+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-            const w = document.createElement('span');
-            w.className = masked ? 'w-in' : 'qw';
-            w.style.setProperty('--wi', i++);
-            w.textContent = part;
-            out.push(w);
-            if (masked) {
-              const m = document.createElement('span');
-              m.className = 'w-mask';
-              m.appendChild(w);
-              frag.appendChild(m);
-            } else {
-              frag.appendChild(w);
-            }
-          });
-          n.replaceWith(frag);
-        } else if (n.nodeType === 1 && n.tagName !== 'BR') {
-          walk(n);
-        }
-      });
-    };
-    walk(el);
-    return out;
-  }
+    let walls = [];
+    let P = 1000; let Wf = 0; let Hf = 0; let S = 0; let L = 0; let zNear = 0; let zFar = 0; let Tmax = 0;
+    let eTop = 0; let eDist = 1; let eP = -1; let eOn = false; let eRaf = 0;
 
-  const heroTitle = $('.hero__title');
-  const helloWord = $('.hello__word');
-  const endTitle = $('.end__title');
-  let qWords = [];
-
-  if (!reduced) {
-    if (heroTitle) {
-      heroTitle.setAttribute('aria-label', heroTitle.textContent.replace(/\s+/g, ' ').trim());
-      $$(':scope > span', heroTitle).forEach((s) => s.setAttribute('aria-hidden', 'true'));
-      splitChars(heroTitle);
-      requestAnimationFrame(() => requestAnimationFrame(() => heroTitle.classList.add('is-in')));
-      // une fois posées, les lettres retrouvent leur ombre portée entière
-      setTimeout(() => heroTitle.classList.add('is-done'), 3400);
-    }
-    if (helloWord) splitChars($('span', helloWord) || helloWord);
-    if (endTitle) {
-      const txt = endTitle.textContent.trim();
-      endTitle.setAttribute('aria-label', txt);
-      const inner = document.createElement('span');
-      inner.setAttribute('aria-hidden', 'true');
-      inner.textContent = txt;
-      endTitle.replaceChildren(inner);
-      splitChars(inner);
-    }
-    $$('.statement, .buzz__title, .post__title, .end__line').forEach((el) => splitWords(el, true));
-    const q = $('.question__title');
-    if (q) qWords = splitWords(q, false).map((el) => ({ el, o: -1 }));
-  }
-
-  // Décalages dans les listes
-  ['.hello__sheet > div', '.beats li', '.places__notes li', '.palette span'].forEach((sel) => {
-    $$(sel).forEach((el, i) => el.style.setProperty('--i', i));
-  });
-
-  // Images qui se dévoilent
-  const unveils = reduced ? [] : $$('.hello__img, .card__media, .split-head__img, .duo-card__media, .mirror-card__grid figure, .visual__img, .light__stack, .mood__imgs, .film__img, .meet__grid figure:not(.meet__tile), .shepherd figure, .places__duo, .places__row, .post__strip, .post__split figure, .grade__img, .twins__side, .film__end-img');
-  unveils.forEach((el) => el.classList.add('unveil'));
-  $$('.mirror-card__grid, .meet__grid, .grade__steps, .twins__pair').forEach((g) => {
-    $$('.unveil', g).forEach((f, i) => f.style.setProperty('--ud', `${(i * 0.09).toFixed(2)}s`));
-  });
-
-  // Parallaxe à l'intérieur des cadres
-  const pxImgs = reduced ? [] : $$('.visual__img img, .film__img img, .split-head__img img, .shepherd img, .duo-card__media img, .hello__img img')
-    .map((img) => { img.dataset.px = ''; return { img, box: img.parentElement, top: 0, h: 0, v: 9999 }; });
-  const pxLoop = sda ? [] : pxImgs;
-
-  /* ------------------------------------------------------------------
-     Apparitions au scroll
-     ------------------------------------------------------------------ */
-  if (!reduced) {
-    $$('[data-draw]').forEach((p) => {
-      const len = Math.ceil(p.getTotalLength());
-      p.style.strokeDasharray = len;
-      p.style.strokeDashoffset = len;
-    });
-  }
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('is-in');
-      $$('[data-draw]', e.target).forEach((p, i) => {
-        p.style.transition = `stroke-dashoffset 2.2s cubic-bezier(.2,.7,.1,1) ${0.3 + i * 0.15}s`;
-        p.style.strokeDashoffset = 0;
-      });
-      io.unobserve(e.target);
-    });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
-  $$('[data-reveal], .unveil, .film__pair').forEach((el) => io.observe(el));
-  if (helloWord) io.observe(helloWord);
-
-  // Démo « mirage » : le filtre ne tourne que lorsqu'il est à l'écran
-  const haze = $('.vfx__media--haze');
-  if (haze && !reduced) {
-    new IntersectionObserver(([e]) => haze.classList.toggle('is-live', e.isIntersecting)).observe(haze);
-  }
-
-  /* ------------------------------------------------------------------
-     Sommaire flottant
-     ------------------------------------------------------------------ */
-  const chapters = $$('[data-chapter]').map((el, i) => ({ el, title: el.dataset.chapter, n: String(i + 1).padStart(2, '0'), top: 0 }));
-  const scenes = $$('.film__beat > b, .film__pair > div:first-child > b, .film__end-text > b').map((b) => ({ label: b.textContent.trim().replace('#', ''), b, top: 0 }));
-  let chap = null;
-  let chapNum = null;
-  let chapTxt = null;
-  let chapLinks = [];
-  let chapLabel = '';
-  let chapOn = false;
-  const setOpen = (open) => {
-    if (!chap) return;
-    chap.classList.toggle('is-open', open);
-    $('.chap__btn', chap).setAttribute('aria-expanded', String(open));
-  };
-  if (chapters.length) {
-    chap = document.createElement('nav');
-    chap.className = 'chap';
-    chap.setAttribute('aria-label', 'Sommaire');
-    chap.innerHTML =
-      `<ol class="chap__list" id="chap-list">${chapters.map((c) => `<li><a href="#${c.el.id}"><b>${c.n}</b><span>${c.title}</span></a></li>`).join('')}</ol>` +
-      `<button class="chap__btn" type="button" aria-expanded="false" aria-controls="chap-list"><b>${chapters[0].n}</b><span class="chap__t"></span><i aria-hidden="true"></i></button>`;
-    document.body.appendChild(chap);
-    chapNum = $('.chap__btn > b', chap);
-    chapTxt = $('.chap__t', chap);
-    chapLinks = $$('a', chap);
-    $('.chap__btn', chap).addEventListener('click', () => setOpen(!chap.classList.contains('is-open')));
-    chapLinks.forEach((a, i) => a.addEventListener('click', (e) => {
-      e.preventDefault();
-      setOpen(false);
-      scrollToEl(chapters[i].el);
-    }));
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
-    document.addEventListener('pointerdown', (e) => { if (!chap.contains(e.target)) setOpen(false); });
-  }
-  function setChapter(i, sub) {
-    const label = chapters[i].title + (sub ? ` · ${sub}` : '');
-    if (label === chapLabel) return;
-    chapLabel = label;
-    chapNum.textContent = chapters[i].n;
-    const s = document.createElement('span');
-    s.textContent = label;
-    chapTxt.replaceChildren(s);
-    chapLinks.forEach((a, k) => a.classList.toggle('is-active', k === i));
-  }
-
-  /* ------------------------------------------------------------------
-     Éléments pilotés par le défilement
-     ------------------------------------------------------------------ */
-  const progressBar = $('[data-progress]');
-  const hero = $('.hero');
-  const heroMedia = $('.hero__media');
-  const heroContent = $('.hero__content');
-  const heroCue = $('.hero__cue');
-  const barsWrap = $('.hero__bars');
-  const layers = (reduced || sda) ? [] : $$('[data-parallax]').filter((el) => el !== heroMedia)
-    .map((el) => ({ el, k: parseFloat(el.dataset.parallax) || 0.15, top: 0, h: 0, v: 9999 }));
-  const expands = (reduced || sda) ? [] : $$('[data-expand]').map((el) => ({ el, top: 0, h: 0, e: -1 }));
-  const qTitle = $('.question__title');
-  const bw = $('.bw-color');
-  const light = $('.light');
-  const moods = $$('.mood').map((el) => ({ el, top: 0 }));
-  // une teinte par lumière : hors du temps, matinée, crevasses, zénith, couleur qui se retire, heure bleue
-  const tones = ['#dfdbd4', '#f7e1c3', '#f2d2a4', '#fffdf9', '#ebe8e3', '#dce3eb'];
-  // La teinte vit sur un calque fixe à part : changer le fond du body ferait repeindre toute la page
-  let tintEl = null;
-  if (!reduced && light) {
-    tintEl = document.createElement('div');
-    tintEl.className = 'tint';
-    tintEl.setAttribute('aria-hidden', 'true');
-    document.body.prepend(tintEl);
-  }
-  const merci = $('#merci');
-  const stickers = finePointer && !reduced
-    ? $$('.sticker').map((el, i) => ({ el, k: 9 + (i % 3) * 6, top: 0, h: 0, x: 0, y: 0 }))
-    : [];
-
-  // Têtes de lecture des schémas
-  const NS = 'http://www.w3.org/2000/svg';
-  const playheads = reduced ? [] : $$('svg[data-playhead]').map((svg) => {
-    const [x0, x1, ya, yb] = svg.dataset.playhead.split(' ').map(Number);
-    const g = document.createElementNS(NS, 'g');
-    g.setAttribute('class', 'sx-play');
-    g.setAttribute('aria-hidden', 'true');
-    g.innerHTML = `<line x1="0" x2="0" y1="${ya}" y2="${yb}"/><path d="M-6 ${ya - 9}h12l-6 9z"/>`;
-    g.setAttribute('transform', `translate(${x0} 0)`);
-    svg.appendChild(g);
-    let hl = null;
-    let ranges = null;
-    let nums = [];
-    if (svg.dataset.scenes) {
-      ranges = svg.dataset.scenes.split(',').map((r) => r.trim().split(' ').map(Number));
-      hl = document.createElementNS(NS, 'rect');
-      hl.setAttribute('class', 'sx-hl');
-      hl.setAttribute('y', ya);
-      hl.setAttribute('height', yb - ya);
-      hl.setAttribute('x', ranges[0][0]);
-      hl.setAttribute('width', ranges[0][1] - ranges[0][0]);
-      svg.insertBefore(hl, svg.firstChild);
-      nums = $$('.sx-num text', svg);
-    }
-    return { svg, g, hl, ranges, nums, x0, x1, top: 0, h: 0, x: -1, si: -1 };
-  });
-
-  // Storyboard en défilement horizontal (grand écran)
-  const board = $('.board');
-  const boardPin = $('.board__pin');
-  const boardStrip = $('.board__strip');
-  const boardBar = $('[data-board-bar]');
-  const boardN = $('[data-board-n]');
-  const boardFrames = boardStrip ? $$(':scope > figure', boardStrip).map((el) => ({ el, cx: 0, s: -1 })) : [];
-  const BOARD_SPEED = 1.5; // 1 px de scroll = 1,5 px de pellicule
-  let boardOn = false;
-  let boardTop = 0;
-  let boardDist = 0;
-  let boardScroll = 1;
-  let boardP = -1;
-  let boardIdx = -1;
-
-  function setupBoard() {
-    if (!board || !boardPin || !boardStrip) return;
-    const on = !reduced && window.innerWidth > 900;
-    board.classList.toggle('is-pinned', on);
-    boardOn = on;
-    if (!on) {
-      boardPin.style.height = '';
-      boardStrip.style.transform = '';
-      boardFrames.forEach((f) => { f.el.style.scale = ''; f.s = -1; });
-      return;
-    }
-    boardDist = Math.max(0, boardStrip.scrollWidth - window.innerWidth);
-    boardScroll = Math.max(1, boardDist / BOARD_SPEED);
-    board.style.setProperty('--board-dist', boardDist.toFixed(1));
-    boardPin.style.height = `${Math.round(window.innerHeight + boardScroll)}px`;
-    // positions mesurées hors transformations (les cadres tournent en 3D)
-    boardFrames.forEach((f) => {
-      const base = f.el.offsetParent === boardStrip ? 0 : boardStrip.offsetLeft;
-      f.cx = f.el.offsetLeft - base + f.el.offsetWidth / 2;
-      f.dn = 9;
-    });
-    boardP = -1;
-  }
-
-  /* ------------------------------------------------------------------
-     Mesures
-     ------------------------------------------------------------------ */
-  let vw = window.innerWidth;
-  let vh = window.innerHeight;
-  let docH = 0;
-  let qTop = 0;
-  let bwTop = 0;
-  let lightTop = 0;
-  let lightBottom = 0;
-  let merciTop = 0;
-  let dirty = true;
-
-  function measure() {
-    vw = window.innerWidth;
-    vh = window.innerHeight;
-    setupBoard();
-    const sy = window.scrollY;
-    const top = (el) => el.getBoundingClientRect().top + sy;
-    docH = root.scrollHeight;
-    layers.forEach((l) => { const p = l.el.parentElement; l.top = top(p); l.h = p.offsetHeight; l.v = 9999; });
-    expands.forEach((x) => { x.top = top(x.el); x.h = x.el.offsetHeight; x.e = -1; });
-    pxImgs.forEach((x) => { x.top = top(x.box); x.h = x.box.offsetHeight; x.v = 9999; });
-    stickers.forEach((x) => { const r = x.el.getBoundingClientRect(); x.top = r.top + sy; x.h = r.height; });
-    playheads.forEach((x) => { x.top = top(x.svg); x.h = x.svg.getBoundingClientRect().height; x.x = -1; });
-    chapters.forEach((c) => { c.top = top(c.el); });
-    scenes.forEach((c) => { c.top = top(c.b); });
-    moods.forEach((m) => { m.top = top(m.el); });
-    if (qTitle) qTop = top(qTitle);
-    if (bw) bwTop = top(bw);
-    if (light) { lightTop = top(light); lightBottom = lightTop + light.offsetHeight; }
-    if (merci) merciTop = top(merci);
-    if (boardOn) boardTop = top(boardPin);
-    dirty = true;
-  }
-
-  let mq = 0;
-  const remeasure = () => { if (!mq) mq = requestAnimationFrame(() => { mq = 0; measure(); }); };
-  window.addEventListener('resize', remeasure);
-  window.addEventListener('load', remeasure);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
-  if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
-  measure();
-
-  /* ------------------------------------------------------------------
-     Interactions au pointeur
-     ------------------------------------------------------------------ */
-  let tmx = 0;
-  let tmy = 0;
-  let mx = 0;
-  let my = 0;
-  if (stickers.length) {
-    window.addEventListener('pointermove', (e) => {
-      tmx = (e.clientX / vw) * 2 - 1;
-      tmy = (e.clientY / vh) * 2 - 1;
-    }, { passive: true });
-  }
-
-  // N&B / couleur : le rideau suit le défilement… ou la souris
-  let bwCur = 50;
-  let bwTarget = 50;
-  let bwLast = -1;
-  let bwHover = false;
-  if (bw && !reduced && finePointer) {
-    bw.addEventListener('pointermove', (e) => {
-      if (e.pointerType !== 'mouse') return;
-      const r = bw.getBoundingClientRect();
-      bwHover = true;
-      bwTarget = clamp(((e.clientX - r.left) / r.width) * 100, 0, 100);
-    });
-    bw.addEventListener('pointerleave', () => { bwHover = false; });
-  }
-
-  /* ------------------------------------------------------------------
-     Boucle
-     ------------------------------------------------------------------ */
-  let lastY = -1;
-  let goingDown = false;
-  let heroP = -1;
-  let tone = '';
-  let progress = -1;
-
-  function loop() {
-    const y = window.scrollY;
-    const moved = y !== lastY || dirty;
-    if (y > lastY + 2) goingDown = true;
-    else if (y < lastY - 2) goingDown = false;
-    lastY = y;
-    dirty = false;
-
-    if (moved) {
-      // Barre de progression
-      if (progressBar && !sda) {
-        const pr = clamp(y / Math.max(1, docH - vh), 0, 1);
-        if (Math.abs(pr - progress) > 0.0005) { progress = pr; progressBar.style.transform = `scaleX(${pr.toFixed(4)})`; }
-      }
-
-      if (!reduced) {
-        // Ouverture : l'image recule, les barreaux se referment, le titre s'en va
-        if (hero && !sda) {
-          const p = clamp(y / vh, 0, 1);
-          if (p !== heroP) {
-            heroP = p;
-            heroMedia.style.transform = `translate3d(0,${(Math.min(y, vh) * 0.25).toFixed(1)}px,0) scale(${(1 + p * 0.08).toFixed(4)})`;
-            if (barsWrap) barsWrap.style.setProperty('--bar', (easeInOut(p) * 0.18).toFixed(4));
-            heroContent.style.transform = p ? `translate3d(0,${(Math.min(y, vh) * 0.3).toFixed(1)}px,0)` : '';
-            heroContent.style.opacity = p ? Math.max(0, 1 - p * 1.6).toFixed(3) : '';
-            if (heroCue) heroCue.style.opacity = p ? Math.max(0, 1 - p * 5).toFixed(3) : '';
+    const build = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      P = Math.round(Math.max(w, h) * 0.78);
+      slot.style.perspective = `${P}px`;
+      Wf = Math.max(w, 520) * 1.1;
+      Hf = h * 2;
+      const N = w < 700 ? 5 : 6;
+      S = Wf * 0.72;
+      L = N * S;
+      zNear = P * 0.8;
+      zFar = zNear - L;
+      Tmax = L * 1.9;
+      walls.forEach((f) => f.el.remove());
+      walls = [];
+      seed = 7;
+      for (let side = -1; side <= 1; side += 2) {
+        for (let k = 0; k < N; k++) {
+          const el = document.createElement('div');
+          el.className = 'slot__wall';
+          const shade = document.createElement('i');
+          el.appendChild(shade);
+          // contours de roche irréguliers (marche aléatoire, quelques encoches)
+          const pts = [];
+          const steps = 30;
+          let d = 3 + rnd() * 8;
+          for (let j = 0; j <= steps; j++) {
+            const y = (j / steps) * 100;
+            d = clamp(d + (rnd() - 0.5) * 5 + (rnd() < 0.12 ? (rnd() - 0.3) * 9 : 0), 0.5, 17);
+            pts.push(side < 0 ? `${(100 - d).toFixed(1)}% ${y.toFixed(1)}%` : `${d.toFixed(1)}% ${y.toFixed(1)}%`);
           }
-        }
-
-        // Parallaxe des grands fonds
-        for (const l of layers) {
-          const rt = l.top - y;
-          if (rt > vh + 100 || rt + l.h < -100) continue;
-          const v = Math.round((rt + l.h / 2 - vh / 2) * -l.k * 10) / 10;
-          if (v !== l.v) { l.v = v; l.el.style.transform = `translate3d(0,${v}px,0)`; }
-        }
-
-        // Parallaxe dans les cadres
-        for (const x of pxLoop) {
-          const rt = x.top - y;
-          if (rt > vh || rt + x.h < 0) continue;
-          const v = Math.round(clamp((rt + x.h / 2 - vh / 2) / vh, -1, 1) * -0.045 * x.h * 10) / 10;
-          if (v !== x.v) { x.v = v; x.img.style.translate = `0 ${v}px`; }
-        }
-
-        // Sections qui s'ouvrent en plein cadre
-        for (const x of expands) {
-          const rt = x.top - y;
-          if (rt > vh || rt + x.h < 0) continue;
-          const e = easeOut(clamp((vh - rt) / (vh * 0.85), 0, 1));
-          if (Math.abs(e - x.e) < 0.0008) continue;
-          x.e = e;
-          const k = 1 - e;
-          x.el.style.clipPath = k > 0.001
-            ? `inset(${(k * vh * 0.07).toFixed(1)}px ${(k * Math.min(vw * 0.06, 90)).toFixed(1)}px round ${(k * 44).toFixed(1)}px)`
-            : '';
-        }
-
-        // La question s'allume mot à mot
-        if (qWords.length) {
-          const p = clamp((vh * 0.85 - (qTop - y)) / (vh * 0.5), 0, 1);
-          const n = qWords.length;
-          qWords.forEach((w, i) => {
-            const o = Math.round((0.16 + 0.84 * clamp(p * (n + 1) - i, 0, 1)) * 100) / 100;
-            if (o !== w.o) { w.o = o; w.el.style.opacity = o; }
+          const back = [];
+          let e = rnd() * 4;
+          for (let j = steps; j >= 0; j -= 3) {
+            const y = (j / steps) * 100;
+            e = clamp(e + (rnd() - 0.5) * 4, 0, 8);
+            back.push(side < 0 ? `${e.toFixed(1)}% ${y.toFixed(1)}%` : `${(100 - e).toFixed(1)}% ${y.toFixed(1)}%`);
+          }
+          const poly = [...pts, ...back];
+          el.style.clipPath = `polygon(${poly.join(',')})`;
+          el.style.width = `${Wf.toFixed(0)}px`;
+          el.style.height = `${Hf.toFixed(0)}px`;
+          el.style.setProperty('--tex', `url("img/${TEX[Math.floor(rnd() * TEX.length)]}")`);
+          el.style.setProperty('--bp', `${(rnd() * 100).toFixed(0)}% ${(rnd() * 100).toFixed(0)}%`);
+          el.style.setProperty('--dir', side < 0 ? 'to left' : 'to right');
+          world.insertBefore(el, walkers);
+          walls.push({
+            el, shade, side,
+            z0: zNear - (k + (side > 0 ? 0.5 : 0) + 0.25) * S,
+            jit: (rnd() - 0.5) * 0.05 * w,
+            yo: (rnd() - 0.5) * 0.12 * h,
+            t: '', o: -1, s: -1,
           });
         }
+      }
+      measureEntry();
+      eP = -1;
+      render();
+    };
 
-        // La page prend la couleur de la lumière
-        if (light && moods.length) {
-          let next = '';
-          if (moods[0].top - y < vh * 0.6 && lightBottom - y > vh * 0.45) {
-            let idx = 0;
-            moods.forEach((m, i) => { if (m.top - y < vh * 0.6) idx = i; });
-            next = tones[idx] || '';
-          }
-          if (next !== tone) { tone = next; if (tintEl) tintEl.style.backgroundColor = next || 'transparent'; }
+    const measureEntry = () => {
+      const r = entry.getBoundingClientRect();
+      eTop = r.top + window.scrollY;
+      eDist = Math.max(1, entry.offsetHeight - window.innerHeight);
+      root.__entryEnd = eTop + entry.offsetHeight;
+    };
+
+    const render = () => {
+      const p = clamp((window.scrollY - eTop) / eDist, 0, 1);
+      if (p === eP) return;
+      eP = p;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const a = smooth(0, 0.22, p);
+      const b = smooth(0.18, 0.62, p);
+      const c = smooth(0.58, 0.82, p);
+      const d = smooth(0.82, 1, p);
+
+      // le paysage : on avance vers la faille, puis il s'efface derrière la roche
+      eMedia.style.transform = `scale(${(1 + a * 0.42 + b * 0.18).toFixed(4)})`;
+      eMedia.style.opacity = (1 - smooth(0.14, 0.34, p)).toFixed(3);
+      eContent.style.opacity = (1 - smooth(0, 0.1, p)).toFixed(3);
+      eMarks.forEach((m) => { m.style.opacity = (1 - smooth(0, 0.1, p)).toFixed(3); });
+      eContent.style.transform = p ? `translate3d(0,${(-a * 70).toFixed(1)}px,0)` : '';
+      if (eCue) eCue.style.opacity = (1 - smooth(0, 0.04, p)).toFixed(3);
+      glow.style.opacity = smooth(0.1, 0.3, p).toFixed(3);
+      glow.style.transform = d ? `scale(${(1 + d * d * 16).toFixed(3)},${(1 + d * 1.2).toFixed(3)})` : '';
+      floor.style.opacity = (smooth(0.14, 0.34, p) * (1 - d)).toFixed(3);
+
+      // la caméra avance ; les parois se resserrent, puis s'ouvrent sur la lumière
+      const T = Tmax * (p * 0.8 + 0.2 * smooth(0, 1, p));
+      const bob = Math.sin(T / 150) * 3 * b * (1 - d);
+      world.style.transform = `translate3d(0,${bob.toFixed(2)}px,0)`;
+      let g = 0.44 * w;
+      g += (0.15 * w - 0.44 * w) * a;
+      g += (0.07 * w - 0.15 * w) * b;
+      g += (0.028 * w - 0.07 * w) * c;
+      g += 1.1 * w * d * d;
+      const wallsIn = smooth(0.02, 0.16, p);
+      for (const f of walls) {
+        let z = f.z0 + T - zFar;
+        z = ((z % L) + L) % L + zFar;
+        const op = wallsIn * smooth(zFar, zFar + S * 0.9, z) * (1 - smooth(zNear - S * 0.45, zNear, z));
+        const inner = g + f.jit;
+        const x = f.side < 0 ? -inner - Wf : inner;
+        const t = `translate3d(${x.toFixed(1)}px,${(-Hf / 2 + f.yo).toFixed(1)}px,${z.toFixed(1)}px)`;
+        if (t !== f.t) { f.t = t; f.el.style.transform = t; }
+        if (Math.abs(op - f.o) > 0.004) { f.o = op; f.el.style.opacity = op.toFixed(3); }
+        const depth = (zNear - z) / L;
+        const sh = clamp(0.55 - depth * 0.62, 0, 0.55) * (1 - d * 0.6);
+        if (Math.abs(sh - f.s) > 0.01) { f.s = sh; f.shade.style.opacity = sh.toFixed(3); }
+      }
+
+      // Marie et Thomas s'enfoncent devant nous, puis se perdent dans la faille
+      const wv = smooth(0.06, 0.15, p) * (1 - smooth(0.6, 0.72, p));
+      const zr = -h * 0.12 - smooth(0.06, 0.74, p) * L * 0.5;
+      walkers.style.opacity = wv.toFixed(3);
+      walkers.style.transform = `translate3d(0,${(h * 0.33).toFixed(1)}px,${zr.toFixed(1)}px)`;
+      slot.classList.toggle('is-walking', wv > 0.01);
+
+      // les phrases
+      for (const l of eLines) {
+        const [s0, s1] = WINDOWS[l.i] || [2, 3];
+        const inn = smooth(s0, s0 + 0.05, p);
+        const o = inn * (1 - smooth(s1 - 0.05, s1, p));
+        if (Math.abs(o - l.o) > 0.004) {
+          l.o = o;
+          l.el.style.opacity = o.toFixed(3);
+          l.el.style.transform = `translate3d(0,${((1 - inn) * 16).toFixed(1)}px,0)`;
         }
-
-        // Têtes de lecture
-        for (const ph of playheads) {
-          const rt = ph.top - y;
-          if (rt > vh || rt + ph.h < 0) continue;
-          const p = clamp((vh * 0.62 - rt) / (vh * 0.57), 0, 1);
-          const x = Math.round((ph.x0 + p * (ph.x1 - ph.x0)) * 10) / 10;
-          if (x === ph.x) continue;
-          ph.x = x;
-          ph.g.setAttribute('transform', `translate(${x} 0)`);
-          if (ph.ranges) {
-            let si = 0;
-            ph.ranges.forEach((r, i) => { if (x >= r[0]) si = i; });
-            if (si !== ph.si) {
-              ph.si = si;
-              const [a, b] = ph.ranges[si];
-              ph.hl.setAttribute('x', a);
-              ph.hl.setAttribute('width', b - a);
-              ph.nums.forEach((tx, i) => tx.classList.toggle('is-on', i === si));
-            }
-          }
-        }
-
-        // Storyboard : la pellicule défile
-        if (boardOn) {
-          const p = clamp((y - boardTop) / boardScroll, 0, 1);
-          if (p !== boardP) {
-            boardP = p;
-            const x = -p * boardDist;
-            if (!sda) {
-              boardStrip.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`;
-              if (boardBar) boardBar.style.transform = `scaleX(${p.toFixed(4)})`;
-            }
-            let best = 0;
-            let bestD = Infinity;
-            boardFrames.forEach((f, i) => {
-              const c = f.cx + x - vw / 2;
-              const d = Math.abs(c);
-              if (d < bestD) { bestD = d; best = i; }
-              // la pellicule s'enroule : chaque cadre tourne selon sa distance au centre
-              const dn = clamp(c / vw, -1, 1);
-              if (Math.abs(dn - f.dn) > 0.002) {
-                f.dn = dn;
-                f.el.style.setProperty('--d', dn.toFixed(3));
-                f.el.style.setProperty('--ad', Math.abs(dn).toFixed(3));
-              }
-            });
-            if (best !== boardIdx && boardN) { boardIdx = best; boardN.textContent = `P${best + 1}`; }
-          }
-        }
       }
-
-      // Sommaire : chapitre courant (et scène, dans « Le film »)
-      if (chap) {
-        // sur téléphone, il s'efface quand on descend (pour ne pas masquer le texte)
-        const on = y > vh * 0.6 && merciTop - y > vh * 0.5 && !(vw <= 600 && goingDown);
-        if (on !== chapOn) { chapOn = on; chap.classList.toggle('is-on', on); if (!on) setOpen(false); }
-        let ci = 0;
-        chapters.forEach((c, i) => { if (c.top - y <= vh * 0.45) ci = i; });
-        let sub = '';
-        if (chapters[ci].el.id === 'script') {
-          let si = -1;
-          scenes.forEach((s, i) => { if (s.top - y <= vh * 0.55) si = i; });
-          if (si >= 0) sub = `Sc. ${scenes[si].label}`;
-        }
-        setChapter(ci, sub);
-      }
-    }
-
-    // N&B / couleur (amorti, donc hors du test « moved »)
-    if (bw && !reduced) {
-      if (!bwHover) {
-        const p = clamp((vh * 0.72 - (bwTop - y)) / (vh * 0.72), 0, 1);
-        bwTarget = 94 - easeInOut(p) * 88;
-      }
-      bwCur = lerp(bwCur, bwTarget, 0.12);
-      if (Math.abs(bwCur - bwLast) > 0.04) { bwLast = bwCur; bw.style.setProperty('--split', `${bwCur.toFixed(2)}%`); }
-    }
-
-    // Autocollants : ils suivent un peu la souris
-    if (stickers.length) {
-      mx = lerp(mx, tmx, 0.06);
-      my = lerp(my, tmy, 0.06);
-      for (const s of stickers) {
-        const rt = s.top - y;
-        if (rt > vh || rt + s.h < 0) continue;
-        const x = -mx * s.k;
-        const yy = -my * s.k * 0.7;
-        if (Math.abs(x - s.x) + Math.abs(yy - s.y) < 0.05) continue;
-        s.x = x;
-        s.y = yy;
-        s.el.style.transform = `translate3d(${x.toFixed(2)}px,${yy.toFixed(2)}px,0)`;
-      }
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  /* ------------------------------------------------------------------
-     Version 3 — profondeur
-     ------------------------------------------------------------------ */
-  // Cartes et galets qui s'inclinent sous le pointeur, avec un reflet de lumière
-  if (finePointer && !reduced) {
-    $$('.reading, .palette span').forEach((el) => {
-      const g = document.createElement('i');
-      g.className = 'glare';
-      g.setAttribute('aria-hidden', 'true');
-      el.appendChild(g);
-      const max = el.classList.contains('reading') ? 5 : 16;
-      el.addEventListener('pointermove', (e) => {
-        const r = el.getBoundingClientRect();
-        const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
-        const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
-        const a = Math.min(1, Math.hypot(nx, ny)) * max;
-        el.classList.add('is-tilting');
-        if (a > 0.05) el.style.rotate = `${(-ny).toFixed(3)} ${nx.toFixed(3)} 0 ${a.toFixed(2)}deg`;
-        el.style.setProperty('--gx', `${((nx + 1) * 50).toFixed(1)}%`);
-        el.style.setProperty('--gy', `${((ny + 1) * 50).toFixed(1)}%`);
-      });
-      el.addEventListener('pointerleave', () => {
-        el.classList.remove('is-tilting');
-        el.style.rotate = '';
-      });
-    });
-  }
-
-  // Ouverture : trois plans (paysage, barreaux, titre) bougent à des profondeurs différentes
-  const heroEl = $('.hero');
-  if (heroEl && finePointer && !reduced) {
-    const hm = $('.hero__media', heroEl);
-    const hb = $('.hero__bars', heroEl);
-    const hc = $('.hero__content', heroEl);
-    heroEl.addEventListener('pointermove', (e) => {
-      const nx = (e.clientX / vw) * 2 - 1;
-      const ny = (e.clientY / vh) * 2 - 1;
-      if (hm) hm.style.translate = `${(-nx * 14).toFixed(1)}px ${(-ny * 9).toFixed(1)}px`;
-      if (hb) hb.style.translate = `${(nx * 18).toFixed(1)}px 0`;
-      if (hc) hc.style.translate = `${(nx * 7).toFixed(1)}px ${(ny * 5).toFixed(1)}px`;
-    }, { passive: true });
-  }
-
-  // Dunes en 3D, la nuit, derrière « Et si la personne qu'on aime… »
-  const qSec = $('.question');
-  if (qSec) {
-    const cv = document.createElement('canvas');
-    cv.className = 'dunes';
-    cv.setAttribute('aria-hidden', 'true');
-    qSec.prepend(cv);
-    const ctx = cv.getContext('2d');
-    const small = window.matchMedia('(max-width: 700px)').matches;
-    const ROWS = small ? 38 : 56;
-    const PTS = small ? 70 : 130;
-    const DZ = 0.46;
-    const ZN = 1.5;
-    const hash = (x, y) => {
-      let h = (Math.imul(x, 374761393) + Math.imul(y, 668265263)) | 0;
-      h = Math.imul(h ^ (h >>> 13), 1274126177);
-      return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+      eLight.style.opacity = smooth(0.9, 0.985, p).toFixed(3);
     };
-    const noise = (x, y) => {
-      const xi = Math.floor(x);
-      const yi = Math.floor(y);
-      const fx = x - xi;
-      const fy = y - yi;
-      const sx = fx * fx * (3 - 2 * fx);
-      const sy = fy * fy * (3 - 2 * fy);
-      const a = hash(xi, yi);
-      const b = hash(xi + 1, yi);
-      const c = hash(xi, yi + 1);
-      const d = hash(xi + 1, yi + 1);
-      return a + (b - a) * sx + (c - a) * sy + (a - b - c + d) * sx * sy;
-    };
-    // crêtes de dunes (vent de travers) + ondulations + grandes masses
-    // (le détail fin s'efface avec la distance, sinon les crêtes lointaines deviennent des pics)
-    const height = (x, z, det) => {
-      const r = 1 - Math.abs(noise(x * 0.3 + z * 0.14, z * 0.34) * 2 - 1);
-      return r * r * 1.35 + noise(x * 0.95, z * 0.95) * 0.22 * det + noise(x * 0.1 + 40, z * 0.1) * 0.95;
-    };
-    const grain = new Image();
-    grain.src = 'img/grain.png';
-    let gPat = null;
-    let W = 0;
-    let H = 0;
-    let dpr = 1;
-    let off = 0;
-    let last = 0;
-    let on = false;
-    let raf = 0;
-    let lastScroll = -1e9;
-    let acc = 0;
-    let fillGrad = null;
-    let fadeGrad = null;
-    const xs = new Float32Array(PTS + 1);
-    const ys = new Float32Array(PTS + 1);
 
-    const size = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      W = cv.clientWidth;
-      H = cv.clientHeight;
-      cv.width = Math.max(1, Math.round(W * dpr));
-      cv.height = Math.max(1, Math.round(H * dpr));
-      fillGrad = ctx.createLinearGradient(0, 0, 0, H);
-      fillGrad.addColorStop(0, '#140e0a');
-      fillGrad.addColorStop(1, '#0a0705');
-      fadeGrad = ctx.createLinearGradient(0, 0, 0, H * 0.45);
-      fadeGrad.addColorStop(0, 'rgba(0,0,0,1)');
-      fadeGrad.addColorStop(1, 'rgba(0,0,0,0)');
-      gPat = grain.complete && grain.naturalWidth ? ctx.createPattern(grain, 'repeat') : null;
+    const tick = () => {
+      eRaf = 0;
+      if (!eOn) return;
+      render();
+      eRaf = requestAnimationFrame(tick);
     };
-    const draw = () => {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, W, H);
-      const f = W * 0.62;
-      const cx = W / 2;
-      const hy = H * 0.1;
-      const camH = 3.9;
-      const frac = off % DZ;
-      const base = Math.floor(off / DZ);
-      for (let i = ROWS - 1; i >= 0; i--) {
-        const z = ZN + i * DZ - frac;
-        const wz = (base + i) * DZ;
-        const span = (((W / 2) * z) / f) * 1.06;
-        const det = Math.max(0, 1 - z / 10);
-        for (let k = 0; k <= PTS; k++) {
-          const x = -span + (2 * span * k) / PTS;
-          xs[k] = cx + (x / z) * f;
-          ys[k] = hy + ((camH - height(x, wz, det)) / z) * f * 0.5;
-        }
-        // la dune masque celles de derrière…
-        ctx.beginPath();
-        ctx.moveTo(xs[0], ys[0]);
-        for (let k = 1; k <= PTS; k++) ctx.lineTo(xs[k], ys[k]);
-        ctx.lineTo(W + 4, H + 4);
-        ctx.lineTo(-4, H + 4);
-        ctx.closePath();
-        ctx.fillStyle = fillGrad;
-        ctx.fill();
-        // …et sa crête accroche la lumière ; le lointain se perd dans la brume
-        const far = i / (ROWS - 1);
-        const near = Math.max(0, 1 - i / 9);
-        const fadeIn = i === ROWS - 1 ? frac / DZ : 1;
-        const a = (0.9 - far * 0.66) * fadeIn;
-        ctx.beginPath();
-        ctx.moveTo(xs[0], ys[0]);
-        for (let k = 1; k <= PTS; k++) ctx.lineTo(xs[k], ys[k]);
-        ctx.strokeStyle = `rgba(${Math.round(236 - near * 26)},${Math.round(206 - near * 92)},${Math.round(168 - near * 112)},${a.toFixed(3)})`;
-        ctx.lineWidth = 0.8 + near * 0.9;
-        ctx.stroke();
-      }
-      if (gPat) {
-        ctx.globalAlpha = 0.9;
-        ctx.fillStyle = gPat;
-        ctx.fillRect(0, 0, W, H);
-        ctx.globalAlpha = 1;
-      }
-      // fondu vers le haut (dessiné ici plutôt qu'en masque CSS : moins coûteux)
-      ctx.globalCompositeOperation = 'destination-out';
-      ctx.fillStyle = fadeGrad;
-      ctx.fillRect(0, 0, W, H * 0.45);
-      ctx.globalCompositeOperation = 'source-over';
-    };
-    // Les dunes dérivent quand on lit, et se figent pendant le défilement
-    // (pour que le défilement reste parfaitement fluide) ; 30 images/s suffisent.
-    window.addEventListener('scroll', () => { lastScroll = performance.now(); }, { passive: true });
-    const tick = (t) => {
-      raf = 0;
-      if (!on) return;
-      const dt = last ? Math.min(64, t - last) : 16;
-      last = t;
-      if (t - lastScroll > 160) {
-        off += dt * 0.00024;
-        acc += dt;
-        if (acc >= 32) { acc = 0; draw(); }
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    size();
-    draw();
-    grain.addEventListener('load', () => { size(); draw(); });
-    window.addEventListener('resize', () => { size(); draw(); });
-    if (!reduced && 'IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window) {
       new IntersectionObserver(([en]) => {
-        on = en.isIntersecting;
-        if (on && !raf) { last = 0; raf = requestAnimationFrame(tick); }
-      }).observe(cv);
+        eOn = en.isIntersecting;
+        if (eOn && !eRaf) eRaf = requestAnimationFrame(tick);
+      }).observe(entry);
+    } else {
+      eOn = true;
+      eRaf = requestAnimationFrame(tick);
     }
+    let eRs = 0;
+    const rebuild = () => { cancelAnimationFrame(eRs); eRs = requestAnimationFrame(build); };
+    window.addEventListener('resize', rebuild);
+    window.addEventListener('load', () => { measureEntry(); eP = -1; render(); });
+    build();
   }
 
-  requestAnimationFrame(loop);
+
+  /* ------------------------------------------------------------------
+     Sommaire + navigation au clavier
+     ------------------------------------------------------------------ */
+  const chapters = $$('[data-chapter]').map((el, i) => ({ el, i, name: el.dataset.chapter, top: 0 }));
+  const chap = $('[data-chap]');
+  const chapBtn = $('[data-chap-btn]');
+  const chapList = $('[data-chap-list]');
+  const chapN = $('[data-chap-n]');
+  const chapT = $('[data-chap-t]');
+  const pad2 = (n) => String(n).padStart(2, '0');
+  let current = -1;
+
+  if (chap && chapters.length) {
+    chapList.replaceChildren(...chapters.map((c) => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = `#${c.el.id}`;
+      const n = document.createElement('b');
+      n.textContent = pad2(c.i + 1);
+      a.append(n, document.createTextNode(c.name));
+      a.addEventListener('click', (e) => { e.preventDefault(); go(c.i); setOpen(false); });
+      li.appendChild(a);
+      return li;
+    }));
+  }
+  const setOpen = (open) => {
+    if (!chapList) return;
+    chapList.hidden = !open;
+    chapBtn.setAttribute('aria-expanded', String(open));
+  };
+  if (chapBtn) chapBtn.addEventListener('click', () => setOpen(chapList.hidden));
+  document.addEventListener('click', (e) => { if (chap && !chap.contains(e.target)) setOpen(false); });
+
+  const go = (i) => {
+    const c = chapters[clamp(i, 0, chapters.length - 1)];
+    if (c) c.el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+  };
+
+  const measure = () => {
+    const y = window.scrollY;
+    chapters.forEach((c) => { c.top = c.el.getBoundingClientRect().top + y; });
+  };
+  const update = () => {
+    const y = window.scrollY;
+    const vh = window.innerHeight;
+    const end = root.__entryEnd || vh;
+    if (chap) chap.classList.toggle('is-on', y > end - vh * 0.5);
+    let ci = -1;
+    chapters.forEach((c) => { if (c.top - y <= vh * 0.4) ci = c.i; });
+    if (ci !== current) {
+      current = ci;
+      const c = chapters[Math.max(0, ci)];
+      if (chapN) chapN.textContent = pad2(c.i + 1);
+      if (chapT) chapT.textContent = c.name;
+      $$('a', chapList).forEach((a, k) => { if (k === c.i) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+    }
+    // barre de progression (navigateurs sans animations liées au défilement)
+    if (progress) {
+      const p = clamp(y / Math.max(1, root.scrollHeight - vh), 0, 1);
+      progress.style.transform = `scaleX(${p.toFixed(4)})`;
+    }
+  };
+  const progress = window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll()') ? null : $('.progress i');
+
+  let raf = 0;
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; update(); }); }, { passive: true });
+  window.addEventListener('resize', () => { measure(); update(); });
+  window.addEventListener('load', () => { measure(); update(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { measure(); update(); });
+  measure();
+  update();
+
+  /* ------------------------------------------------------------------
+     Schémas de la post-prod : au survol d'une scène, ce qu'on ressent
+     et ce qu'on entend (le tableau sous les schémas dit la même chose)
+     ------------------------------------------------------------------ */
+  $$('[data-schema]').forEach((fig) => {
+    const tip = $('.schema__tip', fig);
+    const svg = $('svg', fig);
+    const cursor = $('.sx-cursor', fig);
+    if (!tip || !svg) return;
+    const em = (t) => { const e = document.createElement('em'); e.textContent = t; return e; };
+    const show = (e, hit) => {
+      const i = hit.dataset.i;
+      const [title, tension, feel, hear] = (fig.dataset[`s${i}`] || '').split('|');
+      const strong = document.createElement('b');
+      strong.textContent = title;
+      const l1 = document.createElement('span');
+      l1.append(em('Tension'), ` ${tension}/10 · `, em('On ressent'), ` ${(feel || '').toLowerCase()}`);
+      const l2 = document.createElement('span');
+      l2.append(em('On entend'), ` ${hear || ''}`);
+      tip.replaceChildren(strong, l1, l2);
+      tip.hidden = false;
+      const x = parseFloat(hit.getAttribute('x')) + parseFloat(hit.getAttribute('width')) / 2;
+      if (cursor) { cursor.setAttribute('x1', x); cursor.setAttribute('x2', x); }
+      fig.classList.add('is-hover');
+      const r = fig.getBoundingClientRect();
+      const left = Math.min(r.width - tip.offsetWidth - 8, Math.max(8, e.clientX - r.left + 14));
+      tip.style.left = `${left}px`;
+      tip.style.top = `${e.clientY - r.top + 16}px`;
+    };
+    svg.addEventListener('pointermove', (e) => {
+      const hit = e.target.closest('.sx-hit');
+      if (hit) show(e, hit);
+    });
+    svg.addEventListener('pointerleave', () => { tip.hidden = true; fig.classList.remove('is-hover'); });
+  });
+
+  // Présentation : → section suivante, ← section précédente
+  window.addEventListener('keydown', (e) => {
+    if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (e.target.closest && e.target.closest('input, textarea, select, [contenteditable]')) return;
+    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+    e.preventDefault();
+    measure();
+    const y = window.scrollY;
+    let ci = -1;
+    chapters.forEach((c) => { if (c.top <= y + 30) ci = c.i; });
+    if (e.key === 'ArrowRight') {
+      if (ci + 1 < chapters.length) go(ci + 1);
+      else window.scrollTo({ top: root.scrollHeight, behavior: reduced ? 'auto' : 'smooth' });
+    } else if (ci >= 0 && y > chapters[ci].top + 40) {
+      go(ci); // au milieu d'une section : on revient à son début
+    } else if (ci > 0) {
+      go(ci - 1);
+    } else {
+      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    }
+  });
 })();
