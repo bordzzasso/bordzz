@@ -944,3 +944,27 @@ strong, b { font-weight: 650; }
 @media (max-width: 760px) {
   .meet__grid > img { max-height: 320px; }
 }
+
+/* ==========================================================================
+   v18 — budget : les besoins regroupés par famille (équipe, matériel…)
+   ========================================================================== */
+.budget__table tr.budget__group th {
+  padding: 26px 0 8px; border-top: 0; text-align: left;
+  font-family: var(--display); font-stretch: 125%; font-weight: 900; font-size: 13px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--red);
+}
+.budget__table tbody tr.budget__group:first-child th { padding-top: 4px; }
+.budget__table tr.budget__group + tr > * { border-top-color: rgba(25, 18, 13, 0.3); }
+@media (max-width: 760px) {
+  .budget__table tr.budget__group { display: block; padding: 20px 0 0; border-top: 0; }
+  .budget__table tbody tr.budget__group:first-child { padding-top: 4px; }
+  .budget__table tr.budget__group th { display: block; padding: 0; }
+}
+
+/* ==========================================================================
+   v19 — Rencontrez Thomas / Marie : dans « Le film », juste après le schéma
+   de tension (le casting garde le contraste et les visages)
+   ========================================================================== */
+.film__meet { width: min(var(--wrap), 100% - 2 * var(--pad)); margin: clamp(16px, 2.6vw, 30px) auto 0; }
+.film__meet .meet { margin-top: 0; }
+.film__meet .meet + .meet { margin-top: clamp(16px, 2.6vw, 30px); }
