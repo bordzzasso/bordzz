@@ -1,0 +1,113 @@
+/* ==========================================================================
+   Les Barreaux de Sable — trois scènes à la loupe
+   Chargé après treatment.css et depouillement.css : la fiche de chaque
+   scène reprend la fiche du dépouillement (.dp-seq). Même DA : angles
+   vifs, grain, titres à plat, Instrument Serif pour les phrases.
+   ========================================================================== */
+
+/* ---------- Les trois scènes, en un coup d'œil ---------- */
+.sc-menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.sc-menu a {
+  display: flex; flex-direction: column; height: 100%;
+  padding: 18px 22px 20px; border-top: 8px solid var(--g);
+  background: var(--night) var(--noise); background-blend-mode: soft-light; color: var(--cream);
+  text-decoration: none; box-shadow: var(--hard);
+  transition: translate 0.15s, box-shadow 0.15s;
+}
+.sc-menu a:hover { translate: -2px -2px; box-shadow: 9px 9px 0 rgba(12, 8, 5, 0.85); }
+.sc-menu a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.sc-menu b { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(1.7rem, 2.6vw, 2.2rem); line-height: 1; color: var(--gold); }
+.sc-menu h3 {
+  margin: 12px 0 8px; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 12.5px; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white);
+}
+.sc-menu p { margin: 0 0 16px; font-size: 13.5px; line-height: 1.5; opacity: 0.85; }
+.sc-menu span {
+  margin-top: auto; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #ff5c6e;
+}
+.sc-note { max-width: 70ch; margin: 22px 0 0; font-size: 12.5px; opacity: 0.7; }
+
+/* ---------- Une scène ---------- */
+.sc__head { margin-bottom: clamp(22px, 3vw, 34px); }
+.sc__kicker {
+  margin: 0 0 14px; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+}
+.sheet--night .sc__kicker { color: var(--gold); }
+.sc__sup {
+  display: inline-block; margin: 0; padding: 0.2em 0.5em 0.24em; rotate: -1.5deg;
+  background: var(--red) var(--noise); background-blend-mode: soft-light; color: var(--white);
+  font-family: var(--display); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(2rem, 5vw, 4rem); line-height: 1; text-transform: uppercase;
+  box-shadow: 7px 7px 0 rgba(12, 8, 5, 0.85);
+}
+.sheet--night .sc__sup { background-color: var(--cream); color: var(--red); box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.6); }
+
+.sc__intro {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 24px clamp(28px, 4.4vw, 64px); align-items: center;
+  margin-bottom: clamp(28px, 3.6vw, 44px);
+}
+.sc__lead {
+  margin: 0 0 14px; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.6rem, 2.7vw, 2.2rem); line-height: 1.06;
+}
+.sheet--night .sc__lead { color: var(--white); }
+.sc__why { max-width: 58ch; margin: 0; font-size: 15px; }
+.sheet--night .sc__why { opacity: 0.88; }
+.sc__facts {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px; margin: 0;
+  background: var(--ink); border: 2px solid var(--ink); box-shadow: var(--hard);
+}
+.sheet--night .sc__facts { box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.55); }
+.sc__facts div { padding: 14px 16px 13px; background: var(--white) var(--noise); background-blend-mode: soft-light; color: var(--ink); }
+.sc__facts dt {
+  font-family: var(--display); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem); line-height: 0.88; color: var(--red); white-space: nowrap;
+}
+.sc__facts dd { margin: 8px 0 0; font-size: 12.5px; line-height: 1.3; }
+
+/* La fiche (reprise du dépouillement) */
+.sc-sheet { margin-bottom: clamp(26px, 3.4vw, 40px); scroll-margin-top: 20px; }
+
+/* Les moments à filmer */
+.sc__label {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 14px;
+  font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.sc__label::before { content: ""; width: 18px; height: 2px; background: var(--red); }
+.sc__shots ol {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 10px;
+  margin: 0; padding: 0; list-style: none; counter-reset: p;
+}
+.sc__shots li {
+  position: relative; padding: 14px 16px 15px 54px;
+  background: var(--white) var(--noise); background-blend-mode: soft-light; color: var(--ink);
+  border-left: 3px solid var(--red); font-size: 13.5px; line-height: 1.45;
+}
+.sheet--night .sc__shots li { background: rgba(255, 255, 255, 0.05); color: var(--cream); }
+.sc__shots li::before {
+  counter-increment: p; content: counter(p, decimal-leading-zero);
+  position: absolute; left: 14px; top: 13px;
+  font-family: var(--display); font-weight: 900; font-stretch: 125%; font-size: 1rem; line-height: 1.2; color: var(--red);
+}
+.sheet--night .sc__shots li::before { color: #ff5c6e; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+  .sc-menu { grid-template-columns: 1fr; }
+  .sc__intro { grid-template-columns: 1fr; }
+  .sc__facts { max-width: 520px; }
+}
+
+/* ---------- Impression ---------- */
+@media print {
+  .sc-menu, .sc-note { display: none !important; }
+  .sc { break-before: page; }
+  .sc__sup { box-shadow: none; border: 2px solid #000; background: #fff !important; color: #000 !important; rotate: none; }
+  .sc__kicker, .sc__lead, .sc__label { color: #000 !important; }
+  .sc__facts { box-shadow: none; }
+  .sc__shots li { background: #fff !important; color: #000 !important; }
+}

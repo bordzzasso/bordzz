@@ -196,6 +196,12 @@
 .dp-ten::after { content: ""; position: absolute; inset: 0 auto 0 0; width: calc(var(--t) * 100%); background: var(--red); }
 .dp-tags .is-v3 { background: var(--ink); color: var(--cream); }
 .dp-tags .is-new { background: var(--red); border-color: var(--red); color: var(--white); }
+/* Les liens vers « Trois scènes à la loupe » */
+.dp-loupe { max-width: 100%; margin-top: 18px; white-space: normal; line-height: 1.25; }
+.dp-tags .is-loupe { padding: 0; border-color: var(--red); background: var(--red); }
+.dp-tags .is-loupe a { display: inline-flex; padding: 0.55em 0.8em 0.5em; color: var(--white); text-decoration: none; }
+.dp-tags .is-loupe a:hover { background: var(--ink); }
+.dp-tags .is-loupe a:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
 /* Les rubriques : une grille sans jointure, séparée par des filets */
 .dp-seq__grid {
