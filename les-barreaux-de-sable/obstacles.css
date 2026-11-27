@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Les Barreaux de Sable — obstacles et solutions
+   Chargé après treatment.css et depouillement.css (ouverture, en-têtes de
+   section, pied de page). Même DA : angles vifs, grain, titres à plat,
+   Instrument Serif pour les phrases, ombres portées franches.
+   Chaque obstacle : ce qui est en jeu à gauche, les solutions à droite.
+   ========================================================================== */
+.ob-lead { font-size: 16px !important; }
+
+/* ---------- Pour rappel ---------- */
+.ob-recall {
+  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 20px clamp(24px, 4vw, 56px); align-items: center;
+  margin-bottom: clamp(30px, 4vw, 52px);
+}
+.ob-recall p { max-width: 44ch; margin: 12px 0 0; font-size: 14.5px; }
+.ob-facts {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2px; margin: 0;
+  background: var(--ink); border: 2px solid var(--ink); box-shadow: var(--hard);
+}
+.ob-facts div { padding: 14px 14px 12px; background: var(--white) var(--noise); background-blend-mode: soft-light; }
+.ob-facts dt {
+  font-family: var(--display); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(2rem, 3.6vw, 3rem); line-height: 0.86; color: var(--red);
+}
+.ob-facts dd { margin: 8px 0 0; font-size: 12.5px; line-height: 1.3; }
+
+/* ---------- Les trois obstacles, en un coup d'œil ---------- */
+.ob-menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.ob-menu a {
+  display: flex; flex-direction: column; height: 100%;
+  padding: 18px 22px 20px; border-top: 5px solid var(--red);
+  background: var(--night) var(--noise); background-blend-mode: soft-light; color: var(--cream);
+  text-decoration: none; box-shadow: var(--hard);
+  transition: translate 0.15s, box-shadow 0.15s;
+}
+.ob-menu a:hover { translate: -2px -2px; box-shadow: 9px 9px 0 rgba(12, 8, 5, 0.85); }
+.ob-menu a:focus-visible { outline: 3px solid var(--red); outline-offset: 3px; }
+.ob-menu b { font-family: var(--display); font-weight: 900; font-stretch: 125%; font-size: 2rem; line-height: 1; color: var(--gold); }
+.ob-menu h3 {
+  margin: 14px 0 8px; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 13px; line-height: 1.3; letter-spacing: 0.05em; text-transform: uppercase; color: var(--white);
+}
+.ob-menu p { margin: 0 0 16px; font-size: 13.5px; line-height: 1.5; opacity: 0.85; }
+.ob-menu span {
+  margin-top: auto; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: #ff5c6e;
+}
+
+/* ---------- Un obstacle ---------- */
+.ob__head {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px clamp(18px, 3vw, 40px); align-items: end;
+  margin-bottom: clamp(30px, 4.4vw, 56px);
+}
+.ob__n {
+  font-family: var(--display); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(4.6rem, 12vw, 10rem); line-height: 0.74; letter-spacing: -0.04em; color: var(--red);
+}
+.sheet--night .ob__n { color: #d42a40; }
+.ob__kicker {
+  margin: 0 0 10px; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+}
+.sheet--night .ob__kicker { color: var(--gold); }
+.ob__title {
+  max-width: 16ch; margin: 0; font-family: var(--display); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(2rem, 4.6vw, 3.9rem); line-height: 0.92; letter-spacing: -0.01em; text-transform: uppercase;
+  color: var(--ink);
+}
+.sheet--night .ob__title { color: var(--gold); }
+
+.ob__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(28px, 4.4vw, 64px); align-items: start; }
+.ob__stake {
+  margin: 0 0 16px; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(1.7rem, 2.9vw, 2.4rem); line-height: 1.04; letter-spacing: -0.005em;
+}
+.sheet--night .ob__stake { color: var(--white); }
+.ob__why > p:not(.ob__stake) { max-width: 52ch; font-size: 15px; }
+.sheet--night .ob__why > p:not(.ob__stake) { opacity: 0.88; }
+.ob__label {
+  display: flex; align-items: center; gap: 10px; margin: 28px 0 12px;
+  font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+}
+.ob__fix > .ob__label:first-child, .ob__why > .ob__label:first-child { margin-top: 0; }
+.ob__label::before { content: ""; width: 18px; height: 2px; background: var(--red); }
+.sheet--night .ob__label { color: var(--cream); }
+
+/* Les causes et les impacts : des avertissements */
+.ob__risks { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.ob__risks li {
+  position: relative; padding: 13px 16px 13px 44px; border-left: 3px solid var(--red);
+  background: rgba(25, 18, 13, 0.05); font-size: 14px; line-height: 1.5;
+}
+.sheet--night .ob__risks li { background: rgba(255, 255, 255, 0.05); }
+.ob__risks li::before {
+  content: "!"; position: absolute; left: 17px; top: 11px;
+  font-family: var(--display); font-weight: 900; font-size: 16px; color: #ff5c6e;
+}
+.sheet--white .ob__risks li::before { color: var(--red); }
+.ob__risks b { font-weight: 650; }
+
+/* Les solutions : des étapes numérotées, comme des fiches */
+.ob__steps { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.ob__steps > li {
+  position: relative; padding: 18px 20px 18px 68px;
+  background: var(--paper) var(--noise); background-blend-mode: soft-light; color: var(--ink);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45);
+}
+.sheet--white .ob__steps > li { background-color: var(--cream); box-shadow: 6px 6px 0 rgba(12, 8, 5, 0.85); }
+.ob__steps > li::before {
+  counter-increment: s; content: counter(s);
+  position: absolute; left: 18px; top: 16px; display: grid; place-items: center; width: 32px; height: 32px;
+  background: var(--red); color: var(--white);
+  font-family: var(--display); font-weight: 900; font-stretch: 112%; font-size: 1rem;
+}
+.ob__steps b {
+  display: block; margin: 4px 0 6px; font-family: var(--display); font-weight: 800; font-stretch: 112%;
+  font-size: 12.5px; line-height: 1.35; letter-spacing: 0.04em; text-transform: uppercase;
+}
+.ob__steps p { margin: 0; font-size: 14px; line-height: 1.5; }
+.ob__steps ul { margin: 8px 0 0; padding: 0; list-style: none; }
+.ob__steps ul li { position: relative; margin: 0 0 5px; padding-left: 16px; font-size: 14px; line-height: 1.5; }
+.ob__steps ul li::before { content: ""; position: absolute; left: 0; top: 0.7em; width: 8px; height: 2px; background: var(--red); }
+
+/* Obstacle 1 : le décor, en tirage scotché */
+.ob__img { margin-top: clamp(34px, 4vw, 48px); aspect-ratio: 16 / 10; rotate: -1.2deg; }
+
+/* Obstacle 2 : l'autocollant du nuage */
+.ob__cloud { right: 0; top: -14px; width: clamp(96px, 11vw, 150px); aspect-ratio: 160 / 140; rotate: 8deg; }
+
+/* Obstacle 3 : ce qui est couvert, ce qui reste */
+.ob-money { margin: 6px 0 0; }
+.ob-money figcaption { margin-bottom: 10px; font-size: 14px; opacity: 0.85; }
+.ob-money figcaption b { font-weight: 650; color: var(--white); }
+.ob-money__bar { display: flex; height: 64px; box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.45); }
+.ob-money__bar span {
+  display: flex; flex-direction: column; justify-content: center; width: var(--w); padding: 0 14px;
+  font-size: 11.5px; line-height: 1.2; white-space: nowrap; overflow: hidden;
+}
+.ob-money__bar b { font-family: var(--display); font-weight: 900; font-stretch: 112%; font-size: 1.15rem; line-height: 1.05; }
+.ob-money__ok { background: var(--cream) var(--noise); background-blend-mode: soft-light; color: var(--ink); }
+.ob-money__todo { background: var(--red) var(--noise); background-blend-mode: soft-light; color: var(--white); }
+.ob-money__note { margin: 14px 0 0; font-size: 13px; opacity: 0.75; }
+.ob-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ob-chips li {
+  display: inline-flex; align-items: baseline; gap: 8px; padding: 0.7em 0.9em 0.65em;
+  border: 1.5px solid rgba(246, 231, 201, 0.4);
+  font-family: var(--display); font-weight: 800; font-stretch: 108%; font-size: 10.5px;
+  line-height: 1; letter-spacing: 0.07em; text-transform: uppercase;
+}
+.ob-chips b { color: var(--gold); font-weight: 900; }
+
+/* ---------- Synthèse ---------- */
+.ob-first {
+  margin: 0 0 clamp(26px, 3.4vw, 40px); padding: clamp(22px, 3vw, 36px) clamp(22px, 3.4vw, 44px);
+  background: var(--night) var(--noise); background-blend-mode: soft-light; color: var(--cream);
+  box-shadow: var(--hard);
+}
+.ob-first .says__big { max-width: 30ch; margin: 16px 0 0; color: var(--white); }
+.ob-table {
+  width: 100%; border-collapse: collapse;
+  background: var(--white) var(--noise); background-blend-mode: soft-light; box-shadow: var(--hard);
+  font-size: 14.5px; line-height: 1.45;
+}
+.ob-table th, .ob-table td { padding: 16px 20px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.ob-table tbody tr:last-child > * { border-bottom: 0; }
+.ob-table thead th {
+  padding-block: 14px 12px; border-bottom: 2px solid var(--ink);
+  font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: 10px;
+  letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7;
+}
+.ob-table tbody th { width: 28%; }
+.ob-table tbody th a {
+  display: flex; align-items: baseline; gap: 12px; text-decoration: none;
+  font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: 12.5px;
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.ob-table tbody th a:hover { color: var(--red); }
+.ob-table tbody th b { font-weight: 900; font-stretch: 125%; font-size: 1.3rem; color: var(--red); }
+.ob-table td:last-child { position: relative; padding-left: 52px; }
+.ob-table td:last-child::before {
+  content: "B"; position: absolute; left: 20px; top: 15px; display: grid; place-items: center; width: 22px; height: 22px;
+  background: var(--ink); color: var(--cream);
+  font-family: var(--display); font-weight: 900; font-size: 11px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 980px) {
+  .ob-recall { grid-template-columns: 1fr; }
+  .ob__body { grid-template-columns: 1fr; }
+  .ob__img { max-width: 560px; }
+}
+@media (max-width: 760px) {
+  .ob-facts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ob-menu { grid-template-columns: 1fr; }
+  .ob__head { grid-template-columns: 1fr; }
+  .ob__n { font-size: 4.4rem; }
+  .ob__cloud { top: -6px; width: 92px; }
+  .ob__img { rotate: none; }
+  .ob-table, .ob-table tbody, .ob-table tr, .ob-table th, .ob-table td { display: block; }
+  .ob-table thead { display: none; }
+  .ob-table tbody tr { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .ob-table tbody tr:last-child { border-bottom: 0; }
+  .ob-table tbody th, .ob-table td { width: auto; padding: 4px 0; border: 0; }
+  .ob-table td::after { content: none; }
+  .ob-table td[data-label]::before {
+    content: attr(data-label); display: block; position: static; width: auto; height: auto; margin: 6px 0 2px;
+    background: none; color: inherit; opacity: 0.6;
+    font-family: var(--display); font-weight: 800; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .ob-table td:last-child { padding-left: 0; }
+}
+@media (max-width: 420px) {
+  .ob-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ob-facts div:last-child { grid-column: 1 / -1; }
+}
+
+/* ---------- Impression ---------- */
+@media print {
+  .ob-menu, .ob__cloud, .ob__img { display: none !important; }
+  .ob__title, .ob__n, .ob__kicker, .ob__stake, .ob__label, .ob-money figcaption b { color: #000 !important; }
+  .ob__steps > li, .ob-first, .ob-table, .ob-facts { box-shadow: none; border: 1px solid #000; background: #fff; color: #000; }
+  .ob-first .says__big { color: #000; }
+  .ob__risks li { background: none; }
+  .ob__body { grid-template-columns: 1fr 1fr; }
+  .ob { break-before: page; }
+}

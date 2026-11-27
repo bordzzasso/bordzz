@@ -968,3 +968,34 @@ strong, b { font-weight: 650; }
 .film__meet { width: min(var(--wrap), 100% - 2 * var(--pad)); margin: clamp(16px, 2.6vw, 30px) auto 0; }
 .film__meet .meet { margin-top: 0; }
 .film__meet .meet + .meet { margin-top: clamp(16px, 2.6vw, 30px); }
+
+/* ==========================================================================
+   v22 — le bouton vers le dépouillement (en haut, dans l'ouverture, et en
+   bas, dans « Merci »), repris sur depouillement.html pour le retour
+   ========================================================================== */
+.doc-btn {
+  display: inline-flex; align-items: center; gap: 0.75em;
+  padding: 0.95em 1.25em 0.9em;
+  background: var(--cream) var(--noise); background-blend-mode: soft-light; color: var(--ink);
+  font-family: var(--display); font-weight: 800; font-stretch: 118%;
+  font-size: 11.5px; line-height: 1; letter-spacing: 0.12em; text-transform: uppercase;
+  text-decoration: none; white-space: nowrap;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55);
+  transition: translate 0.15s, box-shadow 0.15s, background-color 0.15s;
+}
+.doc-btn span { font-size: 1.35em; line-height: 0.6; }
+.doc-btn:hover { translate: -2px -2px; box-shadow: 7px 7px 0 rgba(0, 0, 0, 0.55); }
+.doc-btn:active { translate: 3px 3px; box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.55); }
+.doc-btn:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.doc-btn--gold { background-color: var(--gold); }
+.doc-btn--ghost { background: rgba(11, 9, 8, 0.55); color: var(--cream); box-shadow: inset 0 0 0 1.5px rgba(246, 231, 201, 0.7); }
+.doc-btn--ghost:hover { background: var(--cream); color: var(--ink); box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55); }
+.intro__more { margin: 26px 0 0; }
+.merci__panel p.merci__more { margin: 28px auto 0; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .doc-btn { transition: none; }
+  .doc-btn:hover, .doc-btn:active { translate: none; }
+}
+@media print {
+  .doc-btn { display: none; }
+}
